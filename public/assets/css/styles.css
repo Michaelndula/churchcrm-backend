@@ -67,7 +67,6 @@ body {
 .sideNav {
     display: block;
     width: 300px;
-    /* height: calc(100vh - 70px); */
     height: 100vh;
     background-color: var(--blue);
     overflow: hidden;

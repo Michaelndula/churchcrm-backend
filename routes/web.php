@@ -17,11 +17,11 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard-page', function () {
-    return view('navigation-menu');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/dashboard-section', function () {
+Route::get('/dashboard-page', function () {
     return view('dashboard-page');
 });
 
