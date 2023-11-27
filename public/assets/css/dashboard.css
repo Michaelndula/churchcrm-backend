@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+:root {
+    --blue: #163c94;
+    --white: #f7f7f7;
+    --white2: #ffffff;
+}
+
+* {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-body {
+    display: flex;
+}
+
+.navigation-menu {
+    height: 100vh;
+}
+
+.dashboard-container {
+    width: 100%;
+    padding: 80px 50px 50px 80px;
+}
+
+.dashboard-header h3{
+    font-size: 24px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+hr {
+    color: #b7b7b7;
+    margin-bottom: 30px;
+    width: 98%;
+}
+
+.dashboard-cards {
+    box-sizing: border-box;
+    box-shadow: 0 3px 3px 3px #ececec;
+    max-width: 250px;
+    text-align: left;
+    padding: 30px 30px 15px 30px;
+    color: var(--blue);
+    border-radius: 8px;
+}
+
+.dashboard-cards-display {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    column-gap: 30px;
+    row-gap: 80px;
+}
+
+.card-text {
+    margin-bottom: 40px;
+}
+
+.card-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.card-stats {
+    font-size: 40px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.icon i {
+    font-size: 28px;
+}
+
+.card-link {
+    text-align: right;
+}
+
+.card-link a {
+    color: var(--blue);
+}
