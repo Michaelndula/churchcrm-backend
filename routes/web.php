@@ -17,6 +17,14 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard-page', function () {
+    return view('dashboard-page');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
