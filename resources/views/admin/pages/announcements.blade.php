@@ -87,7 +87,7 @@
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('new-announcement') }}" method="post">
+                        <form class="form" action="{{ route('new-announcement') }}" method="post">
                             @csrf
                             <label for="topic">Add Topic</label>
                             <input type="text" class="form-control" name="topic" required placeholder="Add Topic">
@@ -99,15 +99,11 @@
                             </div>
 
                         </form>
-                        {{-- <span class="close">&times;</span> --}}
-
                     </div>
                 </div>
 
             </div>
         </div>
-
-
     </div>
     @include('admin.layout.scripts')
 </body>
