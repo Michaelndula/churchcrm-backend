@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,20 +18,30 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard-page', function () {
     return view('dashboard-page');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
+Route::middleware(['auth', 'verified'])->group(
+    function () {
+        // Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    }
+);
+Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::get('users', [AdminController::class, 'users'])->name('users');
+Route::get('announcements', [AdminController::class, 'announcements'])->name('announcements');
+Route::get('new-announcement', [AdminController::class, 'newannouncement'])->name('new-announcement');
+Route::get('sermons', [AdminController::class, 'sermons'])->name('sermons');
+Route::get('notessermons', [AdminController::class, 'sermonsnotes'])->name('sermonsnotes');
+Route::get('events', [AdminController::class, 'events'])->name('events');
