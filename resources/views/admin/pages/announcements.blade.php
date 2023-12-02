@@ -8,7 +8,7 @@
 <body>
     <div class="dashboard-body">
         <div class="navigation-menu">
-            <div class="container">
+            <div>
                 <!-- Top Navigation Menu -->
                 @include('admin.layout.header')
                 <!-- Side Navigation Menu -->

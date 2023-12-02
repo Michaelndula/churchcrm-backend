@@ -8,92 +8,95 @@
 <body>
     <div class="dashboard-body">
         <div class="navigation-menu">
-            <div class="container">
+            <div>
                 <!-- Top Navigation Menu -->
                 @include('admin.layout.header')
                 <!-- Side Navigation Menu -->
                 @include('admin.layout.aside')
             </div>
         </div>
-        <div class="dashboard-container">
-            <div class="dashboard-header">
-                <h1>Users</h1>
-                <hr>
-            </div>
-            <section class="table">
-                <div class="form-container">
-                    <div>
-                        <h4 style="padding-bottom: 20px;">New App User</h4>
-                        <hr style="margin-bottom: 20px;">
-                    </div>
-                        <table id="table">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Membership Status</th>
-                                <th>Action</th>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                <td>Membership Status</td>
-                                <td>
-                                    <a href="">Delete</a>
-                                    <a href="">view</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                <td>Membership Status</td>
-                                <td>
-                                    <a href="">Delete</a>
-                                    <a href="">view</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                <td>Membership Status</td>
-                                <td>
-                                    <a href="">Delete</a>
-                                    <a href="">view</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                <td>Membership Status</td>
-                                <td>
-                                    <a href="">Delete</a>
-                                    <a href="">view</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Email</td>
-                                <td>Phone</td>
-                                <td>Membership Status</td>
-                                <td>
-                                    <a href="">Delete</a>
-                                    <a href="">view</a>
-                                </td>
-                            </tr>
-
-
+        <div>
+            <div class="dashboard-container" id="dashboardContainer">
+                <div class="dashboard-header">
+                    <h1>Users</h1>
+                    <hr>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header bg-transparent">
+                            <h4>New App Users</h4>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Membership Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Samso</td>
+                                    <td>Natto</td>
+                                    <td>@samso</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Tinor</td>
+                                    <td>Horton</td>
+                                    <td>@tinor_har</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Mythor</td>
+                                    <td>Bully</td>
+                                    <td>@myth_tobo</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Mythor</td>
+                                    <td>Bully</td>
+                                    <td>@myth_tobo</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Mythor</td>
+                                    <td>Bully</td>
+                                    <td>@myth_tobo</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Mythor</td>
+                                    <td>Bully</td>
+                                    <td>@myth_tobo</td>
+                                    <td>@samso</td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Mythor</td>
+                                    <td>Bully</td>
+                                    <td>@myth_tobo</td>
+                                    <td>@samso</td>
+                                </tr>
+                            </tbody>
                         </table>
 
+                    </div>
                 </div>
 
-            </section>
+
+            </div>
+            <script src="assets/js/toggle_bar.js"></script>
         </div>
-    </div>
-    @include('admin.layout.scripts')
+        @include('admin.layout.scripts')
 </body>
 
 </html>

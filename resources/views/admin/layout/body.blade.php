@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div class="dashboard-container" id="dashboardContainer">
     <div class="dashboard-header">
         <h1>Dashboard</h1>
         <hr>
@@ -71,43 +71,55 @@
         </div>
     </div>
     <div class="card">
-        <div class="card-header">
-            <h4>New App Users</h4>
-        </div>
         <div class="card-body">
+            <div class="card-header bg-transparent">
+                <h4>New App Users</h4>
+            </div>
             <table class="table">
-                <thead class="thead-dark">
+                <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Membership Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td>Name</td>
+                        <td>Samso</td>
+                        <td>Natto</td>
+                        <td>@samso</td>
+                        <td>@samso</td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
+                        <td>Name</td>
+                        <td>Tinor</td>
+                        <td>Horton</td>
+                        <td>@tinor_har</td>
+                        <td>@samso</td>
                     </tr>
                     <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
+                        <td>Name</td>
+                        <td>Mythor</td>
+                        <td>Bully</td>
+                        <td>@myth_tobo</td>
+                        <td>@samso</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>Mythor</td>
+                        <td>Bully</td>
+                        <td>@myth_tobo</td>
+                        <td>@samso</td>
                     </tr>
                 </tbody>
             </table>
+
         </div>
 
 
-
+        <script src="assets/js/toggle_bar.js"></script>
     </div>
 </div>
