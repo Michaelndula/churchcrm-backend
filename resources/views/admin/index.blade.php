@@ -6,9 +6,9 @@
 </head>
 
 <body>
-    <div class="dashboard-body">
+    <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
-            <div class="">
+            <div>
                 <!-- Top Navigation Menu -->
                 @include('admin.layout.header')
                 <!-- Side Navigation Menu -->
@@ -20,6 +20,7 @@
         </div>
     </div>
     @include('admin.layout.scripts')
+    <script src="assets/js/toggle_bar.js"></script>
 </body>
 
 </html>
