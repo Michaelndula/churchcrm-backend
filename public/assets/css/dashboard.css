@@ -9,13 +9,6 @@
     padding: 0 75px 50px 0;
 }
 
-/* 
-
-.navigation-menu {
-    height: 100vh;
-}
-*/
-
 .dashboard-header h1 {
     font-size: 22px;
     margin-bottom: 15px;
@@ -81,12 +74,30 @@ hr {
 }
 
 /* SERMONS PAGE */
-/* .col .card img {
-    width: 280px;
-    height: auto;
-    padding: 10px;
+.fa {
+    background-color: transparent;
 }
 
-.col .card {
-    width: 300px;
-} */ 
+.fa-chevron-right:active,
+.fa-chevron-right:focus,
+.fa-chevron-left:active,
+.fa-chevron-left:focus {
+    color: #999999;
+    font-size: 20px;
+    border: none !important;
+    border-color: transparent !important;
+    outline-color: transparent !important;
+    /* padding: 20px 20px; */
+}
+
+.fa-chevron-right, .fa-chevron-left{
+    color: #999999;
+    font-size: 20px;
+
+    padding: 30px 20px;
+}
+
+.carousel-nav-buttons .btn-primary {
+    background-color: transparent;
+    border: none;
+}

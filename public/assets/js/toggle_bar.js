@@ -1,9 +1,9 @@
-let toggle = document.getElementById("toggleSidebar");
+let toggle_menu = document.getElementById("toggleSidebar");
 let sideBar = document.getElementById("sideNavbar");
 let pageBody = document.getElementById("page-body")
 let dashBoardContainer = document.getElementById("dashboardContainer")
 
-toggle.addEventListener('click', function () {
+toggle_menu.addEventListener('click', function () {
     if (sideBar.style.display === 'block' || sideBar.style.display === '') {
         sideBar.style.display = 'none'; 
         pageBody.style.display = 'block'
