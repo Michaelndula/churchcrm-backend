@@ -101,3 +101,8 @@ hr {
     background-color: transparent;
     border: none;
 }
+
+/* Events and Sermons Cards */
+.col-md-4 .card .card-body .card-text {
+    color: #3a3a3a;
+}

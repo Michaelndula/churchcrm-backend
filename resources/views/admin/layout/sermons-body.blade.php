@@ -1,6 +1,6 @@
-<div class="dashboard-container" id="dashboardContainer">
+<!-- <div class="dashboard-container" id="dashboardContainer">
     <div class="dashboard-header">
-        <h1>Users</h1>
+        <h1>Sermons</h1>
         <hr>
     </div>
 
@@ -11,9 +11,9 @@
 
     <div class="dashboard-header">
         <h1>Latest</h1>
-    </div>
+    </div> -->
     <!-- Carousel -->
-    <div class="col-12 d-flex justify-content-center align-items-center">
+    <!-- <div class="col-12 d-flex justify-content-center align-items-center">
         <div class="carousel-nav-buttons">
             <a href="#carouselExampleIndicators2" role="button" data-slide="prev">
                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -107,7 +107,7 @@
         </div>
     </div>
     @include('admin.layout.scripts')
-</div>
+</div> -->
 <!-- 
     <div class="col-6 text-right">
                 <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
