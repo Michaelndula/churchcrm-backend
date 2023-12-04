@@ -83,17 +83,19 @@
                         <span class="close">&times;</span>
                     </div>
                     <div class="modal-head">
-                        <h2 style="padding-bottom: 20px;">Add New Announcement</h2>
+                        <h2 style="padding-bottom: 20px;">Event Details</h2>
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('new-announcement') }}" method="post">
+                        <form action="{{ route('new-announcement') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <label for="topic">Add Topic</label>
-                            <input type="text" class="form-control" name="topic" required placeholder="Add Topic">
-                            <label for="message">Add Message</label>
-                            <textarea class="form-control" name="message" id="message" required cols="30" rows="10"
-                                placeholder="Add Message"></textarea>
+                            <label for="topic">Event Title</label>
+                            <input type="text" class="form-control" name="event-titile" required placeholder="Event Title">
+                            <label for="event-date">Event Date</label>
+                            <input type="date" class="form-control" placeholder="Event Date" name="eventdate" required>
+                            <label for="eventdescription">Description</label>
+                            <textarea class="form-control" name="eventdescription" id="eventdescription" required cols="30" rows="10"
+                                placeholder="Add Description"></textarea>
                             <div class="auth">
                                 <button>Add</button>
                             </div>
