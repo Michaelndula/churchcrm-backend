@@ -6,6 +6,9 @@
 </head>
 
 <body>
+    @php
+        $sermons = App\Models\Sermons::all();
+    @endphp
     <div class="dashboard-body">
         <div class="navigation-menu">
             <div>
@@ -21,8 +24,8 @@
                 <hr>
             </div>
             <section class="center-btn-modal">
-                <button id="announcementsmodalBtn">                    <i class="fa-solid fa-plus mr-2"></i>
-                    Add New Announcements</button>
+                <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
+                    Add New Sermon</button>
             </section>
             <section class="table">
                 <div class="form-container">
@@ -32,49 +35,23 @@
                     </div>
                     <table id="table">
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Membership Status</th>
+                            <th>Notes</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
+                        @foreach ($sermons as $sermon)
+                            <tr>
                             <td>Name</td>
                             <td>Email</td>
-                            <td>Phone</td>
-                            <td>Membership Status</td>
                             <td>
-                                <a href="">Delete</a>
+                                <a href="" class="text-danger">Delete</a>
                                 <a href="">view</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Phone</td>
-                            <td>Membership Status</td>
-                            <td>
-                                <a href="">Delete</a>
-                                <a href="">view</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Phone</td>
-                            <td>Membership Status</td>
-                            <td>
-                                <a href="">Delete</a>
-                                <a href="">view</a>
-                            </td>
-                        </tr>
-
-
-
+                        @endforeach
+                        
                     </table>
-
                 </div>
-
             </section>
             {{-- modal section  Add announcements --}}
             <div id="announcementsmodal" class="modal">
@@ -83,17 +60,17 @@
                         <span class="close">&times;</span>
                     </div>
                     <div class="modal-head">
-                        <h2 style="padding-bottom: 20px;">Add New Announcement</h2>
+                        <h2 style="padding-bottom: 20px;">Add Sermon Notes</h2>
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('new-announcement') }}" method="post">
+                        <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <label for="topic">Add Topic</label>
-                            <input type="text" class="form-control" name="topic" required placeholder="Add Topic">
-                            <label for="message">Add Message</label>
-                            <textarea class="form-control" name="message" id="message" required cols="30" rows="10"
-                                placeholder="Add Message"></textarea>
+                            <label for="notesupload">Upload Notes</label>
+                            <input type="file" class="form-control" name="notesupload" id="notesupload" required>
+                            <label for="sermondescription">Add Description</label>
+                            <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
+                                placeholder="Add Description"></textarea>
                             <div class="auth">
                                 <button>Add</button>
                             </div>
