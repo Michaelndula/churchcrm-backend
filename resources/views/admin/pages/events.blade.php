@@ -21,7 +21,7 @@
                 <hr>
             </div>
             <section class="center-btn-modal">
-                <button id="announcementsmodalBtn">                    <i class="fa-solid fa-plus mr-2"></i>
+                <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
                     Add New Announcements</button>
             </section>
             <section class="table">
