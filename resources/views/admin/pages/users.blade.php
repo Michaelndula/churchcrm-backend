@@ -7,9 +7,9 @@
 
 <body>
     @php
-            // use App\Models\User;
+        // use App\Models\User;
 
-        $users =  App\Models\User::all();    
+        $users = App\Models\User::all();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -42,13 +42,17 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                               <tr>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->phone}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->email}}</td>
-                            </tr> 
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td></td>
+                                    <td>
+                                        <a class="text-danger" href="#"
+                                            onclick="deleteUser({{ $user->id }})">Delete</a>
+                                        <a href="">View</a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

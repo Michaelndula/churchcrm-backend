@@ -9,7 +9,7 @@
     @php
         $announcements = App\Models\Announcement::all();
     @endphp
-    <div class="dashboard-body">
+    <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
                 <!-- Top Navigation Menu -->
@@ -18,7 +18,7 @@
                 @include('admin.layout.aside')
             </div>
         </div>
-        <div class="dashboard-container">
+        <div class="dashboard-container" id="dashboardContainer">
             <div class="dashboard-header">
                 <h1>Announcements</h1>
                 <hr>
@@ -27,33 +27,37 @@
                 <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
                     Add New Announcements</button>
             </section>
-            <section class="table">
-                <div class="form-container">
-                    <div>
-                        <h4 style="padding-bottom: 20px;">List Of Announcements</h4>
-                        <hr style="margin-bottom: 20px;">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header bg-transparent">
+                        <h4>New App Users</h4>
                     </div>
-                    <table id="table">
-                        <tr>
-                            <th>Topic</th>
-                            <th>Messsage</th>
-                            <th>Action</th>
-                        </tr>
-                        @foreach ($announcements as $announcement)
-                            <tr id="announcement_{{ $announcement->id }}">
-                                <td>{{ $announcement->Topic }}</td>
-                                <td>{{ $announcement->Message }}</td>
-                                <td>
-                                    <a href="#" onclick="deleteAnnouncement({{ $announcement->id }})">Delete</a>
-                                    <a href="">View</a>
-                                </td>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Messsage</th>
+                                <th>Action</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            @foreach ($announcements as $announcement)
+                                <tr id="announcement_{{ $announcement->id }}">
+                                    <td>{{ $announcement->Topic }}</td>
+                                    <td>{{ $announcement->Message }}</td>
+                                    <td>
+                                        <a href="#" class='text-danger'
+                                            onclick="deleteAnnouncement({{ $announcement->id }})">Delete</a>
+                                        <a href="">View</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
-
-
                 </div>
-            </section>
+            </div>
+
             <section class="modal-section">
                 {{-- modal section  Add announcements --}}
                 <div id="announcementsmodal" class="modal">
