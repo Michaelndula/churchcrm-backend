@@ -7,10 +7,9 @@
 
 <body>
     @php
-    $sermons = App\Models\Sermons::all();
         $sermons = App\Models\SermonNotes::all();
     @endphp
-    <div class="dashboard-body" id="page-body">
+    <div class="dashboard-body">
         <div class="navigation-menu">
             <div>
                 <!-- Top Navigation Menu -->
@@ -19,9 +18,8 @@
                 @include('admin.layout.aside')
             </div>
         </div>
-        <div class="dashboard-container" id="dashboardContainer">
+        <div class="dashboard-container">
             <div class="dashboard-header">
-                <h1>Sermon Notes</h1>
                 <h1>Announcements</h1>
                 <p class="text-danger">{{ session('error') }}</p>
 
@@ -29,7 +27,7 @@
             </div>
             <section class="center-btn-modal">
                 <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
-                    Add Sermon Note</button>
+                    Add New Sermon</button>
             </section>
             <section class="table">
                 <div class="form-container">
@@ -38,32 +36,22 @@
 
                         <hr style="margin-bottom: 20px;">
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Notes</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($sermons as $sermon)
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
+                    <table id="table">
+                        <tr>
+                            <th>Notes</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                        @foreach ($sermons as $sermon)
+                            <tr id="sermonnotes_{{ $sermon->id }}">
                             <td>{{$sermon->notesupload}}</td>
                             <td>{{$sermon->sermondescription}}</td>
                             <td>
-                                <a href="" class="text-danger">Delete</a>
+                                <a href="#" class="text-danger" onclick="deleteSermonNotes({{ $sermon->id }})">Delete</a>
                                 <a href="">view</a>
                             </td>
                         </tr>
-                        @endforeach
-                        
+                        @endforeach    
                     </table>
                 </div>
             </section>
@@ -83,7 +71,8 @@
                             <label for="notesupload">Upload Notes</label>
                             <input type="file" class="form-control" name="notesupload" id="notesupload" required>
                             <label for="sermondescription">Add Description</label>
-                            <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10" placeholder="Add Description"></textarea>
+                            <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
+                                placeholder="Add Description"></textarea>
                             <div class="auth">
                                 <button>Add</button>
                             </div>
