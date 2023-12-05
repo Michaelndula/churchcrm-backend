@@ -9,65 +9,65 @@
             <p class="card-name">Users</p>
             <div class="card-text">
                 <span class="card-stats">
-                    90
+                    {{ $totalusers }}
                 </span>
                 <span class="icon">
                     <i class="fa-solid fa-user"></i>
                 </span>
             </div>
-            <p class="card-link"><a href="">View all</a></p>
+            <p class="card-link"><a href="{{ route('users') }}">View all</a></p>
         </div>
 
         <div class="dashboard-cards">
             <p class="card-name">Sermons</p>
             <div class="card-text">
                 <span class="card-stats">
-                    150
+                    {{ $totalsermons }}
                 </span>
                 <span class="icon">
                     <i class="fa-solid fa-book-bible"></i>
                 </span>
             </div>
-            <p class="card-link"><a href="">View all</a></p>
+            <p class="card-link"><a href="{{ route('sermons') }}">View all</a></p>
         </div>
 
         <div class="dashboard-cards">
             <p class="card-name">Announcements</p>
             <div class="card-text">
                 <span class="card-stats">
-                    30
+                    {{ $totalannouncements }}
                 </span>
                 <span class="icon">
                     <i class="fa-solid fa-clipboard-list"></i>
                 </span>
             </div>
-            <p class="card-link"><a href="">View all</a></p>
+            <p class="card-link"><a href="{{ route('announcements') }}">View all</a></p>
         </div>
 
         <div class="dashboard-cards">
             <p class="card-name">Sermon Notes</p>
             <div class="card-text">
                 <span class="card-stats">
-                    50
+                    {{ $totalsermonsnotes }}
                 </span>
                 <span class="icon">
                     <i class="fa-solid fa-note-sticky fa-flip-vertical"></i>
                 </span>
             </div>
-            <p class="card-link"><a href="">View all</a></p>
+            <p class="card-link"><a href="{{ route('sermonsnotes') }}">View all</a></p>
         </div>
 
         <div class="dashboard-cards">
             <p class="card-name">Events</p>
             <div class="card-text">
                 <span class="card-stats">
-                    10
+                    {{ $totalevents }}
                 </span>
                 <span class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
                 </span>
             </div>
-            <p class="card-link"><a href="">View all</a></p>
+            <p class="card-link"><a href="{{ route('events') }}">View all</a></p>
         </div>
     </div>
     <div class="card">
@@ -86,34 +86,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Name</td>
-                        <td>Samso</td>
-                        <td>Natto</td>
-                        <td>@samso</td>
-                        <td>@samso</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>Tinor</td>
-                        <td>Horton</td>
-                        <td>@tinor_har</td>
-                        <td>@samso</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>Mythor</td>
-                        <td>Bully</td>
-                        <td>@myth_tobo</td>
-                        <td>@samso</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>Mythor</td>
-                        <td>Bully</td>
-                        <td>@myth_tobo</td>
-                        <td>@samso</td>
-                    </tr>
+                    @php
+                        $users = App\Models\User::OrderBy('id', 'desc')->take(5)
+                            ->get();
+      
+                    @endphp
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td></td>
+                            <td>
+                                <a href="">View</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 

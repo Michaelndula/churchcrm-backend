@@ -1,36 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    @include('admin.layout.head')
-</head>
-
-<body>
-    <div class="dashboard-body" id="page-body">
-        <div class="navigation-menu">
-            <div>
-                <!-- Top Navigation Menu -->
-                @include('admin.layout.header')
-                <!-- Side Navigation Menu -->
-                @include('admin.layout.aside')
-            </div>
-        </div>
-        <div>
-            <div class="dashboard-container" id="dashboardContainer">
-                <div class="dashboard-header">
-                    <h1>Sermons</h1>
-                    <hr>
-                </div>
-            
-                <section class="center-btn-modal">
-                    <button id="announcementsmodalBtn"> <i class="fa-solid fa-plus mr-2"></i>
-                        Add New Sermon</button>
-                </section>
-            
-                <div class="dashboard-header">
-                    <h1>Latest</h1>
-                </div>
-                <!-- Carousel -->
+<!-- Carousel -->
                 <div class="col-12 d-flex justify-content-center align-items-center">
                     <div class="carousel-nav-buttons">
                         <a href="#carouselExampleIndicators2" role="button" data-slide="prev">
@@ -42,6 +10,7 @@
                             <div class="carousel-item active">
                                 <div class="row">
             
+
                                     <div class="col-md-4 mb-3">
                                         <div class="card">
                                             <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532781914607-2031eca2f00d?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=7c625ea379640da3ef2e24f20df7ce8d">
@@ -50,9 +19,10 @@
                                                 <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur quis accusantium, nam similique quas ut quidem libero quod, molestias repellat, ipsam alias numquam? Ut temporibus omnis magni sequi non obcaecati.</p>
             
                                             </div>
-            
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-4 mb-3">
                                         <div class="card">
                                             <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=42b2d9ae6feb9c4ff98b9133addfb698">
@@ -63,6 +33,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-4 mb-3">
                                         <div class="card">
                                             <img class="img-fluid" alt="100%x280" src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=3d2e8a2039c06dd26db977fe6ac6186a">
@@ -73,6 +44,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="carousel-item">
@@ -105,6 +77,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -117,38 +91,3 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            
-             {{-- modal section  Add announcements --}}
-            <div id="announcementsmodal" class="modal">
-                <div class="modal-content">
-                    <div>
-                        <span class="close">&times;</span>
-                    </div>
-                    <div class="modal-head">
-                        <h2 style="padding-bottom: 20px;">Add Sermon Notes</h2>
-                        <hr style="margin-bottom: 20px;">
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <label for="notesupload">Upload Notes</label>
-                            <input type="file" class="form-control" name="notesupload" id="notesupload" required>
-                            <label for="sermondescription">Add Description</label>
-                            <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
-                                placeholder="Add Description"></textarea>
-                            <div class="auth">
-                                <button>Add</button>
-                            </div>
-                        </form>
-                        {{-- <span class="close">&times;</span> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @include('admin.layout.scripts')
-    <script src="assets/js/toggle_bar.js"></script>
-</body>
-
-</html>
