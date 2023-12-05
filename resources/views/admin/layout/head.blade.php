@@ -6,3 +6,4 @@
 <title>Church CRM</title>
 <link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="assets/css/styles.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">

@@ -11,6 +11,12 @@
 
 <body>
     <div class="form-section">
+        <x-validation-errors class="mb-4" />
+        @if (session('status'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
+        @endif
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div>
@@ -18,7 +24,7 @@
             </div>
             <div>
                 <label for="username">Username</label>
-                <input id="username" class="form-control" type="text" placeholder="Enter Username" name="username"
+                <input id="username" class="form-control" type="email" placeholder="Enter Username" name="email"
                     required autofocus autocomplete="username" />
             </div>
             <div class="mt-4">
