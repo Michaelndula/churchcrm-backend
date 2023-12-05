@@ -8,6 +8,7 @@
 <body>
     @php
     $sermons = App\Models\Sermons::all();
+        $sermons = App\Models\SermonNotes::all();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -21,6 +22,9 @@
         <div class="dashboard-container" id="dashboardContainer">
             <div class="dashboard-header">
                 <h1>Sermon Notes</h1>
+                <h1>Announcements</h1>
+                <p class="text-danger">{{ session('error') }}</p>
+
                 <hr>
             </div>
             <section class="center-btn-modal">
@@ -31,6 +35,7 @@
                 <div class="form-container">
                     <div>
                         <h4 style="padding-bottom: 20px;">New App User</h4>
+
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <table class="table">
@@ -50,6 +55,15 @@
                             </tr>
                             @endforeach
                         </tbody>
+                            <td>{{$sermon->notesupload}}</td>
+                            <td>{{$sermon->sermondescription}}</td>
+                            <td>
+                                <a href="" class="text-danger">Delete</a>
+                                <a href="">view</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        
                     </table>
                 </div>
             </section>

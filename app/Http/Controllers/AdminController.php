@@ -38,26 +38,26 @@ class AdminController extends Controller
         DB::delete('DELETE FROM announcements WHERE id = ?', [$id]); 
         return redirect()->back();
     }
-    public function newsermonnotes(Request $request){
+    public function newsermonnotes(Request $request)
+    {
         $request->validate([
-            'notesupload' => 'required|mimes:pdf,docs,ppt|max:2048'
+            'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:2048'
         ]);
-
-        $sermonnotes = new SermonNotes;
-
         $notesfile = $request->file('notesupload');
-
         if ($notesfile) {
-            $notesfileName = time() . '.' . $notesfile->getClientOriginalExtension();
-            $notesfilepath = $notesfile->move('SermonNotes/', $notesfileName);
+            $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
+            $fileExtension = strtolower($notesfile->getClientOriginalExtension());
+    
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()->back()->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
+            }
+            $notesfileName = time() . '.' . $fileExtension;
+            $notesfile->move('SermonNotes/', $notesfileName);
+            $sermonnotes = new SermonNotes;
             $sermonnotes->notesupload = $notesfileName;
-            dd($notesfileName);
-        } else {
-           echo 'no file found'; 
+            $sermonnotes->sermondescription = $request->sermondescription;
+            $sermonnotes->save();
         }
-
-        $sermonnotes->sermondescription = $request->sermondescription;
-        $sermonnotes->save();
         return redirect()->back();
     }
     
