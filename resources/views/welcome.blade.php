@@ -34,6 +34,26 @@
         @endauth
     @endif --}}
     <p>{{ trans('Strings.welcome_txt') }}</p>
+    <div id="app">
+        <h1>User Data api test</h1>
+        <ul id="user-list"></ul>
+    </div>
+
+    <script>
+        // Fetch data from the API
+        fetch('http://127.0.0.1:8000/api/fetch-data')
+            .then(response => response.json())
+            .then(data => {
+                // Display data in the list
+                const userList = document.getElementById('user-list');
+                data.forEach(user => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${user.name} - ${user.email}`;
+                    userList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
 
 </body>
 
