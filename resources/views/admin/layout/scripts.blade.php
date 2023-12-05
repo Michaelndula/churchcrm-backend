@@ -10,25 +10,27 @@
         }
     });
 
-
-
-    
     // the modal function script
-    var modal = document.getElementById("announcementsmodal");
-    var btn = document.getElementById("announcementsmodalBtn");
-    var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
+    function openModal() {
+        document.getElementById('modal').style.display = 'block';
+        document.addEventListener('click', closeModalOutside);
     }
-    span.onclick = function() {
-        modal.style.display = "none";
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+        document.removeEventListener('click', closeModalOutside);
     }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+
+    function closeModalOutside(event) {
+        var modal = document.getElementById('modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.removeEventListener('click', closeModalOutside);
         }
     }
 </script>
+
+
 
 {{-- Ajax Deletions --}}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -38,6 +40,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     function deleteAnnouncement(id) {
         $.ajax({
             url: '/delete/' + id + '/announcement/',

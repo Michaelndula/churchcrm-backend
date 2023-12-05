@@ -3,52 +3,7 @@
 
 <head>
     @include('admin.layout.head')
-    <style>
-        @media (max-width: 768px) {
-            .carousel-inner .carousel-item>div {
-                display: none;
-            }
 
-            .carousel-inner .carousel-item>div:first-child {
-                display: block;
-            }
-        }
-
-        .carousel-inner .carousel-item.active,
-        .carousel-inner .carousel-item-start,
-        .carousel-inner .carousel-item-next,
-        .carousel-inner .carousel-item-prev {
-            display: flex;
-            // transition-duration: 10s;
-        }
-
-        /* display 4 */
-        @media (min-width: 768px) {
-
-            .carousel-inner .carousel-item-right.active,
-            .carousel-inner .carousel-item-next,
-            .carousel-item-next:not(.carousel-item-start) {
-                transform: translateX(25%) !important;
-            }
-
-            .carousel-inner .carousel-item-left.active,
-            .carousel-item-prev:not(.carousel-item-end),
-            .active.carousel-item-start,
-            .carousel-item-prev:not(.carousel-item-end) {
-                transform: translateX(-25%) !important;
-            }
-
-            .carousel-item-next.carousel-item-start,
-            .active.carousel-item-end {
-                transform: translateX(0) !important;
-            }
-
-            .carousel-inner .carousel-item-prev,
-            .carousel-item-prev:not(.carousel-item-end) {
-                transform: translateX(-25%) !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -67,7 +22,7 @@
                 <hr>
             </div>
             <section class="center-btn-modal">
-                <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
+                <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
                     Add New Event</button>
             </section>
             <section class="events-carousel">
@@ -75,69 +30,34 @@
                     <h1>Upcoming</h1>
                 </div>
 
-
-
-
-
-
                 <div id="myCarousel" class="carousel slide container" data-bs-ride="carousel">
                     <div class="carousel-inner w-100">
+                        @php
+                            $events = App\Models\Event::all();
+                        @endphp
                         <div class="carousel-item active">
                             <div class="col-md-3">
                                 <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=1">
+                                    one
+                                    <img style="height: 300px;" class="img-fluid" src="http://placehold.it/380?text=1">
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=2">
+                        @foreach ($events as $event)
+                            <div class="carousel-item">
+                                <div class="col-md-3">
+                                    <div class="card card-body">
+                                        one
+                                        <img style="height: 300px;" class="img-fluid"
+                                            src="EventImages/{{ $event->Img_Path }}">
+                                        <h5>{{ $event->Event_Title }}</h5>
+                                        <p>{{ $event->Event_Description }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=3">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=4">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=5">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=6">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=7">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=8">
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel"
                         data-bs-slide="prev">
@@ -150,17 +70,12 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-
-
+            </section>
 
         </div>
-        </section>
         {{-- modal section  Add Event --}}
-        <div id="announcementsmodal" class="modal">
+        <div id="modal" class="modal">
             <div class="modal-content">
-                <div>
-                    <span class="close">&times;</span>
-                </div>
                 <div class="modal-head">
                     <h2 style="padding-bottom: 20px;">Add Event</h2>
                     <hr style="margin-bottom: 20px;">
@@ -168,35 +83,48 @@
                 <div class="modal-body">
                     <form action="{{ route('new-event') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <label for="image">Image</label>
-                        <input type="file" id="image" class="form-control" name="eventupload">
-                        <label for="topic">Event Title</label>
-                        <input type="text" class="form-control" name="event_title" required
-                            placeholder="Event Title">
-                        <label for="event-date">Event Date</label>
-                        <input type="date" class="form-control" placeholder="Event Date" name="event_date" required>
-                        <label for="eventdescription">Description</label>
-                        <textarea class="form-control" name="event_description" id="eventdescription" required cols="30" rows="10"
-                            placeholder="Add Description"></textarea>
-                        <div class="auth">
-                            <button>Add</button>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" id="image" class="form-control" name="eventupload">
                         </div>
 
-                    </form>
-                    {{-- <span class="close">&times;</span> --}}
+                        <div class="mb-3">
+                            <label for="event_title" class="form-label">Event Title</label>
+                            <input type="text" class="form-control" name="event_title" required
+                                placeholder="Event Title">
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="event_date" class="form-label">Event Date</label>
+                            <input type="date" class="form-control" name="event_date" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="event_description" class="form-label">Description</label>
+                            <textarea class="form-control" name="event_description" id="event_description" required cols="30" rows="10"
+                                placeholder="Add Description"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" class="btn btn-primary">Add Event</button>
+                            </div>
+                            <div>
+                                <button type="button" onclick="closeModal()" class="btn btn-primary">Cancel</button>
+                            </div>
+                        </div>
+                        
+
+                    </form>
                 </div>
             </div>
-
         </div>
-    </div>
     </div>
     @include('admin.layout.scripts')
     <script>
-        // var myCarousel = document.querySelector('#myCarousel')
-        // var carousel = new bootstrap.Carousel(myCarousel, {
-        //   interval: 100000
-        // })
+        var myCarousel = document.querySelector('#myCarousel')
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 100000
+        })
 
         $('.carousel .carousel-item').each(function() {
             var minPerSlide = 4;
@@ -216,6 +144,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

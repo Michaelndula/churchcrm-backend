@@ -26,7 +26,7 @@
                 <hr>
             </div>
             <section class="center-btn-modal">
-                <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
+                <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
                     Add New Sermon</button>
             </section>
             <section class="table">
@@ -56,11 +56,9 @@
                 </div>
             </section>
             {{-- modal section  Add announcements --}}
-            <div id="announcementsmodal" class="modal">
+            <div id="modal" class="modal">
                 <div class="modal-content">
-                    <div>
-                        <span class="close">&times;</span>
-                    </div>
+                   
                     <div class="modal-head">
                         <h2 style="padding-bottom: 20px;">Add Sermon Notes</h2>
                         <hr style="margin-bottom: 20px;">
@@ -73,11 +71,20 @@
                             <label for="sermondescription">Add Description</label>
                             <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
                                 placeholder="Add Description"></textarea>
-                            <div class="auth">
-                                <button>Add</button>
+                            
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Add Event</button>
+                                </div>
+                                <div>
+                                    <button type="button" onclick="closeModal()" class="btn btn-primary">Cancel</button>
+                                </div>
                             </div>
-
                         </form>
+
+
+
+
                         {{-- <span class="close">&times;</span> --}}
 
                     </div>
