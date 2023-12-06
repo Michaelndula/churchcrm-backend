@@ -24,14 +24,14 @@
                 <hr>
             </div>
             <section class="center-btn-modal">
-                <button id="announcementsmodalBtn"><i class="fa-solid fa-plus mr-2"></i>
+                <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
                     Add New Announcements</button>
             </section>
 
             <div class="card">
                 <div class="card-body">
                     <div class="card-header bg-transparent">
-                        <h4>New App Users</h4>
+                        <h4>List of Announcements</h4>
                     </div>
                     <table class="table">
                         <thead>
@@ -60,27 +60,38 @@
 
             <section class="modal-section">
                 {{-- modal section  Add announcements --}}
-                <div id="announcementsmodal" class="modal">
+                <div id="modal" class="modal">
                     <div class="modal-content">
-                        <div>
-                            <span class="close">&times;</span>
-                        </div>
                         <div class="modal-head">
-                            <h2 style="padding-bottom: 20px;">Add New Announcement</h2>
-                            <hr style="margin-bottom: 20px;">
+                            <h4>Add New Announcement</h4>
+                            <hr>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('new-announcement') }}" method="post">
+                            <form class="form" action="{{ route('new-announcement') }}" method="post">
                                 @csrf
-                                <label for="topic">Add Topic</label>
-                                <input type="text" class="form-control" name="topic" id="topic" required
-                                    placeholder="Add Topic">
-                                <label for="message">Add Message</label>
-                                <textarea class="form-control" name="message" id="message" required cols="30" rows="10"
-                                    placeholder="Add Message"></textarea>
-                                <div class="auth">
-                                    <button>Add</button>
+                                <div class="form-group mb-4">
+                                    <label for="topic">Add Topic</label>
+                                    <input type="text" class="form-control" name="topic" id="topic"
+                                        required placeholder="Add Topic">
                                 </div>
+                                <div class="form-group mb-4">
+                                    <label for="message">Add Message</label>
+                                    <textarea class="form-control" name="message" id="message" required cols="30" rows="10"
+                                        placeholder="Add Message"></textarea>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary">Add Event</button>
+                                        </div>
+                                        <div>
+                                            <button type="button" onclick="closeModal()"
+                                                class="btn btn-primary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </form>
                             {{-- <span class="close">&times;</span> --}}
                         </div>

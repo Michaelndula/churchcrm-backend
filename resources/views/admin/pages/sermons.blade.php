@@ -27,49 +27,88 @@
                         Add New Sermon</button>
                 </section>
 
-                <div class="dashboard-header">
-                    <h1>Latest</h1>
-                </div>
-                <!-- Carousel -->
-                <div id="myCarousel" class="carousel slide container" data-bs-ride="carousel">
-                    <div class="carousel-inner w-100">
-                        @php
-                            $events = App\Models\Event::all();
-                        @endphp
-                        <div class="carousel-item active">
-                            <div class="col-md-3">
-                                <div class="card card-body">
-                                    one
-                                    <img style="height: 300px;" class="img-fluid" src="http://placehold.it/380?text=1">
-                                </div>
-                            </div>
-                        </div>
-                        @foreach ($events as $event)
-                            <div class="carousel-item">
-                                <div class="col-md-3">
-                                    <div class="card card-body">
-                                        one
-                                        <img style="height: 300px;" class="img-fluid"
+
+
+                <section>
+                    <div class="dashboard-header">
+                        <h1>Latest</h1>
+                    </div>
+                    {{-- cards display --}}
+                    <div class="cover">
+                        <button class="left" onclick="leftScroll()">
+                            <i class="fas fa-angle-double-left"></i>
+                        </button>
+                        <div class="scroll-images">
+                            @php
+                                $events = App\Models\Event::all();
+                            @endphp
+                            @foreach ($events as $event)
+                                <div class="scroll-card">
+                                    <div class="card-body">
+                                        <img style="height: 200px; width: 300px;" alt="image"
                                             src="EventImages/{{ $event->Img_Path }}">
-                                        <h5>{{ $event->Event_Title }}</h5>
-                                        <p>{{ $event->Event_Description }}</p>
+
+                                        <h4 class="card-title">{{ $event->Event_Title }}</h4>
+                                        <small>
+                                            <p class="card-text">{{ $event->Event_Date }}</p>
+                                        </small>
+                                        <p class="card-text">
+                                            {{ $event->Event_Description }}
+                                        </p>
+
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-
+                            @endforeach
+                        </div>
+                        <button class="right" onclick="rightScroll()">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
+
+
+
+
+                    <div class="dashboard-header">
+                        <h1>Latest</h1>
+                    </div>
+                    {{-- cards display --}}
+                    <div class="cover">
+                        <button class="left" onclick="leftScroll()">
+                            <i class="fas fa-angle-double-left"></i>
+                        </button>
+                        <div class="scroll-images">
+                            @php
+                                $events = App\Models\Event::all();
+                            @endphp
+                            @foreach ($events as $event)
+                                <div class="scroll-card">
+                                    <div class="card-body">
+                                        <img style="height: 200px; width: 300px;" alt="image"
+                                            src="EventImages/{{ $event->Img_Path }}">
+
+                                        <h4 class="card-title">{{ $event->Event_Title }}</h4>
+                                        <small>
+                                            <p class="card-text">{{ $event->Event_Date }}</p>
+                                        </small>
+                                        <p class="card-text">
+                                            {{ $event->Event_Description }}
+                                        </p>
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="right" onclick="rightScroll()">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+                    </div>
+
+                </section>
+
+
+
+
+
             </div>
 
             {{-- modal section  Add announcements --}}
@@ -77,7 +116,7 @@
                 <div class="modal-content">
 
                     <div class="modal-head">
-                        <h2 style="padding-bottom: 20px;">Add Sermon Notes</h2>
+                        <h4 style="padding-bottom: 20px;">Add Sermon Notes</h4>
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
@@ -87,7 +126,7 @@
                                 <label for="notesupload">Upload Notes</label>
                                 <input type="file" class="form-control" name="notesupload" id="notesupload" required>
                             </div>
-                            <div class="mb-3"> 
+                            <div class="mb-3">
                                 <label for="sermondescription">Add Description</label>
                                 <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
                                     placeholder="Add Description"></textarea>
