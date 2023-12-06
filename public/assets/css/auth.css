@@ -15,17 +15,26 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-.primary-color {
-    color: #3498db;
+/* =============================== */
+.icon-password {
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
-
+.icon-password i {
+    margin-left: -30px;
+    cursor: pointer;
+    
+} 
+/* ============================ */
 .form-control {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 10px;
+    border-radius: 5px !important;
     box-sizing: border-box;
+    background-color: #f2f2f2 !important;
 }
 
 .mt-4 {
@@ -33,10 +42,11 @@ body {
 }
 
 .login-btn {
-    background-color: #3498db;
+    background-color: var(--blue);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    padding: 5px 30px;
 }

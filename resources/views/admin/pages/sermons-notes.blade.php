@@ -32,61 +32,90 @@
             <section class="table">
                 <div class="form-container">
                     <div>
-                        <h4 style="padding-bottom: 20px;">New App User</h4>
-
-                        <hr style="margin-bottom: 20px;">
+                        <h4>New App User</h4>
+                        <hr>
                     </div>
-                    <table id="table">
-                        <tr>
-                            <th>Notes</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                        @foreach ($sermons as $sermon)
-                            <tr id="sermonnotes_{{ $sermon->id }}">
-                            <td>{{$sermon->notesupload}}</td>
-                            <td>{{$sermon->sermondescription}}</td>
-                            <td>
-                                <a href="#" class="text-danger" onclick="deleteSermonNotes({{ $sermon->id }})">Delete</a>
-                                <a href="">view</a>
-                            </td>
-                        </tr>
-                        @endforeach    
+                    <table class="table">
+                        <thead>
+
+                            <tr>
+                                <th>Notes</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($sermons as $sermon)
+                                <tr id="sermonnotes_{{ $sermon->id }}">
+                                    <td>{{ $sermon->notesupload }}</td>
+                                    <td>{{ $sermon->sermondescription }}</td>
+                                    <td>
+                                        <a href="#" class="text-danger"
+                                            onclick="deleteSermonNotes({{ $sermon->id }})">Delete</a>
+                                        <a href="">view</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+
                     </table>
+
                 </div>
             </section>
             {{-- modal section  Add announcements --}}
             <div id="modal" class="modal">
                 <div class="modal-content">
-                   
+
                     <div class="modal-head">
-                        <h2 style="padding-bottom: 20px;">Add Sermon Notes</h2>
+                        <h4 style="padding-bottom: 20px;">Add Sermon Notes</h4>
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
                         <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <label for="notesupload">Upload Notes</label>
-                            <input type="file" class="form-control" name="notesupload" id="notesupload" required>
-                            <label for="sermondescription">Add Description</label>
-                            <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
-                                placeholder="Add Description"></textarea>
-                            
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <button type="submit" class="btn btn-primary">Add Event</button>
-                                </div>
-                                <div>
-                                    <button type="button" onclick="closeModal()" class="btn btn-primary">Cancel</button>
+                            <div class="form-group mb-4">
+                                <style>
+                                    input[type="file"] {
+                                        display: none;
+                                    }
+
+                                    .custom-file-upload {
+                                        border-radius: 5px;
+                                        border: 1px solid #ccc;
+                                        display: inline-block;
+                                        padding: 6px 12px;
+                                        cursor: pointer;
+                                        background-color: var(--blue);
+                                        color: var(--white);
+                                        padding-left: 10px;
+                                    }
+                                </style>
+
+                                <label >Upload Notes</label><br>
+                                <label for="file-upload" class="custom-file-upload">
+                                    Custom Upload
+                                </label>
+                                <input id="file-upload" name="notesupload" type="file" />
+
+                            </div>
+                            <div class="form-group mb-4"> 
+                                <label for="sermondescription">Add Description</label>
+                                <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
+                                    placeholder="Add Description"></textarea>
+                            </div>
+                            <div class="form-group mb-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Add Event</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="closeModal()"
+                                            class="btn btn-primary">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
-
-
-
-
-                        {{-- <span class="close">&times;</span> --}}
-
                     </div>
                 </div>
 

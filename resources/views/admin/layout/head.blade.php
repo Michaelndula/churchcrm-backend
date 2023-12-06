@@ -7,48 +7,4 @@
 <link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="assets/css/styles.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<style>
-    @media (max-width: 768px) {
-        .carousel-inner .carousel-item>div {
-            display: none;
-        }
 
-        .carousel-inner .carousel-item>div:first-child {
-            display: block;
-        }
-    }
-
-    .carousel-inner .carousel-item.active,
-    .carousel-inner .carousel-item-start,
-    .carousel-inner .carousel-item-next,
-    .carousel-inner .carousel-item-prev {
-        display: flex;
-    }
-
-    /* display 4 */
-    @media (min-width: 768px) {
-
-        .carousel-inner .carousel-item-right.active,
-        .carousel-inner .carousel-item-next,
-        .carousel-item-next:not(.carousel-item-start) {
-            transform: translateX(25%) !important;
-        }
-
-        .carousel-inner .carousel-item-left.active,
-        .carousel-item-prev:not(.carousel-item-end),
-        .active.carousel-item-start,
-        .carousel-item-prev:not(.carousel-item-end) {
-            transform: translateX(-25%) !important;
-        }
-
-        .carousel-item-next.carousel-item-start,
-        .active.carousel-item-end {
-            transform: translateX(0) !important;
-        }
-
-        .carousel-inner .carousel-item-prev,
-        .carousel-item-prev:not(.carousel-item-end) {
-            transform: translateX(-25%) !important;
-        }
-    }
-</style>
