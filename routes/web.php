@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('new-announcement', [AdminController::class, 'newannouncement'])->name('new-announcement');
     Route::get('sermons', [AdminController::class, 'sermons'])->name('sermons');
     //newsermons
-    Route::post('new-sermons', [AdminController::class, 'newsermons'])->name('newsermons');
+    Route::post('new-sermons', [AdminController::class, 'newsermons'])->name('new-sermons');
 
     Route::get('notessermons', [AdminController::class, 'sermonsnotes'])->name('sermonsnotes');
     Route::get('events', [AdminController::class, 'events'])->name('events');

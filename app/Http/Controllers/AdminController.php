@@ -7,8 +7,8 @@ use App\Models\Announcement;
 use App\Models\Sermons;
 use App\Models\SermonNotes;
 use App\Models\Event;
-
 use DB;
+use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
 {
@@ -29,6 +29,18 @@ class AdminController extends Controller
     public function announcements()
     {
         return view('admin.pages.announcements');
+    }
+    public function sermons()
+    {
+        return view('admin.pages.sermons');
+    }
+    public function sermonsnotes()
+    {
+        return view('admin.pages.sermons-notes');
+    }
+    public function events()
+    {
+        return view('admin.pages.events');
     }
     public function newannouncement(Request $request)
     {
@@ -89,18 +101,57 @@ class AdminController extends Controller
         }
     }
 
-    public function sermons()
-    {
-        return view('admin.pages.sermons');
+    public function newsermons(Request $request) {
+        $sermons = new Sermons();
+        
+
+        // Adding the Sermon Notes
+        $request->validate([
+            'Sermon_Notes' => 'mimes:pdf,doc,docx,ppt,pptx|max:2048',
+            'Sermon_Link' => 'required'
+        ]);
+
+        $sermon_notes = $request->file('Sermon_Notes');
+        if ($sermon_notes) {
+            $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
+            $fileExtension = strtolower($sermon_notes->getClientOriginalExtension());
+
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
+            }
+            $sermon_notes_fileName = time() . '.' . $fileExtension;
+            $sermon_notes->move('SermonNotes/', $sermon_notes_fileName);
+            $sermons->Sermon_Notes = $sermon_notes_fileName;
+        }
+        // Adding the Thumbnail
+        $request->validate([
+            'Thumbnail' => 'mimes:jpeg,png,webp,svg|max:2048',
+        ]);
+
+        $thumbnailFile = $request->file('Thumbnail');
+        if ($thumbnailFile) {
+            $validExtensions = ['jpeg', 'png', 'webp', 'svg'];
+            $fileExtension = strtolower($thumbnailFile->getClientOriginalExtension());
+
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a jpeg, png, webp, svg file.');
+            }
+            $thumbnailFileName = time() . '.' . $fileExtension;
+            $thumbnailFile->move('SermonThumbnails/', $thumbnailFileName);
+            $sermons->Thumbnail = $thumbnailFileName;
+        }
+
+        $sermons->Title = $request->Title;
+        $sermons->Sermon_Description = $request->Sermon_Description;
+        $sermons->Sermon_Link = $request->Sermon_Link;
+        $sermons->save();
+        return redirect()->back();
     }
-    public function sermonsnotes()
-    {
-        return view('admin.pages.sermons-notes');
-    }
-    public function events()
-    {
-        return view('admin.pages.events');
-    }
+
     public function newevent(Request $request)
     {
         $request->validate([
