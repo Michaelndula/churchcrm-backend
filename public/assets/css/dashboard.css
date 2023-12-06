@@ -93,8 +93,8 @@ hr {
 .fa-chevron-right, .fa-chevron-left{
     color: #999999;
     font-size: 20px;
-
-    padding: 30px 20px;
+    margin: 30px 20px;
+    
 }
 
 .carousel-nav-buttons .btn-primary {

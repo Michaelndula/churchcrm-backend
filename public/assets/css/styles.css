@@ -4,6 +4,7 @@
     --blue: #163c94;
     --white: #f7f7f7;
     --white2: #ffffff;
+    --grey: #3a3a3a;
 }
 .g-blue {
     color: var(--blue);
@@ -161,6 +162,10 @@ body {
     padding: 0px 10px;
 }
 
+h6 {
+    padding-top: 15px;
+}
+
 .order-card i {
     font-size: 26px;
 }
@@ -258,7 +263,7 @@ body {
 
 .cover {
     position: relative;
-    padding: 0px 30px;
+    padding: 0px 80px;
     margin-top: 20px;
 }
 
@@ -267,6 +272,7 @@ body {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+    padding-right: 15px;
 }
 
 .right {
@@ -320,4 +326,31 @@ button {
     outline: none;
     cursor: pointer;
     font-size: 25px;
+}
+
+.btn-primary, #announcementsmodalBtn {
+    background-color: var(--blue) !important;
+}
+
+#announcementsmodalBtn {
+    margin-bottom: 15px;
+}
+
+/* ============== Card Images ==============*/
+.card-block {
+    padding: 5px 5px;
+}
+.card-body img {
+    object-fit: cover;
+    padding: 0px 10px;
+}
+
+ .scroll-card .card-body .card-title {
+    padding-top: 10px;
+ }
+
+.scroll-card .card-body .card-text, .scroll-card .card-body .card-title {
+    color: var(--grey);
+    font-weight: 500;
+    padding: 0px 10px;
 }

@@ -18,7 +18,7 @@
         <div>
             <div class="dashboard-container" id="dashboardContainer">
                 <div class="dashboard-header">
-                    <h1>Sermons</h1>
+                    <h4>Sermons</h4>
                     <hr>
                 </div>
 
@@ -27,11 +27,9 @@
                         Add New Sermon</button>
                 </section>
 
-
-
                 <section>
                     <div class="dashboard-header">
-                        <h1>Latest</h1>
+                        <h1 class="margin-top 20">Latest</h1>
                     </div>
                     {{-- cards display --}}
                     <div class="cover">
@@ -40,20 +38,20 @@
                         </button>
                         <div class="scroll-images">
                             @php
-                                $events = App\Models\Event::all();
+                                $sermons = App\Models\Sermons::all();
                             @endphp
-                            @foreach ($events as $event)
+                            @foreach ($sermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
-                                            src="EventImages/{{ $event->Img_Path }}">
+                                            src="SermonThumbnails/{{ $sermon->Thumbnail }}">
 
-                                        <h4 class="card-title">{{ $event->Event_Title }}</h4>
+                                        <h4 class="card-title">{{ $sermon->Title }}</h4>
                                         <small>
-                                            <p class="card-text">{{ $event->Event_Date }}</p>
+                                            <p class="card-text">{{ $sermon->Sermon_Link }}</p>
                                         </small>
                                         <p class="card-text">
-                                            {{ $event->Event_Description }}
+                                            {{ $sermon->Sermon_Description }}
                                         </p>
 
                                     </div>
@@ -69,7 +67,7 @@
 
 
                     <div class="dashboard-header">
-                        <h1>Latest</h1>
+                        <h4 class="margin-top 20">Latest</h4>
                     </div>
                     {{-- cards display --}}
                     <div class="cover">
@@ -78,20 +76,20 @@
                         </button>
                         <div class="scroll-images">
                             @php
-                                $events = App\Models\Event::all();
+                                $sermons = App\Models\Sermons::all();
                             @endphp
-                            @foreach ($events as $event)
+                            @foreach ($sermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
-                                            src="EventImages/{{ $event->Img_Path }}">
+                                            src="SermonThumbnails/{{ $sermon->Thumbnail }}">
 
-                                        <h4 class="card-title">{{ $event->Event_Title }}</h4>
+                                        <h4 class="card-title">{{ $sermon->Title }}</h4>
                                         <small>
-                                            <p class="card-text">{{ $event->Event_Date }}</p>
+                                            <p class="card-text">{{ $sermon->Sermon_Link }}</p>
                                         </small>
                                         <p class="card-text">
-                                            {{ $event->Event_Description }}
+                                            {{ $sermon->Sermon_Description }}
                                         </p>
 
                                     </div>
@@ -102,13 +100,7 @@
                             <i class="fas fa-angle-double-right"></i>
                         </button>
                     </div>
-
                 </section>
-
-
-
-
-
             </div>
 
             {{-- modal section  Add announcements --}}
@@ -116,24 +108,37 @@
                 <div class="modal-content">
 
                     <div class="modal-head">
-                        <h4 style="padding-bottom: 20px;">Add Sermon Notes</h4>
-                        <hr style="margin-bottom: 20px;">
+                        <h4>Add Sermon</h4>
+                        <hr>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('new-sermons') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="notesupload">Upload Notes</label>
-                                <input type="file" class="form-control" name="notesupload" id="notesupload" required>
+                                <label for="Title">Sermon Title</label>
+                                <input type="text" class="form-control" name="Title" id="Title" placeholder="Sermon Title" required>
                             </div>
                             <div class="mb-3">
-                                <label for="sermondescription">Add Description</label>
-                                <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
-                                    placeholder="Add Description"></textarea>
+                                <label for="Sermon_Notes">Upload sermon notes</label>
+                                <input type="file" class="form-control" name="Sermon_Notes" id="Sermon_Notes"
+                                    >
+                            </div>
+                            <div class="mb-3">
+                                <label for="Sermon_Link">Sermon Link</label>
+                                <input type="text" class="form-control" name="Sermon_Link" id="Sermon_Link" placeholder="Sermon Link">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Thumbnail">Upload Thumbnail</label>
+                                <input type="file" class="form-control" name="Thumbnail" id="image" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="Sermon_Description" class="form-label">Description</label>
+                                <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30" rows="10"
+                                    placeholder="Sermon Description"></textarea>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <button type="submit" class="btn btn-primary">Add Event</button>
+                                    <button type="submit" class="btn btn-primary">Add Sermon</button>
                                 </div>
                                 <div>
                                     <button type="button" onclick="closeModal()"
@@ -143,9 +148,6 @@
 
                         </form>
 
-
-
-
                         {{-- <span class="close">&times;</span> --}}
                     </div>
                 </div>
@@ -154,30 +156,6 @@
     </div>
     @include('admin.layout.scripts')
     <script src="assets/js/toggle_bar.js"></script>
-    <script>
-        var myCarousel = document.querySelector('#myCarousel')
-        var carousel = new bootstrap.Carousel(myCarousel, {
-            interval: 100000
-        })
-
-        $('.carousel .carousel-item').each(function() {
-            var minPerSlide = 4;
-            var next = $(this).next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-            next.children(':first-child').clone().appendTo($(this));
-
-            for (var i = 0; i < minPerSlide; i++) {
-                next = next.next();
-                if (!next.length) {
-                    next = $(this).siblings(':first');
-                }
-
-                next.children(':first-child').clone().appendTo($(this));
-            }
-        });
-    </script>
 </body>
 
 </html>

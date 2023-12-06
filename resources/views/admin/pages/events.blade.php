@@ -30,11 +30,11 @@
             </section>
             <section class="events-carousel">
                 <div class="dashboard-header">
-                    <h1 class="margin-top 20">Upcoming</h1>
+                    <h4 class="margin-top 20">Upcoming</h4>
                 </div>
                 <div class="cover">
                     <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-angle-double-left"></i>
+                        <i class="fa fa-chevron-left"></i>
                     </button>
                     <div class="scroll-images">
                         @php
@@ -59,7 +59,7 @@
                         @endforeach
                     </div>
                     <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-angle-double-right"></i>
+                        <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
             </section>
