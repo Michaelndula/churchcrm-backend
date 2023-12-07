@@ -67,7 +67,7 @@
                             <hr>
                         </div>
                         <div class="modal-body">
-                            <form class="form" action="{{ route('new-announcement') }}" method="post">
+                            <form class="form" action="{{ route('new-announcement') }}" method="post" >
                                 @csrf
                                 <div class="form-group mb-4">
                                     <label for="topic">Add Topic</label>
@@ -83,17 +83,16 @@
                                 <div class="form-group mb-4">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <button type="submit" class="btn btn-primary">Add Event</button>
+                                            <button type="submit" class="btn btn-primary">Add Announcement</button>
                                         </div>
                                         <div>
                                             <button type="button" onclick="closeModal()"
-                                                class="btn btn-primary">Cancel</button>
+                                                class="btn btn-outline-primary">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
 
                             </form>
-                            {{-- <span class="close">&times;</span> --}}
                         </div>
                     </div>
                 </div>

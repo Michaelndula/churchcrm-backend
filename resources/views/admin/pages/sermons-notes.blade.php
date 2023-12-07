@@ -20,19 +20,19 @@
         </div>
         <div class="dashboard-container">
             <div class="dashboard-header">
-                <h1>Announcements</h1>
+                <h1>Sermon Notes</h1>
                 <p class="text-danger">{{ session('error') }}</p>
 
                 <hr>
             </div>
             <section class="center-btn-modal">
                 <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
-                    Add New Sermon</button>
+                    Add Sermon Notes</button>
             </section>
             <section class="table">
                 <div class="form-container">
                     <div>
-                        <h4>New App User</h4>
+                        <h4>List of Sermon Notes</h4>
                         <hr>
                     </div>
                     <table class="table">
@@ -63,6 +63,22 @@
 
                 </div>
             </section>
+            <style>
+                input[type="file"] {
+                    display: none;
+                }
+            
+                .custom-file-upload {
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    background-color: var(--blue);
+                    color: var(--white);
+                    padding-left: 10px;
+                }
+            </style>
             {{-- modal section  Add announcements --}}
             <div id="modal" class="modal">
                 <div class="modal-content">
@@ -75,26 +91,11 @@
                         <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-4">
-                                <style>
-                                    input[type="file"] {
-                                        display: none;
-                                    }
-
-                                    .custom-file-upload {
-                                        border-radius: 5px;
-                                        border: 1px solid #ccc;
-                                        display: inline-block;
-                                        padding: 6px 12px;
-                                        cursor: pointer;
-                                        background-color: var(--blue);
-                                        color: var(--white);
-                                        padding-left: 10px;
-                                    }
-                                </style>
+                              
 
                                 <label >Upload Notes</label><br>
                                 <label for="file-upload" class="custom-file-upload">
-                                    Custom Upload
+                                    Upload
                                 </label>
                                 <input id="file-upload" name="notesupload" type="file" />
 
@@ -107,11 +108,11 @@
                             <div class="form-group mb-4">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <button type="submit" class="btn btn-primary">Add Event</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
                                     </div>
                                     <div>
                                         <button type="button" onclick="closeModal()"
-                                            class="btn btn-primary">Cancel</button>
+                                            class="btn btn-outline-primary">Cancel</button>
                                     </div>
                                 </div>
                             </div>
