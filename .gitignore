@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 /public/SermonNotes
 /public/EventImages
+/public/SermonThumbnails

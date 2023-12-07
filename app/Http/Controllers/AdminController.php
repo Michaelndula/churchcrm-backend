@@ -101,14 +101,19 @@ class AdminController extends Controller
         }
     }
 
+
+
+
+
+
+
     public function newsermons(Request $request) {
         $sermons = new Sermons();
-        
-
+    
         // Adding the Sermon Notes
         $request->validate([
             'Sermon_Notes' => 'mimes:pdf,doc,docx,ppt,pptx|max:2048',
-            'Sermon_Link' => 'required'
+            'Thumbnail' => 'mimes:jpeg,png,jpg,webp,svg|max:2048',
         ]);
 
         $sermon_notes = $request->file('Sermon_Notes');
@@ -126,19 +131,17 @@ class AdminController extends Controller
             $sermons->Sermon_Notes = $sermon_notes_fileName;
         }
         // Adding the Thumbnail
-        $request->validate([
-            'Thumbnail' => 'mimes:jpeg,png,webp,svg|max:2048',
-        ]);
+       
 
         $thumbnailFile = $request->file('Thumbnail');
         if ($thumbnailFile) {
-            $validExtensions = ['jpeg', 'png', 'webp', 'svg'];
+            $validExtensions = ['jpeg', 'png','jpg', 'webp', 'svg'];
             $fileExtension = strtolower($thumbnailFile->getClientOriginalExtension());
 
             if (!in_array($fileExtension, $validExtensions)) {
                 return redirect()
                     ->back()
-                    ->with('error', 'Invalid file format. Please upload a jpeg, png, webp, svg file.');
+                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
             }
             $thumbnailFileName = time() . '.' . $fileExtension;
             $thumbnailFile->move('SermonThumbnails/', $thumbnailFileName);
@@ -152,20 +155,27 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+
+
+
+
+
+
     public function newevent(Request $request)
     {
         $request->validate([
-            'eventupload' => 'required|mimes:jpeg,png,webp,svg|max:2048',
+            'eventupload' => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048',
         ]);
         $eventfile = $request->file('eventupload');
         if ($eventfile) {
-            $validExtensions = ['jpeg', 'png', 'webp', 'svg'];
+            $validExtensions = ['jpeg','jpg', 'png', 'webp', 'svg'];
             $fileExtension = strtolower($eventfile->getClientOriginalExtension());
 
             if (!in_array($fileExtension, $validExtensions)) {
                 return redirect()
                     ->back()
-                    ->with('error', 'Invalid file format. Please upload a jpeg, png, webp, svg file.');
+                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg, png, webp, svg file.');
             }
             $eventfileName = time() . '.' . $fileExtension;
             $eventfile->move('EventImages/', $eventfileName);
@@ -174,7 +184,9 @@ class AdminController extends Controller
             $event->Event_Title = $request->event_title;
             $event->Event_Date = $request->event_date;
             $event->Event_Description = $request->event_description;
-            $event->save();
+            $save = $event->save();
+
+           
         }
         return redirect()->back();
     }

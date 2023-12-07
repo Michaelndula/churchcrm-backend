@@ -5,7 +5,7 @@
         </span>
     </div>
     <div class="profileDetails">
-        <span class="profilePic"><img src="assets/images/customer01.jpg" alt="profile-pic"></span>
+        <span class="profilePic"><img src="assets/images/user.jpeg" alt="profile-pic"></span>
         <span class="profileName">Profile</span>
     </div>
 </div>
