@@ -190,7 +190,7 @@ h6 {
 /* ==============End table========== */
 
 /* The modal css  */
-.modal {
+.modal, .user-modal {
     display: none;
     position: fixed;
     z-index: 1;

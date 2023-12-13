@@ -16,7 +16,13 @@
                 <div class="close-profile-modal" onclick="closeProfileModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
-                <p class="profile-modal-text">Name</p>
+                @php
+                use App\Models\User;
+                use Illuminate\Support\Facades\Auth; 
+                $userId = Auth::id();
+                $user = User::where('id', $userId)->first();
+                @endphp
+                <p class="profile-modal-text">{{$user->name}}</p>
                 <hr class="profile-modal-hr">
                 <p class="profile-modal-text">Manage</p>
             </div>

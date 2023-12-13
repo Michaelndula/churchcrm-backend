@@ -86,13 +86,15 @@
 
                     @endphp
                     @foreach ($users as $user)
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
+                        <tr data-user-id = {{$user->id}}>
+                            <td class="username" data-username = {{$user->name}}>{{ $user->name }}</td>
+                            <td class="email" data-email={{$user->email}}>{{ $user->email }}</td>
+                            <td class="phone" data-phone={{$user->phone}}>{{ $user->phone }}</td>
                             <td></td>
                             <td>
-                                <a href="#"  onclick="openModal()">View</a>
+                                <button style="font-size: 16px" onclick="openUserModal('{{$user->name}}','{{$user->email}}'), '{{$user->phone}}'">
+                                    View
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -102,7 +104,7 @@
     </div>
 
     {{-- User info modal --}}
-    <div id="modal" class="modal">
+    <div id="user-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-head">
                     <h4>{{ $user->name }}</h4>
@@ -114,7 +116,7 @@
                         
                         <div class="mb-3">
                             <label for="email" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="email" 
+                            <input id="user-email" data-target="#username" type="text" class="form-control" name="email" 
                                 placeholder={{ $user->email }}>
                         </div>
 
@@ -129,7 +131,7 @@
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                             <div>
-                                <button type="button" onclick="closeModal()" class="btn btn-outline-primary">Cancel</button>
+                                <button type="button" onclick="closeUserModal()" class="btn btn-outline-primary">Cancel</button>
                             </div>
                         </div>
 

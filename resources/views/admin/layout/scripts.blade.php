@@ -52,6 +52,29 @@
     }
 </script>
 
+{{-- User Modal --}}
+<script>
+    function openUserModal(username, email, phone) {
+        document.getElementById('user-modal').style.display = 'block';
+        document.addEventListener('click', closeModalOutside);
+        console.log(username, email, phone)
+        document.querySelector('#user-modal .modal-content .modal-head h4').textContent = username
+        document.querySelector('#user-modal .modal-content .modal-body #user-email').value = email;
+    }
+
+    function closeUserModal() {
+        document.getElementById('user-modal').style.display = 'none';
+        document.removeEventListener('click', closeModalOutside);
+    }
+
+    function closeUserModalOutside(event) {
+        var modal = document.getElementById('user-modal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.removeEventListener('click', closeModalOutside);
+        }
+    }
+</script>
 
 
 {{-- Ajax Deletions --}}
@@ -109,7 +132,7 @@
     }
 </script>
 
-{{--------------- Scroll Carousel -----------------}}
+{{-- ------------- Scroll Carousel --------------- --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const scrollImages = document.querySelector(".scroll-images");
