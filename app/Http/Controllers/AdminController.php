@@ -197,24 +197,31 @@ class AdminController extends Controller
         }
     }
 
-    public function update_user(Request $request, $id) {
+    public function update_user(Request $request, $id)
+    {
+        $request->validate([
+            'email'    => 'required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|nullable|min:6',
+        ]);
+
         $user = User::findOrfail($id);
 
-        if ($user->update($request->all()) === false || $user->update($request->all()) === null) {
-            return response('Error, user does not exist', Response::HTTP_BAD_REQUEST);
-        }
-        else {
-            $newPassword = Hash::make($request->password);
-            if ($newPassword)
-            {
-                $user->update($request->all());
-            }
-            return response(['message', 'User information updated successfully']);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
 
+        $user->email = $request->input('email');
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+        return redirect()->back();
+        
     }
 
-    public function display_user($id) {
+    public function display_user($id)
+    {
         $user = User::where('id', $id)->first();
         $username = $user->name;
         $password = $user->password;
@@ -224,6 +231,6 @@ class AdminController extends Controller
             'password' => $password,
             'email' => $email,
         ];
-        return view('admin.index');   
+        return view('admin.index');
     }
 }
