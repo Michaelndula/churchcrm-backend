@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -202,6 +203,27 @@ class AdminController extends Controller
         if ($user->update($request->all()) === false || $user->update($request->all()) === null) {
             return response('Error, user does not exist', Response::HTTP_BAD_REQUEST);
         }
+        else {
+            $newPassword = Hash::make($request->password);
+            if ($newPassword)
+            {
+                $user->update($request->all());
+            }
+            return response(['message', 'User information updated successfully']);
+        }
 
+    }
+
+    public function display_user($id) {
+        $user = User::where('id', $id)->first();
+        $username = $user->name;
+        $password = $user->password;
+        $email = $user->email;
+        $userInfo[] = [
+            'username' => $username,
+            'password' => $password,
+            'email' => $email,
+        ];
+        return view('admin.index');   
     }
 }
