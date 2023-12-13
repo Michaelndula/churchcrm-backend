@@ -7,8 +7,11 @@ use App\Models\Announcement;
 use App\Models\Sermons;
 use App\Models\SermonNotes;
 use App\Models\Event;
+use App\Models\User;
+use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -101,15 +104,16 @@ class AdminController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        $request->session()->invalidate();
+        return redirect()->route('login');
+    }
 
-
-
-
-
-
-    public function newsermons(Request $request) {
+    public function newsermons(Request $request)
+    {
         $sermons = new Sermons();
-    
+
         // Adding the Sermon Notes
         $request->validate([
             'Sermon_Notes' => 'mimes:pdf,doc,docx,ppt,pptx|max:2048',
@@ -131,11 +135,11 @@ class AdminController extends Controller
             $sermons->Sermon_Notes = $sermon_notes_fileName;
         }
         // Adding the Thumbnail
-       
+
 
         $thumbnailFile = $request->file('Thumbnail');
         if ($thumbnailFile) {
-            $validExtensions = ['jpeg', 'png','jpg', 'webp', 'svg'];
+            $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
             $fileExtension = strtolower($thumbnailFile->getClientOriginalExtension());
 
             if (!in_array($fileExtension, $validExtensions)) {
@@ -155,13 +159,6 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-
-
-
-
-
-
-
     public function newevent(Request $request)
     {
         $request->validate([
@@ -169,7 +166,7 @@ class AdminController extends Controller
         ]);
         $eventfile = $request->file('eventupload');
         if ($eventfile) {
-            $validExtensions = ['jpeg','jpg', 'png', 'webp', 'svg'];
+            $validExtensions = ['jpeg', 'jpg', 'png', 'webp', 'svg'];
             $fileExtension = strtolower($eventfile->getClientOriginalExtension());
 
             if (!in_array($fileExtension, $validExtensions)) {
@@ -185,8 +182,6 @@ class AdminController extends Controller
             $event->Event_Date = $request->event_date;
             $event->Event_Description = $request->event_description;
             $save = $event->save();
-
-           
         }
         return redirect()->back();
     }
@@ -199,5 +194,14 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while deleting the announcement.'], 500);
         }
+    }
+
+    public function update_user(Request $request, $id) {
+        $user = User::findOrfail($id);
+
+        if ($user->update($request->all()) === false || $user->update($request->all()) === null) {
+            return response('Error, user does not exist', Response::HTTP_BAD_REQUEST);
+        }
+
     }
 }
