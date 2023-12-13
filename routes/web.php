@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MobileApiController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,4 +37,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('new-event', [AdminController::class, 'newevent'])->name('new-event');
     //deleteevent
     Route::delete('delete/{id}/event', [AdminController::class, 'deleteevent'])->name('deleteevent');
+    // logout
+    Route::post('logout', [AdminController::class, 'logout'])->name('logout');
+    // Update user
+    Route::put('update_user/{id}/user', [AdminController::class, 'update_user'])->name('update_user');
 });

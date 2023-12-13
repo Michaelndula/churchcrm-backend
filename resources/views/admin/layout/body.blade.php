@@ -92,20 +92,50 @@
                             <td>{{ $user->phone }}</td>
                             <td></td>
                             <td>
-                                <a href="">View</a>
+                                <a href="#"  onclick="openModal()">View</a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-
-
-
-
-
         </div>
-
-
     </div>
+
+    {{-- User info modal --}}
+    <div id="modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-head">
+                    <h4>{{ $user->name }}</h4>
+                </div>
+                <hr>
+                <div class="modal-body">
+                    <form class="form" action="" method="PUT" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="email" 
+                                placeholder={{ $user->email }}>
+                        </div>
+
+                        <div class="icon-password mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input id="password" type="password" class="form-control int-bg" name="password" placeholder={{$user->password}}>
+                        </div>
+
+                        
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                            <div>
+                                <button type="button" onclick="closeModal()" class="btn btn-outline-primary">Cancel</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>

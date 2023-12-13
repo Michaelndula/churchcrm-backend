@@ -35,7 +35,7 @@
 
             </div>
             <div class="flex items-center justify-end mt-4">
-                <button class="login-btn">
+                <button class="btn btn-primary" style="width: 100px; font-size: 16px;">
                     Login
                 </button>
             </div>
