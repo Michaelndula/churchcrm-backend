@@ -56,10 +56,20 @@
 <script>
     function openUserModal(username, email, phone) {
         document.getElementById('user-modal').style.display = 'block';
-        document.addEventListener('click', closeModalOutside);
-        console.log(username, email, phone)
+
+        userId = document.querySelector('.card .card-body .table .table-body tr td button').getAttribute(
+        'data-user-id');
+
+        var updateUrl = "{{ route('users.update', ':userId') }}";
+        updateUrl = updateUrl.replace(':userId', userId);
+
+        document.getElementById("user-modal").action = updateUrl;
+
+        console.log('User ID:', userId);
         document.querySelector('#user-modal .modal-content .modal-head h4').textContent = username
         document.querySelector('#user-modal .modal-content .modal-body #user-email').value = email;
+
+        document.addEventListener('click', closeModalOutside);
     }
 
     function closeUserModal() {

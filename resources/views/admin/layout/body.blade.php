@@ -86,13 +86,13 @@
 
                     @endphp
                     @foreach ($users as $user)
-                        <tr data-user-id = {{$user->id}}>
+                        <tr class="userId">
                             <td class="username" data-username = {{$user->name}}>{{ $user->name }}</td>
                             <td class="email" data-email={{$user->email}}>{{ $user->email }}</td>
                             <td class="phone" data-phone={{$user->phone}}>{{ $user->phone }}</td>
                             <td></td>
                             <td>
-                                <button style="font-size: 16px" onclick="openUserModal('{{$user->name}}','{{$user->email}}'), '{{$user->phone}}'">
+                                <button data-user-id = {{$user->id}} style="font-size: 16px" onclick="openUserModal('{{$user->name}}','{{$user->email}}'), '{{$user->phone}}'">
                                     View
                                 </button>
                             </td>
@@ -111,9 +111,9 @@
                 </div>
                 <hr>
                 <div class="modal-body">
-                    <form class="form" action="" method="PUT" enctype="multipart/form-data">
+                    <form class="form" action="{{ route('users.update', ['id' => ':userId']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        
+                        @method('PUT')
                         <div class="mb-3">
                             <label for="email" class="form-label">Username</label>
                             <input id="user-email" data-target="#username" type="text" class="form-control" name="email" 
@@ -122,7 +122,7 @@
 
                         <div class="icon-password mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input id="password" type="password" class="form-control int-bg" name="password" placeholder={{$user->password}}>
+                            <input id="password" type="password" class="form-control int-bg" name="password" current autocomplete="password">
                         </div>
 
                         

@@ -41,7 +41,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('logout', [AdminController::class, 'logout'])->name('logout');
     // Show user
     Route::get('display_user/{id}/user', [AdminController::class, 'display_user'])->name('display_user');
-    
+    Route::put('/users/{id}', [AdminController::class, 'update_user'])->name('users.update');
 });
 Route::get('/display_user/{id}/user', [AdminController::class, 'display_user']);
-Route::put('/update_user/{id}/user', [AdminController::class, 'update_user'])->name('update_user');
