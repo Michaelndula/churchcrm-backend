@@ -3,12 +3,12 @@
 
 <head>
     @include('admin.layout.head')
-   
+
     <style>
         input[type="file"] {
             display: none;
         }
-    
+
         .custom-file-upload {
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -56,7 +56,8 @@
                             $events = App\Models\Event::all();
                         @endphp
                         @foreach ($events as $event)
-                            <div class="scroll-card">
+                            <div class="scroll-card"
+                                onclick="openupdateModal('{{ $event->id }}', '{{ $event->Event_Title }}', '{{ $event->Event_Date }}', '{{ $event->Event_Description }}')">
                                 <div class="card-body">
                                     <img style="height: 200px; width: 300px;" alt="image"
                                         src="EventImages/{{ $event->Img_Path }}">
@@ -113,7 +114,7 @@
             </section>
 
         </div>
-        {{-- modal section  Add Event --}}
+        {{-- modal section  Add/Update Event --}}
         <div id="modal" class="modal">
             <div class="modal-content">
                 <div class="modal-head">
@@ -121,16 +122,29 @@
                 </div>
                 <hr>
                 <div class="modal-body">
-                    <form class="form" action="{{ route('new-event') }}" method="post" enctype="multipart/form-data">
+                    <form class="form" action="{{ route('new-event') }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            
                             <div class="form-group mb-4">
-                                <label for="eventupload" class="custom-file-upload">
-                                    Add Event Image </label>
-                                <input type="file" class="file" name="eventupload" id="eventupload" />
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col image_display" id="image_display"></div>
+                                        <div class="col">
+                                            <label for="eventupload" class="custom-file-upload">
+                                                Add Event Image
+                                            </label>
+                                            <!-- Add the onchange attribute to trigger the displayImage function -->
+                                            <input type="file" class="file" name="eventupload" id="eventupload"
+                                                onchange="displayImage()" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                       
+
 
                         <div class="mb-3">
                             <label for="event_title" class="form-label">Event Title</label>
@@ -153,7 +167,8 @@
                                 <button type="submit" class="btn btn-primary">Add Event</button>
                             </div>
                             <div>
-                                <button type="button" onclick="closeModal()" class="btn btn-outline-primary">Cancel</button>
+                                <button type="button" onclick="closeModal()"
+                                    class="btn btn-outline-primary">Cancel</button>
                             </div>
                         </div>
 
@@ -162,9 +177,68 @@
                 </div>
             </div>
         </div>
+        {{-- The update modal  --}}
+        <div id="updatemodal" class="modal">
+            <div class="modal-content">
+                <div class="modal-head">
+                    <h4>Update Event</h4>
+                </div>
+                <hr>
+                <div class="modal-body">
+                    <form class="form" action="{{ route('update-event') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col image_display">
+
+                                </div>
+                                <div class="col">
+                                    <div class="update mb-3">
+                                        <button class="btn btn-primary">Upload Image</button>
+                                    </div>
+                                    <div class="remove mb-3">
+                                        <button class="btn btn-primary">Remove Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="event_id" id="event_id" value="">
+
+                        <div class="mb-3">
+                            <label for="event_title" class="form-label">Event Title</label>
+                            <input type="text" class="form-control" name="event_title" required
+                                placeholder="Event Title" id="event_title_input">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="event_date" class="form-label">Event Date</label>
+                            <input type="date" class="form-control" name="event_date" required
+                                id="event_date_input">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="event_description" class="form-label">Description</label>
+                            <textarea class="form-control" name="event_description" id="event_description_input" required cols="30"
+                                rows="10" placeholder="Add Description"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" class="btn btn-primary">Add Event</button>
+                            </div>
+                            <div>
+                                <button type="button" onclick="closeModal('updatemodal')"
+                                    class="btn btn-outline-primary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     @include('admin.layout.scripts')
-  
+
 
 </body>
 
