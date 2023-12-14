@@ -8,3 +8,4 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
+<link rel="stylesheet" href="assets/css/global.css">

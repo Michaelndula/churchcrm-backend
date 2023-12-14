@@ -42,5 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Show user
     Route::get('display_user/{id}/user', [AdminController::class, 'display_user'])->name('display_user');
     Route::put('/users/{id}', [AdminController::class, 'update_user'])->name('users.update');
+    Route::post('updateevent', [AdminController::class, 'updateevent'])->name('update-event');
+
 });
 Route::get('/display_user/{id}/user', [AdminController::class, 'display_user']);

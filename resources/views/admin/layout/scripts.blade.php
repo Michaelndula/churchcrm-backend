@@ -1,6 +1,35 @@
 <script src="assets/js/toggle_bar.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+{{-- corrected modal code --}}
 <script>
+    // Clossing the modal on outside modal click
+    document.addEventListener('click', function(event) {
+        closeModalOutside(event, 'modal');
+        closeModalOutside(event, 'updatemodal');
+    });
+
+    function closeModalOutside(event, modalId) {
+        var modal = document.getElementById(modalId);
+
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.removeEventListener('click', closeModalOutside);
+        }
+    }
+    // end clossing the modal outside modal click
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+
+    //  end corrected modal code 
+
+
+
     // the routing function
     const currentRoute = window.location.href;
     const navLinks = document.querySelectorAll('.nav-link');
@@ -11,28 +40,26 @@
         }
     });
 
-    // the modal function script
+    // The Global modal function script
     function openModal() {
         document.getElementById('modal').style.display = 'block';
         document.addEventListener('click', closeModalOutside);
     }
 
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-        document.removeEventListener('click', closeModalOutside);
+
+
+    function openupdateModal(eventId, eventTitle, eventDate, eventDescription) {
+        document.getElementById('updatemodal').style.display = 'block';
+        document.getElementById('event_id').value = eventId;
+        document.getElementById('event_title_input').value = eventTitle;
+        document.getElementById('event_date_input').value = eventDate;
+        document.getElementById('event_description_input').value = eventDescription;
+        document.addEventListener('click', closeModalOutside);
     }
 
-    function closeModalOutside(event) {
-        var modal = document.getElementById('modal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.removeEventListener('click', closeModalOutside);
-        }
-    }
-</script>
 
-{{-- Profile Modal --}}
-<script>
+    // {{-- Profile Modal --}}
+
     function openProfileModal() {
         document.getElementById('profile-modal').style.display = 'block';
         document.addEventListener('click', closeModalOutside);
@@ -50,15 +77,15 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
-</script>
 
-{{-- User Modal --}}
-<script>
+
+    // {{-- User Modal --}}
+
     function openUserModal(username, email, phone) {
         document.getElementById('user-modal').style.display = 'block';
 
         userId = document.querySelector('.card .card-body .table .table-body tr td button').getAttribute(
-        'data-user-id');
+            'data-user-id');
 
         var updateUrl = "{{ route('users.update', ':userId') }}";
         updateUrl = updateUrl.replace(':userId', userId);
@@ -84,12 +111,11 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
-</script>
 
 
-{{-- Ajax Deletions --}}
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+
+    // {{-- Ajax Deletions --}}
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -140,10 +166,10 @@
             }
         });
     }
-</script>
 
-{{-- ------------- Scroll Carousel --------------- --}}
-<script>
+
+    // {{-- ------------- Scroll Carousel --------------- --}}
+
     document.addEventListener("DOMContentLoaded", function() {
         const scrollImages = document.querySelector(".scroll-images");
         const scrollLength = scrollImages.scrollWidth - scrollImages.clientWidth;
@@ -185,4 +211,20 @@
         leftButton.addEventListener("click", leftScroll);
         rightButton.addEventListener("click", rightScroll);
     });
+</script>
+
+{{-- Display of image before upload --}}
+<script>
+    function displayImage() {
+        var input = document.getElementById('eventupload');
+        var imageDisplay = document.getElementById('image_display');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                imageDisplay.innerHTML = '<img src="' + e.target.result +
+                    '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
