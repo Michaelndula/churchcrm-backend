@@ -148,27 +148,28 @@
 
     // Start User Modal
 
-    function openUserModal(username, email, phone) {
+    function openUserModal(userId, username, email) {
         document.getElementById('user-modal').style.display = 'block';
 
-        userId = document.querySelector('.card .card-body .table .table-body tr td button').getAttribute(
-            'data-user-id');
+        // Changing username
+        document.querySelector('.modal-head h4').innerHTML = username;
 
-        var updateUrl = "{{ route('users.update', ':userId') }}";
-        updateUrl = updateUrl.replace(':userId', userId);
+        // Changing email placeholder and value
+        document.getElementById('user-email').placeholder = email;
+        document.getElementById('user-email').value = email;
 
-        document.getElementById("user-modal").action = updateUrl;
+        // Making sure update route is called for the selected user
+        var new_route = "{{ url('/users') }}" + '/' + userId;
+        document.getElementById('user-update-form').action = new_route;
 
-        console.log('User ID:', userId);
-        document.querySelector('#user-modal .modal-content .modal-head h4').textContent = username
-        document.querySelector('#user-modal .modal-content .modal-body #user-email').value = email;
 
-        document.addEventListener('click', closeModalOutside);
+        console.log(userId, username, email)
+        document.addEventListener('click', closeUserModalOutside);
     }
 
     function closeUserModal() {
         document.getElementById('user-modal').style.display = 'none';
-        document.removeEventListener('click', closeModalOutside);
+        document.removeEventListener('click', closeUserModalOutside);
     }
 
     function closeUserModalOutside(event) {
