@@ -42,10 +42,110 @@ class AdminController extends Controller
     {
         return view('admin.pages.sermons-notes');
     }
+    // Events =====================
     public function events()
     {
         return view('admin.pages.events');
     }
+
+
+    public function validateAndMoveImage($file)
+    {
+        $validExtensions = ['jpeg', 'jpg', 'png', 'webp', 'svg'];
+        $fileExtension = strtolower($file->getClientOriginalExtension());
+
+        if (!in_array($fileExtension, $validExtensions)) {
+            return false;
+        }
+
+        $fileName = time() . '.' . $fileExtension;
+        $file->move('EventImages/', $fileName);
+
+        return $fileName;
+    }
+
+    public function newevent(Request $request)
+    {
+        $request->validate([
+            'eventupload' => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'event_title' => 'required|string|max:255',
+            'event_date' => 'required|date',
+            'event_description' => 'required|string',
+        ]);
+
+        $eventfile = $request->file('eventupload');
+        $eventfileName = $this->validateAndMoveImage($eventfile);
+
+        if ($eventfileName === false) {
+            return redirect()
+                ->back()
+                ->with('error', 'Invalid file format. Please upload a jpeg, jpg, png, webp, svg file.');
+        }
+
+        $event = new Event();
+        $event->Event_Title = $request->event_title;
+        $event->Event_Date = $request->event_date;
+        $event->Event_Description = $request->event_description;
+        $event->Img_Path = $eventfileName;
+
+        $save = $event->save();
+
+        return redirect()->back();
+    }
+
+    public function updateevent(Request $request)
+    {
+        $request->validate([
+            'event_id' => 'required|exists:events,id',
+            'event_title' => 'required|string|max:255',
+            'event_date' => 'required|date',
+            'event_description' => 'required|string',
+            'event_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Add image validation if needed
+        ]);
+
+        $event = Event::findOrFail($request->event_id);
+
+        $event->Event_Title = $request->event_title;
+        $event->Event_Date = $request->event_date;
+        $event->Event_Description = $request->event_description;
+
+        if ($request->hasFile('event_image')) {
+            $imagePath = $this->validateAndMoveImage($request->file('event_image'));
+
+            if ($imagePath === false) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg, png, webp, svg file.');
+            }
+
+            $event->Img_Path = $imagePath;
+        }
+
+        $event->save();
+
+        return redirect()->back()->with('success', 'Event updated successfully');
+    }
+
+
+
+    public function deleteevent($id)
+    {
+        try {
+            $event = Event::findOrFail($id);
+            $event->delete();
+            return response()->json(['message' => 'Event deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the announcement.'], 500);
+        }
+    }
+
+
+    // END Events
+
+
+
+
+
     public function newannouncement(Request $request)
     {
         //user ajax.to save the data.
@@ -160,42 +260,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function newevent(Request $request)
-    {
-        $request->validate([
-            'eventupload' => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048',
-        ]);
-        $eventfile = $request->file('eventupload');
-        if ($eventfile) {
-            $validExtensions = ['jpeg', 'jpg', 'png', 'webp', 'svg'];
-            $fileExtension = strtolower($eventfile->getClientOriginalExtension());
 
-            if (!in_array($fileExtension, $validExtensions)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg, png, webp, svg file.');
-            }
-            $eventfileName = time() . '.' . $fileExtension;
-            $eventfile->move('EventImages/', $eventfileName);
-            $event = new Event();
-            $event->Img_Path = $eventfileName;
-            $event->Event_Title = $request->event_title;
-            $event->Event_Date = $request->event_date;
-            $event->Event_Description = $request->event_description;
-            $save = $event->save();
-        }
-        return redirect()->back();
-    }
-    public function deleteevent($id)
-    {
-        try {
-            $announcement = Event::findOrFail($id);
-            $announcement->delete();
-            return response()->json(['message' => 'Announcement deleted successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while deleting the announcement.'], 500);
-        }
-    }
 
     public function update_user(Request $request, $id)
     {
@@ -217,7 +282,6 @@ class AdminController extends Controller
 
         $user->save();
         return redirect()->back();
-        
     }
 
     public function display_user($id)

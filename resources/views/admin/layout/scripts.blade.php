@@ -48,14 +48,88 @@
 
 
 
-    function openupdateModal(eventId, eventTitle, eventDate, eventDescription) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //The update modal start
+    function openupdateModal(id, Event_Title, Event_Date, Event_Description, Img_Path) {
         document.getElementById('updatemodal').style.display = 'block';
-        document.getElementById('event_id').value = eventId;
-        document.getElementById('event_title_input').value = eventTitle;
-        document.getElementById('event_date_input').value = eventDate;
-        document.getElementById('event_description_input').value = eventDescription;
+        document.getElementById('event_id').value = id;
+        document.getElementById('event_title_input').value = Event_Title;
+        document.getElementById('event_date_input').value = Event_Date;
+        document.getElementById('event_description_input').value = Event_Description;
+        var imagePath = 'EventImages/' + Img_Path;
+        document.getElementById('event_image').src = imagePath;
+
+
+        var removeImageButton = document.querySelector('.remove_button');
+        removeImageButton.addEventListener('click', function() {
+            event.preventDefault();
+            document.getElementById('event_image').src = '';
+        });
+
+        // Add event listener to the upload image button
+        var uploadImageButton = document.querySelector('.update_button');
+        uploadImageButton.addEventListener('click', function() {
+            event.preventDefault();
+            document.getElementById('file_input').click();
+        });
+
+
+        // Add event listener to file input change event
+        var fileInput = document.getElementById('file_input');
+        fileInput.addEventListener('change', function() {
+            // Display the newly uploaded image
+            var newImage = URL.createObjectURL(fileInput.files[0]);
+            document.getElementById('event_image').src = newImage;
+        });
+
+        
         document.addEventListener('click', closeModalOutside);
     }
+
+    //The update modal end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // {{-- Profile Modal --}}

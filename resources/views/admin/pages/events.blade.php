@@ -57,7 +57,7 @@
                         @endphp
                         @foreach ($events as $event)
                             <div class="scroll-card"
-                                onclick="openupdateModal('{{ $event->id }}', '{{ $event->Event_Title }}', '{{ $event->Event_Date }}', '{{ $event->Event_Description }}')">
+                                onclick="openupdateModal('{{ $event->id }}', '{{ $event->Event_Title }}', '{{ $event->Event_Date }}', '{{ $event->Event_Description }}', '{{ $event->Img_Path }}')">
                                 <div class="card-body">
                                     <img style="height: 200px; width: 300px;" alt="image"
                                         src="EventImages/{{ $event->Img_Path }}">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                       
+
 
 
                         <div class="mb-3">
@@ -192,19 +192,21 @@
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col image_display">
-
+                                    <img id="event_image" style="height: 300px; width:100%;" src=""
+                                        alt="Event Image">
                                 </div>
                                 <div class="col">
                                     <div class="update mb-3">
-                                        <button class="btn btn-primary">Upload Image</button>
+                                        <button class="btn btn-primary update_button">Upload Image</button>
                                     </div>
                                     <div class="remove mb-3">
-                                        <button class="btn btn-primary">Remove Image</button>
+                                        <button class="btn btn-primary remove_button">Remove Image</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <input type="hidden" name="event_id" id="event_id" value="">
+                        <input type="file" name="event_image" id="file_input" style="display: none;">
 
                         <div class="mb-3">
                             <label for="event_title" class="form-label">Event Title</label>
@@ -225,7 +227,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <div>
-                                <button type="submit" class="btn btn-primary">Add Event</button>
+                                <button type="submit" class="btn btn-primary">Update Event</button>
                             </div>
                             <div>
                                 <button type="button" onclick="closeModal('updatemodal')"
