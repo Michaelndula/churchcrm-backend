@@ -69,7 +69,7 @@
 
 
 
-    //The update modal start
+    //  Start update modal
     function openupdateModal(id, Event_Title, Event_Date, Event_Description, Img_Path) {
         document.getElementById('updatemodal').style.display = 'block';
         document.getElementById('event_id').value = id;
@@ -102,37 +102,30 @@
             document.getElementById('event_image').src = newImage;
         });
 
-        
+
         document.addEventListener('click', closeModalOutside);
     }
+    // Display of image before upload
+    function displayImage() {
+        var input = document.getElementById('eventupload');
+        var imageDisplay = document.getElementById('image_display');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                imageDisplay.innerHTML = '<img src="' + e.target.result +
+                    '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-    //The update modal end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //  End Update modal 
 
 
 
 
 
-
-
-
-
-
-    // {{-- Profile Modal --}}
+    // Start Profile Modal 
 
     function openProfileModal() {
         document.getElementById('profile-modal').style.display = 'block';
@@ -151,9 +144,9 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
+    //  End Profile modal
 
-
-    // {{-- User Modal --}}
+    // Start User Modal
 
     function openUserModal(username, email, phone) {
         document.getElementById('user-modal').style.display = 'block';
@@ -185,6 +178,7 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
+    // End User Modal
 
 
 
@@ -287,18 +281,24 @@
     });
 </script>
 
-{{-- Display of image before upload --}}
+
+
+{{-- Date verification  --}}
 <script>
-    function displayImage() {
-        var input = document.getElementById('eventupload');
-        var imageDisplay = document.getElementById('image_display');
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                imageDisplay.innerHTML = '<img src="' + e.target.result +
-                    '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        var inputDate = document.getElementById('event_date');
+
+        inputDate.setAttribute('min', tomorrow.toISOString().split('T')[0]);
+
+        inputDate.addEventListener('input', function() {
+            if (inputDate.value < tomorrow.toISOString().split('T')[0]) {
+                inputDate.setCustomValidity('Please select a date from tomorrow onwards.');
+            } else {
+                inputDate.setCustomValidity('');
+            }
+        });
+    });
 </script>
