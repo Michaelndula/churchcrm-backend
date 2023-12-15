@@ -48,17 +48,84 @@
 
 
 
-    function openupdateModal(eventId, eventTitle, eventDate, eventDescription) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  Start update modal
+    function openupdateModal(id, Event_Title, Event_Date, Event_Description, Img_Path) {
         document.getElementById('updatemodal').style.display = 'block';
-        document.getElementById('event_id').value = eventId;
-        document.getElementById('event_title_input').value = eventTitle;
-        document.getElementById('event_date_input').value = eventDate;
-        document.getElementById('event_description_input').value = eventDescription;
+        document.getElementById('event_id').value = id;
+        document.getElementById('event_title_input').value = Event_Title;
+        document.getElementById('event_date_input').value = Event_Date;
+        document.getElementById('event_description_input').value = Event_Description;
+        var imagePath = 'EventImages/' + Img_Path;
+        document.getElementById('event_image').src = imagePath;
+
+
+        var removeImageButton = document.querySelector('.remove_button');
+        removeImageButton.addEventListener('click', function() {
+            event.preventDefault();
+            document.getElementById('event_image').src = '';
+        });
+
+        // Add event listener to the upload image button
+        var uploadImageButton = document.querySelector('.update_button');
+        uploadImageButton.addEventListener('click', function() {
+            event.preventDefault();
+            document.getElementById('file_input').click();
+        });
+
+
+        // Add event listener to file input change event
+        var fileInput = document.getElementById('file_input');
+        fileInput.addEventListener('change', function() {
+            // Display the newly uploaded image
+            var newImage = URL.createObjectURL(fileInput.files[0]);
+            document.getElementById('event_image').src = newImage;
+        });
+
+
         document.addEventListener('click', closeModalOutside);
     }
+    // Display of image before upload
+    function displayImage() {
+        var input = document.getElementById('eventupload');
+        var imageDisplay = document.getElementById('image_display');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                imageDisplay.innerHTML = '<img src="' + e.target.result +
+                    '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    //  End Update modal 
 
 
-    // {{-- Profile Modal --}}
+
+
+
+    // Start Profile Modal 
 
     function openProfileModal() {
         document.getElementById('profile-modal').style.display = 'block';
@@ -77,9 +144,9 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
+    //  End Profile modal
 
-
-    // {{-- User Modal --}}
+    // Start User Modal
 
     function openUserModal(username, email, phone) {
         document.getElementById('user-modal').style.display = 'block';
@@ -111,6 +178,7 @@
             document.removeEventListener('click', closeModalOutside);
         }
     }
+    // End User Modal
 
 
 
@@ -213,18 +281,24 @@
     });
 </script>
 
-{{-- Display of image before upload --}}
+
+
+{{-- Date verification  --}}
 <script>
-    function displayImage() {
-        var input = document.getElementById('eventupload');
-        var imageDisplay = document.getElementById('image_display');
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                imageDisplay.innerHTML = '<img src="' + e.target.result +
-                    '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        var inputDate = document.getElementById('event_date');
+
+        inputDate.setAttribute('min', tomorrow.toISOString().split('T')[0]);
+
+        inputDate.addEventListener('input', function() {
+            if (inputDate.value < tomorrow.toISOString().split('T')[0]) {
+                inputDate.setCustomValidity('Please select a date from tomorrow onwards.');
+            } else {
+                inputDate.setCustomValidity('');
+            }
+        });
+    });
 </script>
