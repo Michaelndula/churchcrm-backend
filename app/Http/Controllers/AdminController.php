@@ -281,20 +281,22 @@ class AdminController extends Controller
         }
 
         $user->save();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'User updated successfully.');
     }
 
     public function display_user($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::find($id);
+        $userID = $user->id;
         $username = $user->name;
         $password = $user->password;
         $email = $user->email;
         $userInfo[] = [
+            'id' => $userID,
             'username' => $username,
             'password' => $password,
             'email' => $email,
         ];
-        return view('admin.index');
+        return view('admin.index', compact('userInfo'));
     }
 }
