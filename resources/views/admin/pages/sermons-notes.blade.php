@@ -20,7 +20,6 @@
             <div class="dashboard-header">
                 <h1>Sermon Notes</h1>
                 <p class="text-danger">{{ session('error') }}</p>
-
                 <hr>
             </div>
             <section class="center-btn-modal">
@@ -48,7 +47,8 @@
 
                             @foreach ($sermonnotes as $sermonnote)
                                 <tr id="sermonnotes_{{ $sermonnote->id }}">
-                                    <td>{{ $sermonnote->notesupload }}</td>
+                                    <td><a style="text-decoration: none;" href="{{ secure_asset('SermonNotes/'. $sermonnote->notesupload ) }}" download>
+                                    {{ $sermonnote->notesupload }}</a></td>
                                     <td>{{ $sermonnote->sermondescription }}</td>
                                     <td>
                                         <a href="#" class="text-danger"
@@ -142,7 +142,7 @@
                             <div class="form-group mb-4">
 
                                 <label>Upload Notes</label><br>
-                                <label for="file-upload" class="custom-file-upload">
+                                <label for="file-update" class="custom-file-upload">
                                     Upload
                                 </label>
                                 <input id="file-update" name="notesupload" type="file" />

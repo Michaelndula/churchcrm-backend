@@ -32,6 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Users
     Route::put('/users/{id}', [AdminController::class, 'update_user'])->name('users.update');
     Route::get('users', [AdminController::class, 'users'])->name('users');
+    Route::put('/update-profile/{id}', [AdminController::class, 'update_admin_profile'])->name('update.admin.profile');
+
+    // Profile
+    Route::get('profile', [AdminController::class, 'profile'])->name('profile');
 
     //Sermons
     Route::post('new-sermons', [AdminController::class, 'newsermons'])->name('new-sermons');
@@ -41,7 +45,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('notessermons', [AdminController::class, 'sermonsnotes'])->name('sermonsnotes');  
     Route::post('new-sermon-notes', [AdminController::class, 'newsermonnotes'])->name('new-sermon-notes');
     Route::delete('delete/{id}/sermonnotes', [AdminController::class, 'deletesermonnotes'])->name('deletesermonnotes');
-
+    Route::put('/sermonnotes/{id}', [AdminController::class, 'update_sermon_notes'])->name('sermonnotes.update');
+    // Download sermon notes
+    Route::get('/download-notes/{id}', [AdminController::class, 'download_sermon_notes'])->name('download_sermon_notes'); 
 
     // Events
     Route::post('new-event', [AdminController::class, 'newevent'])->name('new-event');
@@ -50,5 +56,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('delete/{id}/event', [AdminController::class, 'deleteevent'])->name('deleteevent');
 
 });
-
-Route::put('/sermonnotes/{notesId}', [AdminController::class, 'update_sermon_notes']);

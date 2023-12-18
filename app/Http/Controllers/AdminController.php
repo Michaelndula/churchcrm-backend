@@ -9,6 +9,7 @@ use App\Models\SermonNotes;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,10 @@ class AdminController extends Controller
         return view('admin.pages.events');
     }
 
+    // Profile page ==================
+    public function profile() {
+        return view('admin.pages.profile_page');
+    }
 
     public function validateAndMoveImage($file)
     {
@@ -329,12 +334,43 @@ class AdminController extends Controller
 
         }
 
-        $$sermonnotes->update([
+        $sermonnotes->update([
             'notesupload' => $notesfileName,
             'sermondescription' => $request->sermondescription,
         ]);
 
         return redirect()->back();
         
+    }
+
+    public function download_sermon_notes ($id) {
+        $path_name = SermonNotes::where("id", $id)->value("notesupload");
+        $file_path = 'public/SermonNotes/' . $path_name;
+        if (Storage::exists($file_path)) {
+            return Storage::disk('local')->get($file_path);
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+    }
+
+    public function update_admin_profile(Request $request, $id) {
+        $request->validate([
+            'email'    => 'required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|nullable|min:6',
+        ]);
+
+        $user = User::findOrfail($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->email = $request->input('email');
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+        return redirect()->back()->with('message', 'Admin updated successfully.');
     }
 }

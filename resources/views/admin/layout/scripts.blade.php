@@ -172,16 +172,45 @@
     function openSermonnotesModal(notesId, file, description) {
         document.getElementById('sermonnotes-modal').style.display = 'block';
 
-        // document.getElementById('file-update').value = '';
+        // Clear the existing input value
+        document.getElementById('file-update').value = '';
 
+        // Set the description value
         document.getElementById('update-sermondescription').value = description;
 
-        console.log(notesId, file, description)
-        // Making sure update route is called for the selected announcement
+        console.log(notesId, file, description);
+
+        // Create a new file input element
+        var newFileInput = document.createElement('input');
+        newFileInput.type = 'file';
+        newFileInput.style.display = 'none'; // Hide the new input
+
+        // Create a Blob with the file content (assuming 'file' is binary data)
+        var blob = new Blob([file]);
+
+        // Set the new file input value to a Blob representing the file
+        newFileInput.files = [new File([blob], 'filename')];
+
+        // Append the new input to the document
+        document.body.appendChild(newFileInput);
+
+        // Trigger a click event on the new file input to open the file dialog
+        newFileInput.click();
+
+        // Listen for the change event when the user selects a file
+        newFileInput.addEventListener('change', function() {
+            // Access the selected file using newFileInput.files[0]
+            console.log('Selected file:', newFileInput.files[0].name);
+
+            // Remove the new input from the document
+            document.body.removeChild(newFileInput);
+        });
+
+        // Making sure the update route is called for the selected announcement
         var new_route = "{{ url('/sermonnotes') }}" + '/' + notesId;
         document.getElementById('sermonnotes-update-form').action = new_route;
-
     }
+
 
     function closeSermonnotesModal() {
         document.getElementById('sermonnotes-modal').style.display = 'none';
