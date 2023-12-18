@@ -43,31 +43,11 @@
     // The Global modal function script
     function openModal() {
         document.getElementById('modal').style.display = 'block';
-        document.addEventListener('click', closeModalOutside);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
 
     //  Start update modal
     function openupdateModal(id, Event_Title, Event_Date, Event_Description, Img_Path) {
@@ -122,11 +102,7 @@
     //  End Update modal 
 
 
-
-
-
     // Start Profile Modal 
-
     function openProfileModal() {
         document.getElementById('profile-modal').style.display = 'block';
         document.addEventListener('click', closeModalOutside);
@@ -147,7 +123,6 @@
     //  End Profile modal
 
     // Start User Modal
-
     function openUserModal(userId, username, email) {
         document.getElementById('user-modal').style.display = 'block';
 
@@ -158,30 +133,61 @@
         document.getElementById('user-email').placeholder = email;
         document.getElementById('user-email').value = email;
 
-        // Making sure update route is called for the selected user
+        // Change route to update currently selected user
         var new_route = "{{ url('/users') }}" + '/' + userId;
         document.getElementById('user-update-form').action = new_route;
 
-
-        console.log(userId, username, email)
-        document.addEventListener('click', closeUserModalOutside);
     }
 
     function closeUserModal() {
         document.getElementById('user-modal').style.display = 'none';
-        document.removeEventListener('click', closeUserModalOutside);
+
+    }
+    // End user modal
+
+    // Start announcements modal
+    function openAnnouncementModal(announcementId, topic, message) {
+        document.getElementById('announcements-modal').style.display = 'block';
+
+        document.querySelector('.modal-head h4').innerHTML = topic;
+
+        document.getElementById('update-topic').value = topic;
+
+        document.getElementById('update-message').value = message;
+
+        console.log(announcementId, topic, message)
+        // Making sure update route is called for the selected announcement
+        var new_route = "{{ url('/announcements') }}" + '/' + announcementId;
+        document.getElementById('announcement-update-form').action = new_route;
+
     }
 
-    function closeUserModalOutside(event) {
-        var modal = document.getElementById('user-modal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.removeEventListener('click', closeModalOutside);
-        }
+    function closeAnnouncementModal() {
+        document.getElementById('announcements-modal').style.display = 'none';
+
     }
-    // End User Modal
+    // End announcements modal
 
+    // Start sermon notes update modal
+    function openSermonnotesModal(notesId, file, description) {
+        document.getElementById('sermonnotes-modal').style.display = 'block';
 
+        // document.getElementById('file-update').value = '';
+
+        document.getElementById('update-sermondescription').value = description;
+
+        console.log(notesId, file, description)
+        // Making sure update route is called for the selected announcement
+        var new_route = "{{ url('/sermonnotes') }}" + '/' + notesId;
+        document.getElementById('sermonnotes-update-form').action = new_route;
+
+    }
+
+    function closeSermonnotesModal() {
+        document.getElementById('sermonnotes-modal').style.display = 'none';
+
+    }
+    // End sermon notes update modal
 
     // {{-- Ajax Deletions --}}
 

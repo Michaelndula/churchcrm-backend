@@ -138,20 +138,14 @@ class AdminController extends Controller
             return response()->json(['error' => 'An error occurred while deleting the announcement.'], 500);
         }
     }
-
-
     // END Events
-
-
-
-
 
     public function newannouncement(Request $request)
     {
         //user ajax.to save the data.
         $announcement = new Announcement();
-        $announcement->Topic = $request->topic;
-        $announcement->Message = $request->message;
+        $announcement->Topic = $request->Topic;
+        $announcement->Message = $request->Message;
         $announcement->save();
         return redirect()->back();
     }
@@ -284,19 +278,63 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'User updated successfully.');
     }
 
-    public function display_user($id)
-    {
-        $user = User::find($id);
-        $userID = $user->id;
-        $username = $user->name;
-        $password = $user->password;
-        $email = $user->email;
-        $userInfo[] = [
-            'id' => $userID,
-            'username' => $username,
-            'password' => $password,
-            'email' => $email,
-        ];
-        return view('admin.index', compact('userInfo'));
+    public function update_announcement(Request $request, $id) {
+        $request->validate([
+            'Topic'    => 'required|string',
+            'Message' => 'required|string',
+        ]);
+
+        $announcements = Announcement::findOrfail($id);
+
+        if (!$announcements) {
+            return response()->json(['message' => 'Announcement not found'], 404);
+        }
+
+        $announcements->Topic = $request->input('Topic');
+        $announcements->Message = $request->input('Message');
+
+        $announcements->save();
+
+
+        return redirect()->back()->with('message', 'Announcement updated successfully.');
+    }
+
+    public function update_sermon_notes (Request $request, $id) {
+        
+        $request->validate([
+            'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
+            'sermondescription' => 'required|string',
+        ]);
+        
+        $sermonnotes = SermonNotes::findOrfail($id);
+
+        if(!$sermonnotes) {
+            return response()->json(['message' => 'Notes not found'], 404);
+        }
+
+        $notesfile = $request->file('notesupload');
+
+        if ($request->hasFile('notesupload')) {
+            $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
+            $fileExtension = strtolower($notesfile->getClientOriginalExtension());
+
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
+            }
+            $notesfileName = time() . '.' . $fileExtension;
+            $notesfile->move('SermonNotes/', $notesfileName);
+
+
+        }
+
+        $$sermonnotes->update([
+            'notesupload' => $notesfileName,
+            'sermondescription' => $request->sermondescription,
+        ]);
+
+        return redirect()->back();
+        
     }
 }

@@ -6,9 +6,6 @@
 </head>
 
 <body>
-    @php
-        $announcements = App\Models\Announcement::all();
-    @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
@@ -42,6 +39,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $announcements = App\Models\Announcement::OrderBy('id', 'desc')->get();
+                            @endphp
                             @foreach ($announcements as $announcement)
                                 <tr id="announcement_{{ $announcement->id }}">
                                     <td>{{ $announcement->Topic }}</td>
@@ -49,7 +49,11 @@
                                     <td>
                                         <a href="#" class='text-danger'
                                             onclick="deleteAnnouncement({{ $announcement->id }})">Delete</a>
-                                        <a href="">View</a>
+                                        <button id="update-user-button" class="view-button"
+                                            style="font-size: 16px"
+                                            onclick="openAnnouncementModal({{ $announcement->id }}, '{{ $announcement->Topic }}', '{{ $announcement->Message }}')">
+                                            View
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,16 +71,16 @@
                             <hr>
                         </div>
                         <div class="modal-body">
-                            <form class="form" action="{{ route('new-announcement') }}" method="post" >
+                            <form class="form" action="{{ route('new-announcement') }}" method="post">
                                 @csrf
                                 <div class="form-group mb-4">
-                                    <label for="topic">Add Topic</label>
-                                    <input type="text" class="form-control" name="topic" id="topic"
-                                        required placeholder="Add Topic">
+                                    <label for="Topic">Add Topic</label>
+                                    <input type="text" class="form-control" name="Topic" id="topic" required
+                                        placeholder="Add Topic">
                                 </div>
                                 <div class="form-group mb-4">
-                                    <label for="message">Add Message</label>
-                                    <textarea class="form-control" name="message" id="message" required cols="30" rows="10"
+                                    <label for="Message">Add Message</label>
+                                    <textarea class="form-control" name="Message" id="Message" required cols="30" rows="10"
                                         placeholder="Add Message"></textarea>
                                 </div>
 
@@ -97,6 +101,46 @@
                     </div>
                 </div>
             </section>
+
+            {{-- Announcements update modal --}}
+            <div id="announcements-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-head">
+                        <h4>{{ $announcement->Topic }}</h4>
+                        <hr>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" id="announcement-update-form"
+                            action="{{ url('/announcements', $announcement->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group mb-4">
+                                <label for="topic">Update Topic</label>
+                                <input type="text" class="form-control" name="Topic" id="update-topic" required
+                                    placeholder="Update Topic">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="Message">Update Message</label>
+                                <textarea class="form-control" name="Message" id="update-message" required cols="30" rows="10"
+                                    placeholder="Update Message"></textarea>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Update Announcement</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="closeAnnouncementModal()"
+                                            class="btn btn-outline-primary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @include('admin.layout.scripts')
