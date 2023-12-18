@@ -11,7 +11,7 @@
         <li class="nav-link">
             <a href="{{ route('users') }}">
                 <span class="icon">
-                    <i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-users"></i>
                 </span>
                 <span class="title">
                     Users
@@ -55,6 +55,16 @@
                 </span>
                 <span class="title">
                     Events
+                </span>
+            </a>
+        </li>
+        <li class="nav-link">
+            <a href="{{ route('profile') }}">
+                <span class="icon">
+                    <i class="fa-solid fa-user"></i>
+                </span>
+                <span class="title">
+                    Profile
                 </span>
             </a>
         </li>

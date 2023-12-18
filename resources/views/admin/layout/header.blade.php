@@ -24,7 +24,9 @@
                 @endphp
                 <p class="profile-modal-text">{{$user->name}}</p>
                 <hr class="profile-modal-hr">
-                <p class="profile-modal-text">Manage</p>
+                <a style="text-decoration: none" href="{{ route('profile')}}">
+                    <p class="profile-modal-text">Manage</p>
+                </a>
             </div>
             <div class="modal-body" style="margin: 0 auto">
                 <form action="{{ route('logout') }}" method="post">
