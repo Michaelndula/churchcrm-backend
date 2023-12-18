@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SermonNotes extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'notesupload',
+        'sermondescription',
+    ];
 }

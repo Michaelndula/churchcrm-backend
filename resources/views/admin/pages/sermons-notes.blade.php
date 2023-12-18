@@ -6,9 +6,7 @@
 </head>
 
 <body>
-    @php
-        $sermons = App\Models\SermonNotes::all();
-    @endphp
+
     <div class="dashboard-body">
         <div class="navigation-menu">
             <div>
@@ -37,7 +35,9 @@
                     </div>
                     <table class="table">
                         <thead>
-
+                            @php
+                                $sermonnotes = App\Models\SermonNotes::OrderBy('id', 'desc')->get();
+                            @endphp
                             <tr>
                                 <th>Notes</th>
                                 <th>Description</th>
@@ -46,14 +46,17 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($sermons as $sermon)
-                                <tr id="sermonnotes_{{ $sermon->id }}">
-                                    <td>{{ $sermon->notesupload }}</td>
-                                    <td>{{ $sermon->sermondescription }}</td>
+                            @foreach ($sermonnotes as $sermonnote)
+                                <tr id="sermonnotes_{{ $sermonnote->id }}">
+                                    <td>{{ $sermonnote->notesupload }}</td>
+                                    <td>{{ $sermonnote->sermondescription }}</td>
                                     <td>
                                         <a href="#" class="text-danger"
-                                            onclick="deleteSermonNotes({{ $sermon->id }})">Delete</a>
-                                        <a href="">view</a>
+                                            onclick="deleteSermonNotes({{ $sermonnote->id }})">Delete</a>
+                                        <button id="update-user-button" class="view-button" style="font-size: 16px"
+                                            onclick="openSermonnotesModal({{ $sermonnote->id }}, '{{ $sermonnote->notesupload }}', '{{ $sermonnote->sermondescription }}')">
+                                            View
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,7 +70,7 @@
                 input[type="file"] {
                     display: none;
                 }
-            
+
                 .custom-file-upload {
                     border-radius: 5px;
                     border: 1px solid #ccc;
@@ -79,28 +82,28 @@
                     padding-left: 10px;
                 }
             </style>
-            {{-- modal section  Add announcements --}}
+            {{-- modal section  add sermon notes --}}
             <div id="modal" class="modal">
                 <div class="modal-content">
 
                     <div class="modal-head">
-                        <h4 style="padding-bottom: 20px;">Add Sermon Notes</h4>
+                        <h4 style="padding-bottom: 20px;"></h4>
                         <hr style="margin-bottom: 20px;">
                     </div>
                     <div class="modal-body">
                         <form action="{{ route('new-sermon-notes') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-4">
-                              
 
-                                <label >Upload Notes</label><br>
+
+                                <label>Upload Notes</label><br>
                                 <label for="file-upload" class="custom-file-upload">
                                     Upload
                                 </label>
                                 <input id="file-upload" name="notesupload" type="file" />
 
                             </div>
-                            <div class="form-group mb-4"> 
+                            <div class="form-group mb-4">
                                 <label for="sermondescription">Add Description</label>
                                 <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
                                     placeholder="Add Description"></textarea>
@@ -112,6 +115,51 @@
                                     </div>
                                     <div>
                                         <button type="button" onclick="closeModal()"
+                                            class="btn btn-outline-primary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+            {{-- Update Sermon notes modal --}}
+            <div id="sermonnotes-modal" class="modal">
+                <div class="modal-content">
+
+                    <div class="modal-head">
+                        <h4 style="padding-bottom: 20px;">Update Sermon Notes</h4>
+                        <hr style="margin-bottom: 20px;">
+                    </div>
+                    <div class="modal-body">
+                        <form id="sermonnotes-update-form" action="{{ url('/sermonnotes', $sermonnote->id) }}"
+                            method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group mb-4">
+
+                                <label>Upload Notes</label><br>
+                                <label for="file-upload" class="custom-file-upload">
+                                    Upload
+                                </label>
+                                <input id="file-update" name="notesupload" type="file" />
+
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="sermondescription">Add Description</label>
+                                <textarea class="form-control" name="sermondescription" id="update-sermondescription" required cols="30"
+                                    rows="10" placeholder="Update Description"></textarea>
+                            </div>
+                            <div class="form-group mb-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="closeSermonnotesModal()"
                                             class="btn btn-outline-primary">Cancel</button>
                                     </div>
                                 </div>
