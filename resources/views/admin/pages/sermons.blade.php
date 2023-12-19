@@ -94,7 +94,7 @@
                                 $sermons = App\Models\Sermons::all();
                             @endphp
                             @foreach ($sermons as $sermon)
-                                <div class="scroll-card" onclick="playVideo('{{$sermon->Sermon_Link}}')">
+                                <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
                                             src="SermonThumbnails/{{ $sermon->Thumbnail }}">

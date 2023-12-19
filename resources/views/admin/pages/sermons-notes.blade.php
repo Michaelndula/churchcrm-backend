@@ -6,9 +6,7 @@
 </head>
 
 <body>
-    @php
-        $sermonnotes = App\Models\SermonNotes::OrderBy('id', 'desc')->get();
-    @endphp
+
     <div class="dashboard-body">
         <div class="navigation-menu">
             <div>
@@ -36,6 +34,9 @@
                     </div>
                     <table class="table">
                         <thead>
+                            @php
+                                $sermonnotes = App\Models\SermonNotes::OrderBy('id', 'desc')->get();
+                            @endphp
                             <tr>
                                 <th>Notes</th>
                                 <th>Description</th>
@@ -46,10 +47,8 @@
 
                             @foreach ($sermonnotes as $sermonnote)
                                 <tr id="sermonnotes_{{ $sermonnote->id }}">
-                                    <td><a style="text-decoration: none;"
-                                            href="{{ secure_asset('SermonNotes/' . $sermonnote->notesupload) }}"
-                                            download>
-                                            {{ $sermonnote->notesupload }}</a></td>
+                                    <td><a style="text-decoration: none;" href="{{ secure_asset('SermonNotes/'. $sermonnote->notesupload ) }}" download>
+                                    {{ $sermonnote->notesupload }}</a></td>
                                     <td>{{ $sermonnote->sermondescription }}</td>
                                     <td>
                                         <a href="#" class="text-danger"
@@ -86,6 +85,7 @@
             {{-- modal section  add sermon notes --}}
             <div id="modal" class="modal">
                 <div class="modal-content">
+
                     <div class="modal-head">
                         <h4 style="padding-bottom: 20px;"></h4>
                         <hr style="margin-bottom: 20px;">
