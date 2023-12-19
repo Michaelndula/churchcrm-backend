@@ -9,7 +9,7 @@
     @php
         // use App\Models\User;
 
-        $users = App\Models\User::all();
+        $users = App\Models\User::OrderBy('id', 'desc')->get();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
