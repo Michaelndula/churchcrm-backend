@@ -1,7 +1,7 @@
 <div class="sideNav" id="sideNavbar">
     <ul>
         <li class="nav-link">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('dashboard') }}" >
                 <span class="icon">
                     <i class="fa-solid fa-house"></i>
                 </span>
@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="nav-link">
-            <a href="{{ route('announcements') }}">
+            <a href="{{ route('announcements') }}" >
                 <span class="icon">
                     <i class="fa-solid fa-clipboard-list"></i>
                 </span>
@@ -68,16 +68,15 @@
                 </span>
             </a>
         </li>
-        <style>
+       <style>
             /* Add your styling for the active background color here */
             .nav-link.active-link {
-                background-color: white;
-            }
-
-            .nav-link.active-link a {
-                color: blue;
-            }
+            background-color: white;
+        }
+        .nav-link.active-link a {
+            color: blue;
+        }
         </style>
-        @include('admin.layout.aside')
+
     </ul>
 </div>

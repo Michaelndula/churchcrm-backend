@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->boolean('user_type')->default(false);
-            $table->string('membership_status')->default('Member');
             $table->string('phone')->default('0743381134');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
