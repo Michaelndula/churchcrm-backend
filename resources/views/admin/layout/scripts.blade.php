@@ -218,6 +218,13 @@
     }
     // End sermon notes update modal
 
+    // Play Sermon Video
+    function playVideo(videoLink) {
+        
+    }
+
+    // End play sermon video
+
     // {{-- Ajax Deletions --}}
 
     $.ajaxSetup({

@@ -37,7 +37,7 @@
                                 <div class="col image_display" id="image_display"></div>
                                 <div class="col">
                                     <!-- Add the onchange attribute to trigger the displayImage function -->
-                                    <input type="file" class="file" name="profile-pic" id="eventupload"
+                                    <input type="file" class="file" name="profile_photo_path" id="eventupload"
                                         onchange="displayImage()" />
                                 </div>
                             </div>
