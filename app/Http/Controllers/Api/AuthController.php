@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\AppUser;
 
 class AuthController extends Controller
 {
@@ -17,11 +17,12 @@ class AuthController extends Controller
             'password' => 'required|min:8',
         ]);
 
-        $user = User::create([
+        $user = AppUser::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
             'password' => bcrypt($userData['password']),
         ]);
+
 
         $token = $user->createToken('authToken')->plainTextToken;
 

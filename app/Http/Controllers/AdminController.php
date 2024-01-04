@@ -304,44 +304,43 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Announcement updated successfully.');
     }
 
-    public function update_sermon_notes (Request $request, $id) {
-        
+    public function update_sermon_notes(Request $request, $id)
+    {
         $request->validate([
-            'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
+            'notesupload' => 'sometimes|required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
             'sermondescription' => 'required|string',
         ]);
-        
-        $sermonnotes = SermonNotes::findOrfail($id);
-
-        if(!$sermonnotes) {
+    
+        $sermonnotes = SermonNotes::findOrFail($id);
+    
+        if (!$sermonnotes) {
             return response()->json(['message' => 'Notes not found'], 404);
         }
-
-        $notesfile = $request->file('notesupload');
-
+    
+        $notesfileName = $sermonnotes->notesupload;
+    
         if ($request->hasFile('notesupload')) {
             $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
-            $fileExtension = strtolower($notesfile->getClientOriginalExtension());
-
+            $fileExtension = strtolower($request->file('notesupload')->getClientOriginalExtension());
+    
             if (!in_array($fileExtension, $validExtensions)) {
                 return redirect()
                     ->back()
                     ->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
             }
+    
             $notesfileName = time() . '.' . $fileExtension;
-            $notesfile->move('SermonNotes/', $notesfileName);
-
-
+            $request->file('notesupload')->move('SermonNotes/', $notesfileName);
         }
-
+    
         $sermonnotes->update([
             'notesupload' => $notesfileName,
             'sermondescription' => $request->sermondescription,
         ]);
-
+    
         return redirect()->back();
-        
     }
+    
 
     public function download_sermon_notes ($id) {
         $path_name = SermonNotes::where("id", $id)->value("notesupload");

@@ -122,10 +122,7 @@
                         </form>
                     </div>
                 </div>
-
             </div>
-
-
             {{-- Update Sermon notes modal --}}
             <div id="sermonnotes-modal" class="modal">
                 <div class="modal-content">
