@@ -108,4 +108,9 @@ class MobileApiController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
     }
+
+    public function sermonAndNote($id) {
+        $data = Sermons::where('id', $id)->first();
+        return response()->json($data);
+    }
 }
