@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('Topic');
             $table->longText('Message');
+            $table->string('poster');
             $table->timestamps();
         });
     }

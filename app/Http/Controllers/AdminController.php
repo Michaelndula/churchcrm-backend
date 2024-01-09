@@ -50,7 +50,8 @@ class AdminController extends Controller
     }
 
     // Profile page ==================
-    public function profile() {
+    public function profile()
+    {
         return view('admin.pages.profile_page');
     }
 
@@ -145,15 +146,33 @@ class AdminController extends Controller
     }
     // END Events
 
+
+
     public function newannouncement(Request $request)
     {
         //user ajax.to save the data.
         $announcement = new Announcement();
         $announcement->Topic = $request->Topic;
         $announcement->Message = $request->Message;
+
+        // Validate the poster using Laravel's validation
+        $validation = $request->validate([
+            'poster' => 'required|image|mimes:jpg,png,jpeg',
+        ]);
+
+        $poster = $request->file('poster');
+        if ($poster) {
+            $postername = uniqid() . '.' . $poster->getClientOriginalExtension();
+            $poster->move('Announcements/', $postername);
+        }
+        $announcement->poster = $postername;
+
         $announcement->save();
-        return redirect()->back();
+
+        return redirect()->back()->with('success', 'Announcement created successfully');
     }
+
+
     //deleteannouncement
     public function deleteannouncement($id)
     {
@@ -283,7 +302,8 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'User updated successfully.');
     }
 
-    public function update_announcement(Request $request, $id) {
+    public function update_announcement(Request $request, $id)
+    {
         $request->validate([
             'Topic'    => 'required|string',
             'Message' => 'required|string',
@@ -310,39 +330,40 @@ class AdminController extends Controller
             'notesupload' => 'sometimes|required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
             'sermondescription' => 'required|string',
         ]);
-    
+
         $sermonnotes = SermonNotes::findOrFail($id);
-    
+
         if (!$sermonnotes) {
             return response()->json(['message' => 'Notes not found'], 404);
         }
-    
+
         $notesfileName = $sermonnotes->notesupload;
-    
+
         if ($request->hasFile('notesupload')) {
             $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
             $fileExtension = strtolower($request->file('notesupload')->getClientOriginalExtension());
-    
+
             if (!in_array($fileExtension, $validExtensions)) {
                 return redirect()
                     ->back()
                     ->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
             }
-    
+
             $notesfileName = time() . '.' . $fileExtension;
             $request->file('notesupload')->move('SermonNotes/', $notesfileName);
         }
-    
+
         $sermonnotes->update([
             'notesupload' => $notesfileName,
             'sermondescription' => $request->sermondescription,
         ]);
-    
+
         return redirect()->back();
     }
-    
 
-    public function download_sermon_notes ($id) {
+
+    public function download_sermon_notes($id)
+    {
         $path_name = SermonNotes::where("id", $id)->value("notesupload");
         $file_path = 'public/SermonNotes/' . $path_name;
         if (Storage::exists($file_path)) {
@@ -352,7 +373,8 @@ class AdminController extends Controller
         }
     }
 
-    public function update_admin_profile(Request $request, $id) {
+    public function update_admin_profile(Request $request, $id)
+    {
         $request->validate([
             'email'    => 'required|email|unique:users,email,' . $id,
             'password' => 'sometimes|nullable|min:6',
@@ -371,5 +393,9 @@ class AdminController extends Controller
 
         $user->save();
         return redirect()->back()->with('message', 'Admin updated successfully.');
+    }
+    public function settings()
+    {
+        return view('admin.pages.settings');
     }
 }

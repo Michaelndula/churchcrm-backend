@@ -54,5 +54,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('events', [AdminController::class, 'events'])->name('events');
     Route::post('updateevent', [AdminController::class, 'updateevent'])->name('update-event');
     Route::delete('delete/{id}/event', [AdminController::class, 'deleteevent'])->name('deleteevent');
+    Route::get('settings', [AdminController::class, 'settings'])->name('settings');
 
 });
