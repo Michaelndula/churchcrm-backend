@@ -11,5 +11,6 @@ class Announcement extends Model
     protected $fillable = [
         'Topic',
         'Message',
+        'poster',
     ];
 }

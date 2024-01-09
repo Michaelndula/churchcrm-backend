@@ -3,7 +3,7 @@
 <script src="assets/js/passwordgenerator.js"></script>
 {{-- corrected modal code --}}
 <script>
-    // Clossing the modal on outside modal click
+    // Clossing the modal on outside modal click (The Global Modal)
     document.addEventListener('click', function(event) {
         closeModalOutside(event, 'modal');
         closeModalOutside(event, 'updatemodal');
@@ -26,7 +26,7 @@
     }
 
 
-    //  end corrected modal code 
+    //  End corrected modal code 
 
 
 
@@ -145,6 +145,51 @@
     }
     // End user modal
 
+
+
+
+
+
+
+
+
+    // Start Add User Modal
+    function openAddUserModal(userId, username, email) {
+        document.getElementById('add-user-modal').style.display = 'block';
+
+
+
+    }
+
+    function closeAddUserModal() {
+        document.getElementById('add-user-modal').style.display = 'none';
+
+    }
+    // End add user modal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Start announcements modal
     function openAnnouncementModal(announcementId, topic, message) {
         document.getElementById('announcements-modal').style.display = 'block';
@@ -156,7 +201,6 @@
         document.getElementById('update-message').value = message;
 
         console.log(announcementId, topic, message)
-        // Making sure update route is called for the selected announcement
         var new_route = "{{ url('/announcements') }}" + '/' + announcementId;
         document.getElementById('announcement-update-form').action = new_route;
 
@@ -172,41 +216,30 @@
     function openSermonnotesModal(notesId, file, description) {
         document.getElementById('sermonnotes-modal').style.display = 'block';
 
-        // Clear the existing input value
         document.getElementById('file-update').value = '';
 
-        // Set the description value
         document.getElementById('update-sermondescription').value = description;
 
         console.log(notesId, file, description);
 
-        // Create a new file input element
         var newFileInput = document.createElement('input');
         newFileInput.type = 'file';
-        newFileInput.style.display = 'none'; // Hide the new input
+        newFileInput.style.display = 'none'; 
 
-        // Create a Blob with the file content (assuming 'file' is binary data)
         var blob = new Blob([file]);
 
-        // Set the new file input value to a Blob representing the file
         newFileInput.files = [new File([blob], 'filename')];
 
-        // Append the new input to the document
         document.body.appendChild(newFileInput);
 
-        // Trigger a click event on the new file input to open the file dialog
         newFileInput.click();
 
-        // Listen for the change event when the user selects a file
         newFileInput.addEventListener('change', function() {
-            // Access the selected file using newFileInput.files[0]
             console.log('Selected file:', newFileInput.files[0].name);
 
-            // Remove the new input from the document
             document.body.removeChild(newFileInput);
         });
 
-        // Making sure the update route is called for the selected announcement
         var new_route = "{{ url('/sermonnotes') }}" + '/' + notesId;
         document.getElementById('sermonnotes-update-form').action = new_route;
     }
