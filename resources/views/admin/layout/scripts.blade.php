@@ -1,6 +1,6 @@
 <script src="assets/js/toggle_bar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+<script src="assets/js/passwordgenerator.js"></script>
 {{-- corrected modal code --}}
 <script>
     // Clossing the modal on outside modal click

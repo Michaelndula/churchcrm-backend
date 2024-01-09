@@ -6,6 +6,9 @@
 </head>
 
 <body>
+    @php
+        $announcements = App\Models\Announcement::OrderBy('id', 'desc')->get();
+    @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
@@ -39,9 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $announcements = App\Models\Announcement::OrderBy('id', 'desc')->get();
-                            @endphp
+
                             @foreach ($announcements as $announcement)
                                 <tr id="announcement_{{ $announcement->id }}">
                                     <td>{{ $announcement->Topic }}</td>
@@ -49,8 +50,7 @@
                                     <td>
                                         <a href="#" class='text-danger'
                                             onclick="deleteAnnouncement({{ $announcement->id }})">Delete</a>
-                                        <button id="update-user-button" class="view-button"
-                                            style="font-size: 16px"
+                                        <button id="update-user-button" class="view-button" style="font-size: 16px"
                                             onclick="openAnnouncementModal({{ $announcement->id }}, '{{ $announcement->Topic }}', '{{ $announcement->Message }}')">
                                             View
                                         </button>
@@ -106,18 +106,17 @@
             <div id="announcements-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-head">
-                        <h4>{{ $announcement->Topic }}</h4>
+                        <h4>{{ isset($announcement) ? $announcement->Topic : '' }}</h4>
                         <hr>
                     </div>
                     <div class="modal-body">
                         <form class="form" id="announcement-update-form"
-                            action="{{ url('/announcements', $announcement->id) }}" method="POST">
+                            action="{{ url('/announcements', $announcement->id) }}" method="post">
                             @csrf
-                            @method('PUT')
                             <div class="form-group mb-4">
                                 <label for="topic">Update Topic</label>
                                 <input type="text" class="form-control" name="Topic" id="update-topic" required
-                                    placeholder="Update Topic">
+                                    placeholder="Update Topic" value="{{ isset($announcement) ? $announcement->Topic : '' }}">
                             </div>
                             <div class="form-group mb-4">
                                 <label for="Message">Update Message</label>
