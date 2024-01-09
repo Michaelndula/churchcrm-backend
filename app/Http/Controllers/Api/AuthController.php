@@ -9,17 +9,19 @@ use App\Models\AppUser;
 class AuthController extends Controller
 {
 
-    public function register(Request $request)
+    public function register_user(Request $request)
     {
         $userData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
+            'phone' => 'required|string|max:12',
             'password' => 'required|min:8',
         ]);
 
         $user = AppUser::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
+            'phone' =>$userData['phone'],
             'password' => bcrypt($userData['password']),
         ]);
 
