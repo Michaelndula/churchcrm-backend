@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use PDFParser;
 
 class MobileApiController extends Controller
 {
@@ -40,6 +41,7 @@ class MobileApiController extends Controller
         $data = User::where('id', $id)->first();
         return response()->json($data);
     }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -111,6 +113,15 @@ class MobileApiController extends Controller
 
     public function sermonAndNote($id) {
         $data = Sermons::where('id', $id)->first();
+
+        $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
+        $parser = new \Smalot\PdfParser\Parser();
+        $pdf = $parser->parseFile($pdfFile);
+        $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
+        $data->text = $text;
+
         return response()->json($data);
     }
+
+
 }
