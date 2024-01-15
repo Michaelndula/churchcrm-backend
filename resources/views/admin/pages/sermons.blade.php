@@ -22,6 +22,10 @@
 </head>
 
 <body>
+    @php
+$LatestSermons = App\Models\Sermons::latest()->take(6)->get();
+$previousSermons = App\Models\Sermons::orderBy('id', 'desc')->skip(6)->take(PHP_INT_MAX)->get();
+    @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
@@ -44,7 +48,7 @@
                 </section>
                 <section>
                     <div class="dashboard-header">
-                        <h1 class="margin-top 20">Latest</h1>
+                        <h1 class="margin-top 20">Latest Sermons</h1>
                     </div>
                     {{-- cards display --}}
                     <div class="cover">
@@ -52,10 +56,8 @@
                             <i class="fas fa-angle-left"></i>
                         </button>
                         <div class="scroll-images">
-                            @php
-                                $sermons = App\Models\Sermons::all();
-                            @endphp
-                            @foreach ($sermons as $sermon)
+
+                            @foreach ($LatestSermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
@@ -82,7 +84,7 @@
 
 
                     <div class="dashboard-header">
-                        <h4 class="margin-top 20">Latest</h4>
+                        <h4 class="margin-top 20">Previous Sermons</h4>
                     </div>
                     {{-- cards display --}}
                     <div class="cover">
@@ -93,7 +95,7 @@
                             @php
                                 $sermons = App\Models\Sermons::all();
                             @endphp
-                            @foreach ($sermons as $sermon)
+                            @foreach ($previousSermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"

@@ -14,7 +14,7 @@
             <!-- Side Navigation Menu -->
             @include('admin.layout.aside')
         </div>
-
+        
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <h1>Profile</h1>
@@ -34,7 +34,7 @@
                     <div class="form-group mb-4">
                         <div class="mb-3">
                             <div class="row">
-                                <div class="col image_display" id="image_display"></div>
+                                <div class=" image_display" id="image_display"></div>
                                 <div class="col">
                                     <!-- Add the onchange attribute to trigger the displayImage function -->
                                     <input type="file" class="file" name="profile-pic" id="eventupload"
@@ -64,9 +64,15 @@
 
 
             </form>
+
+            
         </div>
-        @include('admin.layout.scripts');
-    </div>
+      
+    </div>    
+    
+    
+    @include('admin.layout.scripts')
+
 </body>
 
 </html>

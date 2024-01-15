@@ -101,7 +101,10 @@
                                 @foreach ($announcements as $announcement)
                                     <tr id="announcement_{{ $announcement->id }}">
                                         <td>{{ $announcement->Topic }}</td>
-                                        <td>{{ $announcement->Message }}</td>
+                                        <td>
+                                        
+                                            {{ Illuminate\Support\Str::limit($announcement->Message, $limit = 50, $end = '...') }}
+                                        </td>
                                         <td>
                                             <a href="#" class='text-danger'
                                                 onclick="deleteAnnouncement({{ $announcement->id }})">Delete</a>
