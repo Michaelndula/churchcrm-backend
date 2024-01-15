@@ -30,14 +30,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/announcements/{id}', [AdminController::class, 'update_announcement'])->name('announcement.update');
 
     // Users
-    Route::put('/users/{id}', [AdminController::class, 'update_user'])->name('users.update');
+    Route::post('/users/{id}', [AdminController::class, 'update_user'])->name('users.update');
     Route::get('users', [AdminController::class, 'users'])->name('users');
     Route::put('/update-profile/{id}', [AdminController::class, 'update_admin_profile'])->name('update.admin.profile');
 
     // Profile
     Route::get('profile', [AdminController::class, 'profile'])->name('profile');
-//update profile details
-Route::post('profile-information-update', [AdminController::class, 'updateProfileInformation'])->name('profile-information-update');
+    //update profile details
+    Route::post('profile-information-update', [AdminController::class, 'updateProfileInformation'])->name('profile-information-update');
     //Sermons
     Route::post('new-sermons', [AdminController::class, 'newsermons'])->name('new-sermons');
     Route::get('sermons', [AdminController::class, 'sermons'])->name('sermons');
@@ -56,5 +56,8 @@ Route::post('profile-information-update', [AdminController::class, 'updateProfil
     Route::post('updateevent', [AdminController::class, 'updateevent'])->name('update-event');
     Route::delete('delete/{id}/event', [AdminController::class, 'deleteevent'])->name('deleteevent');
     Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+    //admin-usr-register
+    Route::post('admin-usr-register', [AdminController::class, 'adminusrregister'])->name('admin-usr-register');
+    Route::delete('delete/{id}/user', [AdminController::class, 'delete_user'])->name('delete_user');
 
 });
