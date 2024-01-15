@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('phone')->default('0743381134');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('membership_status')->default('new member');
             $table->boolean('usertype')->default(false);

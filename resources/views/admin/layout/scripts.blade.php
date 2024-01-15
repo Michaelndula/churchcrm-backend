@@ -303,7 +303,22 @@
             }
         });
     }
-
+//deleteEvent
+function deleteUser(id) {
+        $.ajax({
+            url: '/delete/' + id + '/user/',
+            type: 'DELETE',
+            success: function() {
+                $('#user_' + id).remove();
+                alert('user deleted successfully');
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText);
+                alert('An error occurred while deleting the user.');
+            }
+        });
+    }
 
     // {{-- ------------- Scroll Carousel --------------- --}}
 

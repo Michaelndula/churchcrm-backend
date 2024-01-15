@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Support\Str;
+
 class AdminController extends Controller
 {
     //
@@ -62,21 +64,89 @@ class AdminController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         // Update the user's profile
         $user = Auth::user();
         $user->update($data);
-    
+
         // Handle photo upload if applicable
         if ($request->hasFile('photo')) {
             $user->updateProfilePhoto($request->file('photo'));
         }
-    
+
         // Flash a success message and redirect
         return redirect()->route('profile')->with('status', 'Profile information updated successfully!');
     }
-    
+    public function adminusrregister(Request $request)
+    {
+        $userData = $request->validate([
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+        ]);
+        $userName = Str::before($userData['email'], '@');
+        $user = User::create([
+            'name' => $userName,
+            'email' => $userData['email'],
+            'password' => bcrypt($userData['password']),
+        ]);
 
+        if (!$user) {
+            // Failed to create user
+            $message = 'Failed to create user';
+            return redirect()->back()->with('message', $message)->withErrors(['Failed to create user']);
+        }
+
+        // User created successfully
+        $message = 'User ' . $user->email . ' created successfully';
+        return redirect()->back()->with('message', $message);
+    }
+
+    public function update_user(Request $request, $id)
+    {
+        $userData = $request->validate([
+            'email'    => 'required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|nullable|min:6',
+        ]);
+
+        // Extract the user name from the email
+        $userName = Str::before($userData['email'], '@');
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->name = $userName;
+        $user->email = $userData['email'];
+
+        if ($request->filled('password')) {
+            $pass = $request->input('password');
+            $user->password = Hash::make($pass);
+        }
+
+        $user->save();
+
+        // Check if the user was successfully updated
+        if (!$user->wasChanged()) {
+            $message = 'No changes were made for user ' . $user->email;
+            return redirect()->back()->with('message', $message);
+        }
+
+        $message = 'User ' . $user->email . ', password:  ' . $pass . '  ' . ' Updated successfully';
+        return redirect()->back()->with('message', $message);
+    }
+    //Delete User
+    public function delete_user($id)
+    {
+        try {
+            $event = User::findOrFail($id);
+            $event->delete();
+            return response()->json(['message' => 'User deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the user.'], 500);
+        }
+    }
 
 
 
@@ -306,27 +376,7 @@ class AdminController extends Controller
 
 
 
-    public function update_user(Request $request, $id)
-    {
-        $request->validate([
-            'email'    => 'required|email|unique:users,email,' . $id,
-            'password' => 'sometimes|nullable|min:6',
-        ]);
 
-        $user = User::findOrfail($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        $user->email = $request->input('email');
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
-
-        $user->save();
-        return redirect()->back()->with('message', 'User updated successfully.');
-    }
 
     public function update_announcement(Request $request, $id)
     {

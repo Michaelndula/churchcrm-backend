@@ -13,7 +13,6 @@
         $totalsermons = App\Models\Sermons::count();
         $totalsermonsnotes = App\Models\SermonNotes::count();
         $totalevents = App\Models\Event::count();
-
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -36,22 +35,18 @@
                             <div class="card-header bg-transparent"
                                 style="display: flex; justify-content: space-between;">
                                 <h4>Web Users</h4>
-
-                               
                                 <!-- Add New Event Modal -->
-
-                                <button id="update-user-button" class="btn btn-success"
-                                    onclick="openAddUserModal()">
+                                <button id="update-user-button" class="btn btn-success" onclick="openAddUserModal()">
                                     <i class="fa fa-user-plus"></i> Add New User
-
                                 </button>
-
-
-
                             </div>
-
-
-
+                            <div class="container">
+                                @if (session('message'))
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif
+                            </div>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -67,7 +62,6 @@
                                         $users = App\Models\User::OrderBy('id', 'desc')
                                             ->take(5)
                                             ->get();
-
                                     @endphp
                                     @foreach ($users as $user)
                                         <tr class="userId">
@@ -101,13 +95,11 @@
                                             action="{{ url('/users', $user->id) }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            @method('PUT')
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Username</label>
                                                 <input id="user-email" data-target="#username" type="email"
                                                     class="form-control" name="email" value="{{ $user->email }}">
                                             </div>
-
                                             <div class="icon-password mb-3">
                                                 <label for="password" class="form-label">Password</label>
                                                 <input id="password" type="text" class="form-control int-bg"
@@ -118,15 +110,12 @@
                                                         <button class="button copy">Copy</button>
                                                     </div>
                                                     <div class="range">
-                                                        <input type="range" min="4" max="24"
+                                                        <input type="range" min="8" max="24"
                                                             value="8" />
                                                         <span>8</span>
                                                     </div>
                                                 </div>
-
                                             </div>
-
-
                                             <div class="d-flex justify-content-between">
                                                 <div>
                                                     <button type="submit" class="btn btn-primary">Update</button>
@@ -149,33 +138,44 @@
                                     </div>
                                     <hr>
                                     <div class="modal-body">
-                                        <form class="form" id="user-update-form"
-                                            action="{{ url('/users', $user->id) }}" method="POST"
+                                        <form class="form" action="{{ route('admin-usr-register') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            @method('PUT')
                                             <div class="mb-3">
-                                                <label for="email" class="form-label">Username</label>
-                                                <input id="user-email" data-target="#username" type="email"
-                                                    class="form-control" name="email" value="{{ $user->email }}">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input id="user-email" type="email" class="form-control"
+                                                    name="email">
                                             </div>
 
                                             <div class="icon-password mb-3">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input id="password" type="text" class="form-control int-bg"
-                                                    name="password" autocomplete="password">
+                                                <input id="inpassword" type="text" class="form-control int-bg"
+                                                     name="password" autocomplete="off">
+                                            </div>
+
+                                            <div class="icon-password mb-3">
+                                                <label for="password_confirmation" class="form-label">Confirm
+                                                    Password</label>
+                                                <input id="password_confirmation" type="text"
+                                                    class="form-control int-bg" name="password_confirmation"
+                                                    autocomplete="off">
+                                            </div>
+
+                                            <div class="icon-password mb-3">
                                                 <div class="generator">
                                                     <div class="password">
-                                                        <button class="button generate">Generate</button>
-                                                        <button class="button copy">Copy</button>
+                                                        <button class="button generate" type="button"
+                                                            onclick="generatePassword()">Generate</button>
+                                                        <button class="button copy" type="button"
+                                                            onclick="copyToClipboard()">Copy</button>
                                                     </div>
                                                     <div class="range">
                                                         <input type="range" min="4" max="24"
-                                                            value="8" />
-                                                        <span>8</span>
+                                                            value="8" id="passwordLength"
+                                                            onchange="updatePasswordLength()">
+                                                        <span id="passwordLengthValue">8</span>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div class="d-flex justify-content-between">
@@ -187,9 +187,37 @@
                                                         class="btn btn-outline-primary">Cancel</button>
                                                 </div>
                                             </div>
-
-
                                         </form>
+
+                                        <script>
+                                            function generatePassword() {
+                                                var length = document.getElementById("passwordLength").value;
+                                                var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+
+                                                var password = "";
+
+                                                for (var i = 0; i < length; i++) {
+                                                    var randomIndex = Math.floor(Math.random() * charset.length);
+                                                    password += charset.charAt(randomIndex);
+                                                }
+
+                                                document.getElementById("inpassword").value = password;
+                                                document.getElementById("password_confirmation").value = password;
+                                            }
+
+                                            function copyToClipboard() {
+                                                var passwordField = document.getElementById("inpassword");
+                                                passwordField.select();
+                                                document.execCommand("copy");
+                                                alert("Password copied to clipboard!");
+                                            }
+
+                                            function updatePasswordLength() {
+                                                var length = document.getElementById("passwordLength").value;
+                                                document.getElementById("passwordLengthValue").innerText = length;
+                                            }
+                                        </script>
+
                                     </div>
                                 </div>
                             </div>
