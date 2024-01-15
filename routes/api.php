@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MobileApiController;
 use App\Http\Controllers\Api\AuthController;
 USE App\Http\Controllers\AdminController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,3 +49,13 @@ Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
 
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
+
+
+
+
+
+
+// Forgot Password
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+// Reset Password
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);

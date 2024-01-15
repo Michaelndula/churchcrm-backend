@@ -36,7 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Profile
     Route::get('profile', [AdminController::class, 'profile'])->name('profile');
-
+//update profile details
+Route::post('profile-information-update', [AdminController::class, 'updateProfileInformation'])->name('profile-information-update');
     //Sermons
     Route::post('new-sermons', [AdminController::class, 'newsermons'])->name('new-sermons');
     Route::get('sermons', [AdminController::class, 'sermons'])->name('sermons');

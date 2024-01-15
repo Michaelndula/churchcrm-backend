@@ -63,11 +63,14 @@
 
                             @foreach ($sermonnotes as $sermonnote)
                                 <tr id="sermonnotes_{{ $sermonnote->id }}">
-                                    <td><a style="text-decoration: none;"
-                                            href="{{ secure_asset('SermonNotes/' . $sermonnote->notesupload) }}"
-                                            download>
+                                    <td>
+                                        <a style="text-decoration: none;" target="_blank"
+                                            href="{{ 'SermonNotes/' . $sermonnote->notesupload }}"
+                                            >
                                             {{ $sermonnote->notesupload }}</a></td>
-                                    <td>{{ $sermonnote->sermondescription }}</td>
+                                    <td>
+                                        {{ Illuminate\Support\Str::limit($sermonnote->sermondescription, $limit = 50, $end = '...') }}
+                                    </td>
                                     <td>
                                         <a href="#" class="text-danger"
                                             onclick="deleteSermonNotes({{ $sermonnote->id }})">Delete</a>

@@ -14,7 +14,7 @@ use DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Laravel\Jetstream\HasProfilePhoto;
 class AdminController extends Controller
 {
     //
@@ -54,6 +54,32 @@ class AdminController extends Controller
     {
         return view('admin.pages.profile_page');
     }
+    public function updateProfileInformation(Request $request)
+    {
+        // Validate the request inputs
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Update the user's profile
+        $user = Auth::user();
+        $user->update($data);
+    
+        // Handle photo upload if applicable
+        if ($request->hasFile('photo')) {
+            $user->updateProfilePhoto($request->file('photo'));
+        }
+    
+        // Flash a success message and redirect
+        return redirect()->route('profile')->with('status', 'Profile information updated successfully!');
+    }
+    
+
+
+
+
 
     public function validateAndMoveImage($file)
     {
@@ -189,7 +215,7 @@ class AdminController extends Controller
     public function newsermonnotes(Request $request)
     {
         $request->validate([
-            'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
+            'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:5120',
         ]);
         $notesfile = $request->file('notesupload');
         if ($notesfile) {

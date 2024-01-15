@@ -25,6 +25,15 @@
 </head>
 
 <body>
+    @php
+        use Illuminate\Support\Carbon;
+
+        $today = Carbon::now();
+
+        $upcomingEvents = App\Models\Event::where('Event_Date', '>=', $today)->get();
+        $pastEvents = App\Models\Event::where('Event_Date', '<', $today)->get();
+
+    @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
@@ -52,10 +61,8 @@
                         <i class="fa fa-chevron-left"></i>
                     </button>
                     <div class="scroll-images">
-                        @php
-                            $events = App\Models\Event::all();
-                        @endphp
-                        @foreach ($events as $event)
+
+                        @foreach ($upcomingEvents as $event)
                             <div class="scroll-card"
                                 onclick="openupdateModal('{{ $event->id }}', '{{ $event->Event_Title }}', '{{ $event->Event_Date }}', '{{ $event->Event_Description }}', '{{ $event->Img_Path }}')">
                                 <div class="card-body">
@@ -67,7 +74,7 @@
                                         <p class="card-text">{{ $event->Event_Date }}</p>
                                     </small>
                                     <p class="card-text">
-                                        {{ $event->Event_Description }}
+                                        {{ Illuminate\Support\Str::limit($event->Event_Description, $limit = 50, $end = '...') }}
                                     </p>
 
                                 </div>
@@ -86,10 +93,8 @@
                         <i class="fa fa-chevron-left"></i>
                     </button>
                     <div class="scroll-images">
-                        @php
-                            $events = App\Models\Event::all();
-                        @endphp
-                        @foreach ($events as $event)
+
+                        @foreach ($pastEvents as $event)
                             <div class="scroll-card">
                                 <div class="card-body">
                                     <img style="height: 200px; width: 300px;" alt="image"
@@ -100,7 +105,8 @@
                                         <p class="card-text">{{ $event->Event_Date }}</p>
                                     </small>
                                     <p class="card-text">
-                                        {{ $event->Event_Description }}
+                                        {{ Illuminate\Support\Str::limit($event->Event_Description, $limit = 100, $end = '...') }}
+
                                     </p>
 
                                 </div>
@@ -156,7 +162,7 @@
                             <label for="event_date" class="form-label">Event Date</label>
                             <input type="date" class="form-control" id="event_date" name="event_date" required>
                         </div>
-                     
+
 
                         <div class="mb-3">
                             <label for="event_description" class="form-label">Description</label>
