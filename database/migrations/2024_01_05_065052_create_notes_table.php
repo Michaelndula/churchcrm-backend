@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id_fk');
             $table->string('note_topic');
+            $table->string('note_img')->nullable();
             $table->foreign('user_id_fk')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
