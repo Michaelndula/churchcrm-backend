@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('notesupload');
             $table->longtext('sermondescription');
+            $table->string('notesimage')->nullable();
             $table->timestamps();
         });
     }
