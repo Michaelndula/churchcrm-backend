@@ -9,6 +9,7 @@ use App\Models\SermonNotes;
 use App\Models\Sermons;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
@@ -51,7 +52,6 @@ class MobileApiController extends Controller
 
         if (Auth::attempt($credentials)) {
             $token = $request->user()->createToken('authToken')->plainTextToken;
-
             $user = Auth::id();
 
             return response()->json(
@@ -70,12 +70,28 @@ class MobileApiController extends Controller
         $validatedData = $request->validate([
             'note_topic' => 'required|string',
             'content' => 'required|string',
+            'note_img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         
-        // Only send to the database the topic and user ID
         $notes = new Note();
+        $notes_image_thumbnail = $validatedData['note_img'];
+        if ($notes_image_thumbnail) {
+            $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
+            $fileExtension = strtolower($notes_image_thumbnail->getClientOriginalExtension());
+
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
+            }
+            $notesThumbnailFile = time() . '.' . $fileExtension;
+            $notes_image_thumbnail->move('User_Notes_Thumbnails/', $notesThumbnailFile);
+            $notes->note_img = $notesThumbnailFile;
+        }
+
         $notes->note_topic = $validatedData['note_topic'];
         $notes->user_id_fk = $request->user_id_fk;
+        
         $notes->save();
 
         $jsonFilePath = Storage::path('UserNotes\notes_file.json');
@@ -98,6 +114,7 @@ class MobileApiController extends Controller
     }
 
     public function displayNotes($id) {
+    
         // Find all notes for the logged user
         $user = User::where('id', $id)->first();
 
