@@ -158,6 +158,14 @@ $previousSermons = App\Models\Sermons::orderBy('id', 'desc')->skip(6)->take(PHP_
                                 </div>
                             </div>
                             <div class="mb-3">
+                                <div class="form-group mb-4">
+                                    <label>Upload sermon notes with an image (Optional)</label><br>
+                                    <label for="Notes_Thumbnail" class="custom-file-upload">
+                                        Upload </label>
+                                    <input type="file" class="file" name="Notes_Thumbnail" id="Notes_Thumbnail" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
                                 <label for="Sermon_Description" class="form-label">Sermon Description</label>
                                 <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30" rows="10"
                                     placeholder="Sermon Description"></textarea>
