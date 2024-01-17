@@ -110,6 +110,16 @@
 
                             </div>
                             <div class="form-group mb-4">
+
+
+                                <label>Upload Image with Notes (Optional)</label><br>
+                                <label for="notesimage" class="custom-file-upload">
+                                    Upload
+                                </label>
+                                <input id="notesimage" name="notesimage" type="file" />
+
+                            </div>
+                            <div class="form-group mb-4">
                                 <label for="sermondescription">Add Description</label>
                                 <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"
                                     placeholder="Add Description"></textarea>

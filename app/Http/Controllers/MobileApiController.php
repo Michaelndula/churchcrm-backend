@@ -30,7 +30,8 @@ class MobileApiController extends Controller
     public function fetchSermonnotes()
     {
         $data = SermonNotes::all();
-        return response()->json($data);
+        $notes = Sermons::select('Notes_Thumbnail', 'Sermon_Notes')->get();
+        return response()->json(['data' => $data, 'notes' => $notes]);
     }
     public function fetchSermons()
     {
@@ -119,7 +120,7 @@ class MobileApiController extends Controller
         $user = User::where('id', $id)->first();
 
         if ($user) {
-            $data = Note::where('user_id_fk', $user->id)->get();
+            $data = Note::where('user_id_fk', $user->id)->orderBy('updated_at', 'desc')->get();
             // Get the created date
             // $createdAtDate = Carbon::parse($data->created_at)->toDateString();
             return response()->json($data);
@@ -128,17 +129,17 @@ class MobileApiController extends Controller
         }
     }
 
-    public function sermonAndNote($id) {
-        $data = Sermons::where('id', $id)->first();
+    // public function sermonAndNote($id) {
+    //     $data = Sermons::where('id', $id)->first();
 
-        $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
-        $parser = new \Smalot\PdfParser\Parser();
-        $pdf = $parser->parseFile($pdfFile);
-        $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
-        $data->text = $text;
+    //     $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
+    //     $parser = new \Smalot\PdfParser\Parser();
+    //     $pdf = $parser->parseFile($pdfFile);
+    //     $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
+    //     $data->text = $text;
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 
 
 }
