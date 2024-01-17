@@ -23,8 +23,13 @@
 
 <body>
     @php
-$LatestSermons = App\Models\Sermons::latest()->take(6)->get();
-$previousSermons = App\Models\Sermons::orderBy('id', 'desc')->skip(6)->take(PHP_INT_MAX)->get();
+        $LatestSermons = App\Models\Sermons::latest()
+            ->take(6)
+            ->get();
+        $previousSermons = App\Models\Sermons::orderBy('id', 'desc')
+            ->skip(6)
+            ->take(PHP_INT_MAX)
+            ->get();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -56,21 +61,17 @@ $previousSermons = App\Models\Sermons::orderBy('id', 'desc')->skip(6)->take(PHP_
                             <i class="fas fa-angle-left"></i>
                         </button>
                         <div class="scroll-images">
-
                             @foreach ($LatestSermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
                                             src="SermonThumbnails/{{ $sermon->Thumbnail }}">
 
-                                        <h4 class="card-title">{{ $sermon->Title }}</h4>
-                                        <small>
-                                            <p class="card-text">{{ $sermon->Sermon_Link }}</p>
-                                        </small>
-                                        <p class="card-text">
-                                            {{ $sermon->Sermon_Description }}
-                                        </p>
+                                        <h6 class="card-title">{{ $sermon->Title }}</h6>
 
+                                        <small class="card-text">
+                                            {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 50, $end = '...') }}
+                                        </small>
                                     </div>
                                 </div>
                             @endforeach
@@ -79,14 +80,9 @@ $previousSermons = App\Models\Sermons::orderBy('id', 'desc')->skip(6)->take(PHP_
                             <i class="fas fa-angle-right"></i>
                         </button>
                     </div>
-
-
-
-
                     <div class="dashboard-header">
                         <h4 class="margin-top 20">Previous Sermons</h4>
                     </div>
-                    {{-- cards display --}}
                     <div class="cover">
                         <button class="circle-icon left" onclick="leftScroll()">
                             <i class="fa fa-chevron-left"></i>

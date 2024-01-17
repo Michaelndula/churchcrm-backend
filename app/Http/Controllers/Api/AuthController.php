@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -21,7 +22,7 @@ class AuthController extends Controller
         $user = AppUser::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
-            'phone' =>$userData['phone'],
+            'phone' => $userData['phone'],
             'password' => bcrypt($userData['password']),
         ]);
 
@@ -37,18 +38,16 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::appuser();
-        $token = $user->createToken('authToken')->accessToken;
+        if (Auth::guard('app_users')->attempt($credentials)) {
+            $user = Auth::guard('app_users')->user();
 
-        // return response(['user' => $user, 'access_token' => $token]);
+            $token = $user->createToken('authToken')->plainTextToken;
 
-            $token = $request->user()->createToken('authToken')->plainTextToken;
-
+            // Return the token as a JSON response
             return response()->json(['token' => $token]);
         }
 
+        // If authentication fails, return an unauthorized response
         return response()->json(['error' => 'Unauthorized'], 401);
     }
 }
-
