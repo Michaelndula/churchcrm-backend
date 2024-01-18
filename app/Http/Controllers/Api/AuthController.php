@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AppUser;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -43,11 +47,9 @@ class AuthController extends Controller
 
             $token = $user->createToken('authToken')->plainTextToken;
 
-            // Return the token as a JSON response
-            return response()->json(['token' => $token]);
+            return response()->json(['token' => $token, 'userId' => $user->id]);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        // If authentication fails, return an unauthorized response
-        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }
