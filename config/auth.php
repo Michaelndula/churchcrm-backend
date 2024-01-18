@@ -13,7 +13,7 @@ return [
             'provider' => 'users',
         ],
 
-        'api' => [
+        'app_users' => [
             'driver' => 'sanctum',
             'provider' => 'app_users',
         ],
