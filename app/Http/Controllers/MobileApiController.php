@@ -26,7 +26,8 @@ class MobileApiController extends Controller
     public function fetchSermonnotes()
     {
         $data = SermonNotes::all();
-        return response()->json($data);
+        $notes = Sermons::select('Notes_Thumbnail', 'Sermon_Notes')->get();
+        return response()->json(['data' => $data, 'notes' => $notes]);
     }
     public function fetchSermons()
     {
@@ -95,11 +96,11 @@ class MobileApiController extends Controller
     {
         $data = Sermons::where('id', $id)->first();
 
-        $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
-        $parser = new \Smalot\PdfParser\Parser();
-        $pdf = $parser->parseFile($pdfFile);
-        $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
-        $data->text = $text;
+    //     $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
+    //     $parser = new \Smalot\PdfParser\Parser();
+    //     $pdf = $parser->parseFile($pdfFile);
+    //     $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
+    //     $data->text = $text;
 
         return response()->json($data);
     }
