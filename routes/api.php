@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //the auth functions
 Route::post('/register', [AuthController::class, 'register_user']);
-Route::post('/login', [MobileApiController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // fetch of the api data
 Route::get('/fetchEvents', [MobileApiController::class, 'fetchEvents']);
@@ -45,7 +45,7 @@ Route::get('/profile/{userId}', [MobileApiController::class, 'fetchProfile']);
 
 // Notes
 Route::post('/newNotes', [MobileApiController::class, 'createNotes']);
-Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
+Route::get('/showNotes', [MobileApiController::class, 'displayNotes']);
 
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
