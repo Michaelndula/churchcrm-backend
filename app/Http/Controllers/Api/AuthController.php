@@ -6,50 +6,45 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AppUser;
-use App\Models\User;
-
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
 
     public function register_user(Request $request)
     {
-        $userData = $request->validate([
+        $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|string|max:12',
-            'password' => 'required|min:8',
+            'email' => 'required|email|unique:app_users,email',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = AppUser::create([
-            'name' => $userData['name'],
-            'email' => $userData['email'],
-            'phone' => $userData['phone'],
-            'password' => bcrypt($userData['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
 
         $token = $user->createToken('authToken')->plainTextToken;
+        return response()->json(['user' => $user, 'message' => 'App user registered successfully']);
 
-        return response()->json(['token' => $token]);
+        // return response()->json(['token' => $token]);
     }
     public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
-
-        if (Auth::guard('app_users')->attempt($credentials)) {
-            $user = Auth::guard('app_users')->user();
-
-            $token = $user->createToken('authToken')->plainTextToken;
-
-            return response()->json(['token' => $token, 'userId' => $user->id]);
-        } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $user = AppUser::where('email', $credentials['email'])->first();
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            return response()->json([
+                'user' => $user,
+                'access_token' => $user->createToken('auth_token')->plainTextToken,
+                'message' => 'User logged in successfully',
+            ]);
         }
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 }

@@ -9,11 +9,7 @@ use App\Models\SermonNotes;
 use App\Models\Sermons;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Contracts\Support\ValidatedData;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
-use PDFParser;
 
 class MobileApiController extends Controller
 {
@@ -43,55 +39,21 @@ class MobileApiController extends Controller
         return response()->json($data);
     }
 
-    public function login(Request $request)
+   
+
+    public function createNotes(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $token = $request->user()->createToken('authToken')->plainTextToken;
-            $user = Auth::id();
-
-            return response()->json(
-                [
-                    'token' => $token,
-                    'email' => $credentials['email'],
-                    'userId' => $user,
-                ]
-            );
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
-    }
-
-    public function createNotes(Request $request) {
+        // ===== Pending work on the upload of the image =====//
         $validatedData = $request->validate([
             'note_topic' => 'required|string',
             'content' => 'required|string',
-            'note_img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
         $notes = new Note();
-        $notes_image_thumbnail = $validatedData['note_img'];
-        if ($notes_image_thumbnail) {
-            $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
-            $fileExtension = strtolower($notes_image_thumbnail->getClientOriginalExtension());
-
-            if (!in_array($fileExtension, $validExtensions)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
-            }
-            $notesThumbnailFile = time() . '.' . $fileExtension;
-            $notes_image_thumbnail->move('User_Notes_Thumbnails/', $notesThumbnailFile);
-            $notes->note_img = $notesThumbnailFile;
-        }
-
+        
         $notes->note_topic = $validatedData['note_topic'];
         $notes->user_id_fk = $request->user_id_fk;
-        
+
         $notes->save();
 
         $jsonFilePath = Storage::path('UserNotes\notes_file.json');
@@ -113,22 +75,24 @@ class MobileApiController extends Controller
         file_put_contents($jsonFilePath, json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    public function displayNotes($id) {
+    public function displayNotes()
+    {
+        $jsonFilePath = Storage::path('UserNotes\notes_file.json');
     
-        // Find all notes for the logged user
-        $user = User::where('id', $id)->first();
-
-        if ($user) {
-            $data = Note::where('user_id_fk', $user->id)->get();
-            // Get the created date
-            // $createdAtDate = Carbon::parse($data->created_at)->toDateString();
-            return response()->json($data);
+        if (file_exists($jsonFilePath)) {
+            $existingNotes = file_get_contents($jsonFilePath);
+            $notesData = json_decode($existingNotes, true) ?? [];
+            
+            //returning the data 
+            return response()->json(['data' => $notesData]);
         } else {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['message' => 'No notes found', 'data' => []]);
         }
     }
+    
 
-    public function sermonAndNote($id) {
+    public function sermonAndNote($id)
+    {
         $data = Sermons::where('id', $id)->first();
 
         $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
@@ -139,6 +103,4 @@ class MobileApiController extends Controller
 
         return response()->json($data);
     }
-
-
 }
