@@ -37,14 +37,19 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
+    
         $user = AppUser::where('email', $credentials['email'])->first();
+    
         if ($user && Hash::check($credentials['password'], $user->password)) {
             return response()->json([
+                'user_id' => $user->id,
                 'user' => $user,
                 'access_token' => $user->createToken('auth_token')->plainTextToken,
                 'message' => 'User logged in successfully',
             ]);
         }
+    
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+    
 }

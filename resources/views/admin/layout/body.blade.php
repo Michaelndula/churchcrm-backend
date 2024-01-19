@@ -84,7 +84,7 @@
                 </thead>
                 <tbody>
                     @php
-                        $users = App\Models\User::OrderBy('id', 'desc')
+                        $users = App\Models\AppUser::OrderBy('id', 'desc')
                             ->take(5)
                             ->get();
                     @endphp
