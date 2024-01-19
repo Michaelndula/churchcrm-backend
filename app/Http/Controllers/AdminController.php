@@ -283,7 +283,7 @@ class AdminController extends Controller
     public function newsermonnotes(Request $request)
     {
         $sermonnotes = new SermonNotes();
-        $request->validate([
+        $validate = $request->validate([
             'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:5120',
             'notesimage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
@@ -301,10 +301,10 @@ class AdminController extends Controller
             $notesfile->move('SermonNotes/', $notesfileName);
         }
 
-        $notes_image_thumbnail = $request->file('notesimage');
-        if ($notes_image_thumbnail) {
+        $notes_thumbnail = $validate['notesimage'];
+        if ($notes_thumbnail) {
             $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
-            $fileExtension = strtolower($notes_image_thumbnail->getClientOriginalExtension());
+            $fileExtension = strtolower($notes_thumbnail->getClientOriginalExtension());
 
             if (!in_array($fileExtension, $validExtensions)) {
                 return redirect()
@@ -312,11 +312,11 @@ class AdminController extends Controller
                     ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
             }
             $notesThumbnailFile = time() . '.' . $fileExtension;
-            $notes_image_thumbnail->move('Notes_Thumbnails/', $notesThumbnailFile);
-            $sermonnotes->notesimage = $notesThumbnailFile;
+            $notes_thumbnail->move('Notes_Thumbnails/', $notesThumbnailFile);
         }
 
         $sermonnotes->notesupload = $notesfileName;
+        $sermonnotes->notesimage = $notesThumbnailFile;
         $sermonnotes->sermondescription = $request->sermondescription;
         $sermonnotes->save();
 

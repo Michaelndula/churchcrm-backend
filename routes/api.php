@@ -45,7 +45,7 @@ Route::get('/profile/{userId}', [MobileApiController::class, 'fetchProfile']);
 
 // Notes
 Route::post('/newNotes', [MobileApiController::class, 'createNotes']);
-Route::get('/showNotes', [MobileApiController::class, 'displayNotes']);
+Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
 
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
