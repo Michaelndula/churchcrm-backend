@@ -15,23 +15,23 @@ class MobileApiController extends Controller
 {
     public function fetchEvents()
     {
-        $data = Event::all();
+        $data = Event::orderBy('id', 'desc')->get();
         return response()->json($data);
     }
     public function fetchAnnouncements()
     {
-        $data = Announcement::all();
+        $data = Announcement::orderBy('updated_at', 'desc')->get();
         return response()->json($data);
     }
     public function fetchSermonnotes()
     {
-        $data = SermonNotes::all();
-        $notes = Sermons::select('Notes_Thumbnail', 'Sermon_Notes')->get();
-        return response()->json(['data' => $data, 'notes' => $notes]);
+        $data = SermonNotes::orderBy('id', 'desc')->get();
+        // $notes = Sermons::select('Notes_Thumbnail', 'Sermon_Notes')->get();
+        return response()->json($data);
     }
     public function fetchSermons()
     {
-        $data = Sermons::all();
+        $data = Sermons::orderBy('id', 'desc')->get();
         return response()->json($data);
     }
     public function fetchProfile($id)
@@ -76,18 +76,18 @@ class MobileApiController extends Controller
         file_put_contents($jsonFilePath, json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    public function displayNotes()
+    public function displayNotes($id)
     {
-        $jsonFilePath = Storage::path('UserNotes\notes_file.json');
-    
-        if (file_exists($jsonFilePath)) {
-            $existingNotes = file_get_contents($jsonFilePath);
-            $notesData = json_decode($existingNotes, true) ?? [];
-            
-            //returning the data 
-            return response()->json(['data' => $notesData]);
+        // Find all notes for the logged user
+        $user = User::where('id', $id)->first();
+
+        if ($user) {
+            $data = Note::where('user_id_fk', $user->id)->get();
+            // Get the created date
+            // $createdAtDate = Carbon::parse($data->created_at)->toDateString();
+            return response()->json($data);
         } else {
-            return response()->json(['message' => 'No notes found', 'data' => []]);
+            return response()->json(['error' => 'User not found'], 404);
         }
     }
     
