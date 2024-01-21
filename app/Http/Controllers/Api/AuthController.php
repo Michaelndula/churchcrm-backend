@@ -15,8 +15,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'phone' => 'required|string|max:12|min:10',
             'email' => 'required|email|unique:app_users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
+            'confirmpassword' => 'required|string|min:8' 
         ]);
 
         $user = AppUser::create([
