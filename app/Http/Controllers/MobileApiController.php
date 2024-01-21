@@ -9,6 +9,7 @@ use App\Models\SermonNotes;
 use App\Models\Sermons;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\AppUser;
 use Illuminate\Support\Facades\Storage;
 
 class MobileApiController extends Controller
@@ -34,9 +35,9 @@ class MobileApiController extends Controller
         $data = Sermons::orderBy('id', 'desc')->get();
         return response()->json($data);
     }
-    public function fetchProfile($id)
+    public function fetchProfile($userId)
     {
-        $data = User::where('id', $id)->first();
+        $data = AppUser::where('id', $userId)->first();
         return response()->json($data);
     }
 
