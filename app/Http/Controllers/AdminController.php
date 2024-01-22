@@ -280,6 +280,7 @@ class AdminController extends Controller
         }
     }
 
+    //Sermon notes start
     public function newsermonnotes(Request $request)
     {
         $sermonnotes = new SermonNotes();
@@ -287,41 +288,41 @@ class AdminController extends Controller
             'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:5120',
             'notesimage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
+    
         $notesfile = $request->file('notesupload');
-        if ($notesfile) {
-            $validExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx'];
-            $fileExtension = strtolower($notesfile->getClientOriginalExtension());
-
-            if (!in_array($fileExtension, $validExtensions)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Invalid file format. Please upload a PDF, DOC, DOCX, PPT, or PPTX file.');
-            }
-            $notesfileName = time() . '.' . $fileExtension;
-            $notesfile->move('SermonNotes/', $notesfileName);
-        }
-
+        $notesThumbnailFile = $this->uploadEventFile($notesfile, ['pdf', 'doc', 'docx', 'ppt', 'pptx'], 'SermonNotes/');
+    
         $notes_thumbnail = $validate['notesimage'];
-        if ($notes_thumbnail) {
-            $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
-            $fileExtension = strtolower($notes_thumbnail->getClientOriginalExtension());
-
-            if (!in_array($fileExtension, $validExtensions)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
-            }
-            $notesThumbnailFile = time() . '.' . $fileExtension;
-            $notes_thumbnail->move('Notes_Thumbnails/', $notesThumbnailFile);
-        }
-
-        $sermonnotes->notesupload = $notesfileName;
-        $sermonnotes->notesimage = $notesThumbnailFile;
+        $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'webp', 'svg'], 'Notes_Thumbnails/');
+    
+        $sermonnotes->notesupload = $notesThumbnailFile['file_name'];
+        $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];
         $sermonnotes->sermondescription = $request->sermondescription;
         $sermonnotes->save();
-
+    
         return redirect()->back();
     }
+    
+    private function uploadEventFile($file, $validExtensions, $destination)
+    {
+        if ($file) {
+            $fileExtension = strtolower($file->getClientOriginalExtension());
+    
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid file format. Please upload a valid file.');
+            }
+    
+            $fileName = time() . '.' . $fileExtension;
+            $file->move($destination, $fileName);
+    
+            return ['file_name' => $fileName, 'thumbnail_file_name' => $fileName];
+        }
+    
+        return null;
+    }
+    
 
     public function deletesermonnotes($id)
     {
