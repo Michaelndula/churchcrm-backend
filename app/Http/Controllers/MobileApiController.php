@@ -80,12 +80,10 @@ class MobileApiController extends Controller
     public function displayNotes($id)
     {
         // Find all notes for the logged user
-        $user = User::where('id', $id)->first();
+        $user = AppUser::where('id', $id)->first();
 
         if ($user) {
             $data = Note::where('user_id_fk', $user->id)->get();
-            // Get the created date
-            // $createdAtDate = Carbon::parse($data->created_at)->toDateString();
             return response()->json($data);
         } else {
             return response()->json(['error' => 'User not found'], 404);
