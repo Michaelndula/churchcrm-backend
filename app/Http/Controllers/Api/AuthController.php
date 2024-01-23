@@ -13,25 +13,31 @@ class AuthController extends Controller
 
     public function register_user(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
             'email' => 'required|email|unique:app_users,email',
             'password' => 'required|string|min:8',
-            'confirmpassword' => 'required|string|min:8' 
         ]);
+        $password = $request->password;
+        $confirmpassword = $request->confirmpassword;
+        if ($password == $confirmpassword) {
+            $user = new AppUser();
 
-        $user = AppUser::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->phone = $validated['phone'];
+            $user->password = Hash::make($password);
 
-
-        $token = $user->createToken('authToken')->plainTextToken;
-        return response()->json(['user' => $user, 'message' => 'App user registered successfully']);
-
-        // return response()->json(['token' => $token]);
+            $save = $user->save();
+            
+            if ($save) {
+                $token = $user->createToken('authToken')->plainTextToken;
+                return response()->json(['user' => $user, 'message' => 'App user registered successfully']);
+            }
+        } else {
+            return response()->json(['message' => 'Password do not match']);
+        }
     }
     public function login(Request $request)
     {
@@ -39,9 +45,9 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-    
+
         $user = AppUser::where('email', $credentials['email'])->first();
-    
+
         if ($user && Hash::check($credentials['password'], $user->password)) {
             return response()->json([
                 'user_id' => $user->id,
@@ -50,8 +56,7 @@ class AuthController extends Controller
                 'message' => 'User logged in successfully',
             ]);
         }
-    
+
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
-    
 }
