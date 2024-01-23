@@ -83,7 +83,7 @@ class MobileApiController extends Controller
         $user = AppUser::where('id', $id)->first();
 
         if ($user) {
-            $data = Note::where('user_id_fk', $user->id)->get();
+            $data = Note::where('user_id_fk', $user->id)->orderBy('id', 'desc')->get();
             return response()->json($data);
         } else {
             return response()->json(['error' => 'User not found'], 404);
