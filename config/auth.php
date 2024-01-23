@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'defaults' => [
@@ -35,8 +34,14 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
+            'expire' => 30,
+            'throttle' => 30,
+        ],
+        'app_users' => [
+            'provider' => 'app_users',
+            'table' => 'password_reset_tokens',
+            'expire' => 30,
+            'throttle' => 30,
         ],
     ],
 

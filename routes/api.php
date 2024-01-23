@@ -58,4 +58,5 @@ Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermon
 // Forgot Password
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 // Reset Password
-Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+Route::get('/showResetForm/{token}/{email}', [ResetPasswordController::class, 'showResetForm'])->name('appuser_reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('appuser_reset_password');
