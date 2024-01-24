@@ -50,6 +50,10 @@ Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
 
+// Download notes
+Route::get('/download_notes/{sermonId}', [MobileApiController::class, 'downloadSermonNotes']);
+
+
 
 
 
