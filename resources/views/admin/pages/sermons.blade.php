@@ -46,6 +46,7 @@
                 <div class="dashboard-header">
                     <h1>Sermons</h1>
                     <hr>
+                    @include('admin.layout.error')
                 </div>
 
                 <section class="center-btn-modal">

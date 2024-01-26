@@ -47,6 +47,8 @@
             <div class="dashboard-header">
                 <h1>Events</h1>
                 <hr>
+                @include('admin.layout.error')
+
             </div>
             <section class="center-btn-modal">
                 <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
@@ -61,7 +63,6 @@
                         <i class="fa fa-chevron-left"></i>
                     </button>
                     <div class="scroll-images">
-
                         @foreach ($upcomingEvents as $event)
                             <div class="scroll-card"
                                 onclick="openupdateModal('{{ $event->id }}', '{{ $event->Event_Title }}', '{{ $event->Event_Date }}', '{{ $event->Event_Description }}', '{{ $event->Img_Path }}')">
@@ -120,7 +121,8 @@
             </section>
 
         </div>
-        {{-- modal section  Add/Update Event --}}
+
+        {{-- Event Modal --}}
         <div id="modal" class="modal">
             <div class="modal-content">
                 <div class="modal-head">
@@ -140,7 +142,6 @@
                                             <label for="eventupload" class="custom-file-upload">
                                                 Add Event Image
                                             </label>
-                                            <!-- Add the onchange attribute to trigger the displayImage function -->
                                             <input type="file" class="file" name="eventupload" id="eventupload"
                                                 onchange="displayImage()" />
                                         </div>

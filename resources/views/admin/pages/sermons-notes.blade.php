@@ -37,8 +37,9 @@
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <h1>Sermon Notes</h1>
-                <p class="text-danger">{{ session('error') }}</p>
                 <hr>
+                @include('admin.layout.error')
+
             </div>
             <section class="center-btn-modal">
                 <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>

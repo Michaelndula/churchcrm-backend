@@ -74,7 +74,7 @@ body {
     display: block;
     width: 250px;
     background-color: var(--blue);
-    /* position: fixed; */
+    position: fixed;
     top: 70px;
     left: 0;
     height: auto;
