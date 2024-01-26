@@ -13,6 +13,9 @@
         $totalsermons = App\Models\Sermons::count();
         $totalsermonsnotes = App\Models\SermonNotes::count();
         $totalevents = App\Models\Event::count();
+        $users = App\Models\User::OrderBy('id', 'desc')
+            ->take(5)
+            ->get();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -35,8 +38,7 @@
                             <div class="card-header bg-transparent"
                                 style="display: flex; justify-content: space-between;">
                                 <h4>Web Users</h4>
-                                <!-- Add New Event Modal -->
-                                <button id="update-user-button" class="btn btn-success" onclick="openAddUserModal()">
+                                <button id="update-user-button" class="btn btn-info" onclick="openAddUserModal()">
                                     <i class="fa fa-user-plus"></i> Add New User
                                 </button>
                             </div>
@@ -58,11 +60,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $users = App\Models\User::OrderBy('id', 'desc')
-                                            ->take(5)
-                                            ->get();
-                                    @endphp
+
                                     @foreach ($users as $user)
                                         <tr class="userId">
                                             <td class="username" data-username={{ $user->name }}>{{ $user->name }}
@@ -150,7 +148,7 @@
                                             <div class="icon-password mb-3">
                                                 <label for="password" class="form-label">Password</label>
                                                 <input id="inpassword" type="text" class="form-control int-bg"
-                                                     name="password" autocomplete="off">
+                                                    name="password" autocomplete="off">
                                             </div>
 
                                             <div class="icon-password mb-3">

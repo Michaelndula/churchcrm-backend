@@ -30,8 +30,8 @@
                     <input id="password" class="form-control int-bg" type="password" placeholder="Passsword"
                         name="password" required autocomplete="current-password" />
                     <i id="passwordIcon" class="fa-solid fa-eye" onclick="displayPassword()"></i>
-    
-    
+
+
                 </div>
                 <div class="flex items-center justify-end mt-4">
                     <button class="btn btn-primary" style="width: 100px; font-size: 16px;">
@@ -42,34 +42,7 @@
         </div>
 
     </section>
-    <script>
-        function displayPassword() {
-
-            var passwordInput = document.getElementById("password");
-            var eyeIcon = document.getElementById("passwordIcon");
-
-            if (!passwordInput) {
-                console.error("Password input not found");
-                return;
-            }
-
-            if (!eyeIcon) {
-                console.error("Eye icon not found");
-                return;
-            }
-
-
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                eyeIcon.classList.remove("fa-eye");
-                eyeIcon.classList.add("fa-eye-slash");
-            } else {
-                passwordInput.type = "password";
-                eyeIcon.classList.remove("fa-eye-slash");
-                eyeIcon.classList.add("fa-eye");
-            }
-        }
-    </script>
+    <script src="assets/js/passworddisplay.js"></script>
 </body>
 
 </html>

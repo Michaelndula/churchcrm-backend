@@ -74,10 +74,10 @@ body {
     display: block;
     width: 250px;
     background-color: var(--blue);
-    position: fixed;
+    /* position: fixed; */
     top: 70px;
     left: 0;
-    height: 100vh;
+    height: auto;
     overflow: hidden;
     transition: display 1s ease;
     transition-delay: 1s;
@@ -240,7 +240,7 @@ h6 {
     padding: 14px;
     text-decoration: none;
     transition: all 0.3s;
-    user-select: none;
+    /* user-select: none; */
     white-space: nowrap;
 }
 
@@ -313,7 +313,6 @@ h6 {
     overflow-x: hidden !important;
     -webkit-box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
     box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
-
 }
 
 .scroll-images::-webkit-scrollbar {
@@ -421,7 +420,7 @@ button {
 
 .profile-modal-btn {
     background-color: #ffffff;
-    border: 1px solid #163c94
+    border: 1px solid #163c94;
 }
 
 .profile-modal-btn a {

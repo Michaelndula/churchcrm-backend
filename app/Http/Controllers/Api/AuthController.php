@@ -13,6 +13,7 @@ class AuthController extends Controller
 
     public function register_user(Request $request)
     {
+        //TODO Adding User Profile image.
         $validated = $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
@@ -27,6 +28,7 @@ class AuthController extends Controller
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             $user->phone = $validated['phone'];
+            $user->profile_photo_path= 'default_user_profile.jpeg';
             $user->password = Hash::make($password);
 
             $save = $user->save();
