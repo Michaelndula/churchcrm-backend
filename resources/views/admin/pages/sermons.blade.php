@@ -31,6 +31,7 @@
             ->take(PHP_INT_MAX)
             ->get();
     @endphp
+
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
             <div>
@@ -70,7 +71,7 @@
                                         <h6 class="card-title">{{ $sermon->Title }}</h6>
 
                                         <small class="card-text">
-                                            {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 50, $end = '...') }}
+                                            {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 30, $end = '...') }}
                                         </small>
                                     </div>
                                 </div>
@@ -88,9 +89,7 @@
                             <i class="fa fa-chevron-left"></i>
                         </button>
                         <div class="scroll-images">
-                            @php
-                                $sermons = App\Models\Sermons::all();
-                            @endphp
+
                             @foreach ($previousSermons as $sermon)
                                 <div class="scroll-card">
                                     <div class="card-body">

@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\AppUser;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-
 class ResetPasswordController extends Controller
 {
-    public function showResetForm(Request $request, $token, $email)
+    public function showResetForm( $token, $email)
     {
 
         return view('auth.reset-appuser-password', [

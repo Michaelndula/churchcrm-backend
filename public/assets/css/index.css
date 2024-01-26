@@ -1,0 +1,7 @@
+.nav-link.active-link {
+    background-color: white;
+}
+
+.nav-link.active-link a {
+    color: blue;
+}

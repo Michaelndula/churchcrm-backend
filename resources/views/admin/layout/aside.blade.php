@@ -74,18 +74,10 @@
                     <i class="fa fa-cog"></i>
                 </span>
                 <span class="title">
-                    Settings
+                    Admin
                 </span>
             </a>
         </li>
-        <style>
-            .nav-link.active-link {
-                background-color: white;
-            }
-
-            .nav-link.active-link a {
-                color: blue;
-            }
-        </style>
+        
     </ul>
 </div>

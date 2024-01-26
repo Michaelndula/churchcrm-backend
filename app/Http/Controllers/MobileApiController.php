@@ -8,7 +8,6 @@ use App\Models\Note;
 use App\Models\SermonNotes;
 use App\Models\Sermons;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\AppUser;
 use Illuminate\Support\Facades\Storage;
 
