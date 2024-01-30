@@ -12,3 +12,6 @@ input[type="file"] {
     color: var(--white);
     padding-left: 10px;
 }
+.form-display{
+    width: 400px;
+}

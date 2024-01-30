@@ -1,3 +1,7 @@
+@php
+    $userId = Illuminate\Support\Facades\Auth::id();
+    $user = App\Models\User::where('id', $userId)->first();
+@endphp
 <div class="topNav">
     <div class="hamburgerMenu" id="toggleSidebar">
         <span>
@@ -5,7 +9,14 @@
         </span>
     </div>
     <div class="profileDetails" onclick="openProfileModal()">
-        <span class="profilePic"><img src="assets/images/user.jpeg" alt="profile-pic"></span>
+        <span class="profilePic">
+            @if ($user->profile_photo_path)
+                <img src="{{ $user->profile_photo_path }}" alt="{{ $user->profile_photo_path }}">
+            @else
+                <img class="nav-profile-img mr-2" src="{{ Auth::user()->profile_photo_url }}"
+                    alt="{{ Auth::user()->name }}" />
+            @endif
+        </span>
         <span class="profileName">Profile</span>
     </div>
 
@@ -16,15 +27,10 @@
                 <div class="close-profile-modal" onclick="closeProfileModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
-                @php
-                use App\Models\User;
-                use Illuminate\Support\Facades\Auth; 
-                $userId = Auth::id();
-                $user = User::where('id', $userId)->first();
-                @endphp
-                <p class="profile-modal-text">{{$user->name}}</p>
+
+                <p class="profile-modal-text">{{ $user->name }}</p>
                 <hr class="profile-modal-hr">
-                <a style="text-decoration: none" href="{{ route('profile')}}">
+                <a style="text-decoration: none" href="{{ route('profile') }}">
                     <p class="profile-modal-text">Manage</p>
                 </a>
             </div>
