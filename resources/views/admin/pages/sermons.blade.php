@@ -3,22 +3,8 @@
 
 <head>
     @include('admin.layout.head')
-    <style>
-        .file {
-            display: none;
-        }
+    <link rel="stylesheet" href="assets/css/files.css">
 
-        .custom-file-upload {
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 6px 12px;
-            cursor: pointer;
-            background-color: var(--blue);
-            color: var(--white);
-            padding-left: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -46,73 +32,79 @@
                 <div class="dashboard-header">
                     <h1>Sermons</h1>
                     <hr>
+                    @include('admin.layout.error')
                 </div>
 
                 <section class="center-btn-modal">
                     <button id="announcementsmodalBtn" onclick="openModal()"> <i class="fa-solid fa-plus mr-2"></i>
                         Add New Sermon</button>
                 </section>
-                <section>
-                    <div class="dashboard-header">
-                        <h1 class="margin-top 20">Latest Sermons</h1>
-                    </div>
-                    {{-- cards display --}}
-                    <div class="cover">
-                        <button class="circle-icon left" onclick="leftScroll()">
-                            <i class="fas fa-angle-left"></i>
-                        </button>
-                        <div class="scroll-images">
-                            @foreach ($LatestSermons as $sermon)
-                                <div class="scroll-card">
-                                    <div class="card-body">
-                                        <img style="height: 200px; width: 300px;" alt="image"
-                                            src="SermonThumbnails/{{ $sermon->Thumbnail }}">
 
-                                        <h6 class="card-title">{{ $sermon->Title }}</h6>
-
-                                        <small class="card-text">
-                                            {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 30, $end = '...') }}
-                                        </small>
-                                    </div>
-                                </div>
-                            @endforeach
+                <!-- Sermons Section -->
+                <section class="sermon-carousel">
+                    <section class="LatestSermons">
+                        <div class="dashboard-header">
+                            <h1 class="margin-top 20">Latest Sermons</h1>
                         </div>
-                        <button class=" circle-icon right" onclick="rightScroll()">
-                            <i class="fas fa-angle-right"></i>
-                        </button>
-                    </div>
-                    <div class="dashboard-header">
-                        <h4 class="margin-top 20">Previous Sermons</h4>
-                    </div>
-                    <div class="cover">
-                        <button class="circle-icon left" onclick="leftScroll()">
-                            <i class="fa fa-chevron-left"></i>
-                        </button>
-                        <div class="scroll-images">
+                        <div class="cover">
+                            <button class="circle-icon left" onclick="scrollSection('latestSermons', 'left')">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <div class="scroll-images">
+                                @foreach ($LatestSermons as $sermon)
+                                    <div class="scroll-card">
+                                        <div class="card-body">
+                                            <img style="height: 200px; width: 300px;" alt="image"
+                                                src="SermonThumbnails/{{ $sermon->Thumbnail }}">
 
-                            @foreach ($previousSermons as $sermon)
-                                <div class="scroll-card">
-                                    <div class="card-body">
-                                        <img style="height: 200px; width: 300px;" alt="image"
-                                            src="SermonThumbnails/{{ $sermon->Thumbnail }}">
+                                            <h6 class="card-title">
+                                                {{ Illuminate\Support\Str::limit($sermon->Title, $limit = 25, $end = '...') }}
+                                            </h6>
 
-                                        <h4 class="card-title">{{ $sermon->Title }}</h4>
-                                        <small>
-                                            <p class="card-text">{{ $sermon->Sermon_Link }}</p>
-                                        </small>
-                                        <p class="card-text">
-                                            {{ $sermon->Sermon_Description }}
-                                        </p>
-
+                                            <small class="card-text">
+                                                {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 30, $end = '...') }}
+                                            </small>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+                            <button class=" circle-icon right" onclick="scrollSection('latestSermons', 'right')">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
                         </div>
-                        <button class="circle-icon right" onclick="rightScroll()">
-                            <i class="fas fa-angle-right"></i>
-                        </button>
-                    </div>
+                    </section>
+
+                    <section class="PreviousSermons">
+                        <div class="dashboard-header">
+                            <h4 class="margin-top 20">Previous Sermons</h4>
+                        </div>
+                        <div class="cover">
+                            <button class="circle-icon left" onclick="scrollSection('previousSermons', 'left')">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <div class="scroll-images">
+                                @foreach ($previousSermons as $sermon)
+                                    <div class="scroll-card">
+                                        <div class="card-body">
+                                            <img style="height: 200px; width: 300px;" alt="image"
+                                                src="SermonThumbnails/{{ $sermon->Thumbnail }}">
+                                            <h4 class="card-title">
+                                                {{ Illuminate\Support\Str::limit($sermon->Title, $limit = 25, $end = '...') }}
+                                            </h4>
+                                            <p class="card-text">
+                                                {{ Illuminate\Support\Str::limit($sermon->Event_Description, $limit = 25, $end = '...') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="circle-icon right" onclick="scrollSection('previousSermons', 'right')">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </section>
                 </section>
+
             </div>
 
             {{-- modal section  Add announcements --}}
@@ -162,8 +154,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="Sermon_Description" class="form-label">Sermon Description</label>
-                                <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30" rows="10"
-                                    placeholder="Sermon Description"></textarea>
+                                <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30"
+                                    rows="10" placeholder="Sermon Description"></textarea>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div>
@@ -183,7 +175,9 @@
             </div>
         </div>
     </div>
+    <script src="assets/js/scroller.js"></script>
     @include('admin.layout.scripts')
+
     <script src="assets/js/toggle_bar.js"></script>
 </body>
 

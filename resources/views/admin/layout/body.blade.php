@@ -2,6 +2,7 @@
     $users = App\Models\AppUser::orderBy('id', 'desc')
         ->take(5)
         ->get();
+    $ifusers = App\Models\AppUser::all()->count();
 @endphp
 
 <div class="dashboard-container" id="dashboardContainer">
@@ -71,86 +72,101 @@
         </div>
     </section>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="card-header bg-transparent">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-header bg-transparent">
                 <h4>New App Users</h4>
             </div>
-
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Membership Status</th>
                         <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($users)
-                            @foreach ($users as $user)
-                                <tr class="userId">
-                                    <td class="username" data-username="{{ $user->name }}">{{ $user->name }}</td>
-                                    <td class="email" data-email="{{ $user->email }}">{{ $user->email }}</td>
-                                    <td class="phone" data-phone="{{ $user->phone }}">{{ $user->phone }}</td>
-                                    <td></td>
-                                    <td>
-                                        <button id="update-user-button" data-userId="{{ $user->id }}"
-                                            style="font-size: 16px"
-                                            onclick="openUserModal('{{ $user->name }}', '{{ $user->email }}', '{{ route('users.update', $user->id) }}')">
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($ifusers > 0)
+                        @foreach ($users as $user)
+                            <tr class="userId">
+                                <td class="username" data-username="{{ $user->name }}">{{ $user->name }}</td>
+                                <td class="email" data-email="{{ $user->email }}">{{ $user->email }}</td>
+                                <td class="phone" data-phone="{{ $user->phone }}">{{ $user->phone }}</td>
+                                <td>{{ $user->membership_status }}</td>
+                                <td>
+                                    <button id="update-user-button" data-userId="{{ $user->id }}"
+                                        style="font-size: 16px"
+                                        onclick="openUserModal('{{ $user->name }}', '{{ $user->email }}', '{{ route('users.update', $user->id) }}')">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                        <div id="user-modal" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-head">
+                                    <h4>{{ $user->name }}</h4>
+                                </div>
+                                <hr>
+                                <div class="modal-body">
+                                    <form class="form" id="user-update-form" action="{{ url('/users', $user->id) }}"
+                                        method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Username</label>
+                                            <input id="user-email" data-target="#username" type="email"
+                                                class="form-control" name="email" value="{{ $user->email }}">
+                                        </div>
 
-                <div id="user-modal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-head">
-                            <h4 id="modal-username"></h4>
+                                        <div class="icon-password mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input id="password" type="text" class="form-control int-bg"
+                                                name="password" autocomplete="password">
+                                            <div class="generator">
+                                                <div class="password">
+                                                    <button class="button generate">Generate</button>
+                                                    <button class="button copy">Copy</button>
+                                                </div>
+                                                <div class="range">
+                                                    <input type="range" min="4" max="24"
+                                                        value="8" />
+                                                    <span>8</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                            <div>
+                                                <button type="button" onclick="closeUserModal()"
+                                                    class="btn btn-outline-primary">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="modal-body">
-                            <form class="form" id="user-update-form" action="" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Username</label>
-                                    <input id="user-email" data-target="#username" type="text" class="form-control"
-                                        name="email" placeholder="">
-                                </div>
+                    @endif
+                </tbody>
+            </table>
 
-                                <div class="icon-password mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input id="password" type="password" class="form-control int-bg" name="password"
-                                        autocomplete="password">
-                                </div>
 
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" onclick="closeUserModal()"
-                                            class="btn btn-outline-primary">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        {{-- User info modal --}}
+    </div>
+    {{-- User info modal --}}
     </section>
-</div>
 
-<script>
+</div>
+@include('admin.layout.scripts')
+
+{{-- <script>
     function openUserModal(username, userEmail, updateUrl) {
         document.getElementById('modal-username').innerText = username;
         document.getElementById('user-email').placeholder = userEmail;
@@ -164,4 +180,4 @@
         // Close the modal
         document.getElementById('user-modal').style.display = 'none';
     }
-</script>
+</script> --}}

@@ -7,9 +7,9 @@
 
 <body>
     @php
-        // use App\Models\User;
+        $appusers = App\Models\AppUser::all();
+        $webusers = App\Models\User::all();
 
-        $users = App\Models\AppUser::all();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($appusers as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
@@ -62,45 +62,43 @@
                     </table>
                 </div>
             </div>
-
-            <style>
-                /* generate password css */
-                .generator {
-                    background-color: #f5f5f5;
-                    width: auto;
-                    margin: 10px auto;
-                    padding: 20px;
-                    border-radius: 10px;
-                }
-
-                div.password {
-                    display: grid;
-                    grid-template-columns: auto min-content;
-                    border-radius: 10px;
-                    overflow: hidden;
-                }
-
-                .button {
-                    background-color: #0f8fc2;
-                    color: #fff;
-                    text-transform: uppercase;
-                    padding: 5px 15px;
-                    border: 0;
-                    border-radius: 10px;
-                }
-
-                div.password .button {
-                    border-radius: 0;
-                }
-
-                .range {
-                    margin: 10px 0;
-                    display: grid;
-                    grid-template-columns: 1fr min-content;
-                }
-            </style>
-
-
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header bg-transparent">
+                        <h4>New Web Users</h4>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Membership Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($webusers as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->membership_status }}</td>
+                                    <td>
+                                        <a class="text-danger" href="#"
+                                            onclick="deleteUser({{ $user->id }})">Delete</a>
+                                        <button id="update-user-button" class="view-button"
+                                            data-userId={{ $user->id }}
+                                            onclick="openUserModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')">
+                                            View
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             {{-- --User Modal- --}}
             <div id="user-modal" class="modal">
                 <div class="modal-content">
