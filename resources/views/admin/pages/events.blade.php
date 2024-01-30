@@ -34,7 +34,6 @@
                 <h1>Events</h1>
                 <hr>
                 @include('admin.layout.error')
-                {!! $message !!}
             </div>
             <section class="center-btn-modal">
                 <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
