@@ -3,22 +3,8 @@
 
 <head>
     @include('admin.layout.head')
-    <style>
-        .file {
-            display: none;
-        }
+    <link rel="stylesheet" href="assets/css/files.css">
 
-        .custom-file-upload {
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 6px 12px;
-            cursor: pointer;
-            background-color: var(--blue);
-            color: var(--white);
-            padding-left: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -26,12 +12,9 @@
         $LatestSermons = App\Models\Sermons::latest()
             ->take(6)
             ->get();
-        // $previousSermons = App\Models\Sermons::orderBy('id', 'desc')
-        //     ->skip(6)
-        //     ->take(PHP_INT_MAX)
-        //     ->get();
-        $previousSermons = App\Models\Sermons::latest()
-            ->take(6)
+        $previousSermons = App\Models\Sermons::orderBy('id', 'desc')
+            ->skip(6)
+            ->take(PHP_INT_MAX)
             ->get();
     @endphp
 

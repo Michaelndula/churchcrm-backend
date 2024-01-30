@@ -17,10 +17,8 @@
         $upcomingEvents = App\Models\Event::orderBy('Event_Date', 'asc')
             ->where('Event_Date', '>=', $date)
             ->get();
-        $pastEvents = App\Models\Event::orderBy('Event_Date', 'desc')
-            ->where('Event_Date', '>=', $date)
-            ->get();
-        // $pastEvents = App\Models\Event::orderBy('Event_Date' , 'asc')->where('Event_Date', '<', $date)->get();
+       
+        $pastEvents = App\Models\Event::orderBy('Event_Date' , 'asc')->where('Event_Date', '<', $date)->get();
     @endphp
     <div class="dashboard-body" id="page-body">
         <div class="navigation-menu">
