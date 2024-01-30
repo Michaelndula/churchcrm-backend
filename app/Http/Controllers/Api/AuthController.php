@@ -46,13 +46,13 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
-            'email' => 'required|email|unique:app_users,email',
+            'email' => 'required|email',
             'password' => 'required|string|min:8',
-            'profile' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'profile_photo_path' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'membership_status' => 'string',
         ]);
 
-        $profile_pic = $validated['profile'];
+        $profile_pic = $request->file('profile_photo_path');
 
         $user = AppUser::findOrFail($id);
         if($user) {
@@ -62,23 +62,21 @@ class AuthController extends Controller
             $user->password = Hash::make($validated['password']);
             $user->membership_status = $validated['membership_status'];
 
-            //Saving the profile photo
-            // if ($profile_pic) {
-            //     $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
-            //     $fileExtension = strtolower($profile_pic->getClientOriginalExtension());
+            // Saving the profile photo
+            if ($profile_pic) {
+                $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
+                $fileExtension = strtolower($profile_pic->getClientOriginalExtension());
 
-            //     if (!in_array($fileExtension, $validExtensions)) {
-            //         return redirect()
-            //             ->back()
-            //             ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
-            //     }
-            //     $profile_pic_path = time() . '.' . $fileExtension;
-            //     $profile_pic->move('Mobile_App_Profile_Pics/', $profile_pic_path);
-            // }
+                if (!in_array($fileExtension, $validExtensions)) {
+                    return redirect()
+                        ->back()
+                        ->with('error', 'Invalid file format. Please upload a jpeg, jpg,  png, webp, svg file.');
+                }
+                $profile_pic_path = time() . '.' . $fileExtension;
+                $profile_pic->move('Mobile_App_Profile_Pics/', $profile_pic_path);
+            }
 
-            // $user->profile_photo_path = $profile_pic_path;
-            $user->profile_photo_path = 'default_user_profile.jpeg';
-
+            $user->profile_photo_path = $profile_pic_path;
             $user->save();
         }
         else {
