@@ -1,8 +1,19 @@
 <script src="assets/js/toggle_bar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="assets/js/passwordgenerator.js"></script>
-{{-- corrected modal code --}}
 <script>
+    // The Global modal function script
+    function openModal() {
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+
+
+
     // Clossing the modal on outside modal click (The Global Modal)
     document.addEventListener('click', function(event) {
         closeModalOutside(event, 'modal');
@@ -24,11 +35,7 @@
             modal.style.display = 'none';
         }
     }
-
-
-    //  End corrected modal code 
-
-
+    
 
     // the routing function
     const currentRoute = window.location.href;
@@ -40,14 +47,6 @@
         }
     });
 
-    // The Global modal function script
-    function openModal() {
-        document.getElementById('modal').style.display = 'block';
-    }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
 
     //  Start update modal
     function openupdateModal(id, Event_Title, Event_Date, Event_Description, Img_Path) {
@@ -224,7 +223,7 @@
 
         var newFileInput = document.createElement('input');
         newFileInput.type = 'file';
-        newFileInput.style.display = 'none'; 
+        newFileInput.style.display = 'none';
 
         var blob = new Blob([file]);
 
@@ -303,8 +302,8 @@
             }
         });
     }
-//deleteEvent
-function deleteUser(id) {
+    //deleteEvent
+    function deleteUser(id) {
         $.ajax({
             url: '/delete/' + id + '/user/',
             type: 'DELETE',
@@ -320,50 +319,10 @@ function deleteUser(id) {
         });
     }
 
-    // {{-- ------------- Scroll Carousel --------------- --}}
+    
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const scrollImages = document.querySelector(".scroll-images");
-        const scrollLength = scrollImages.scrollWidth - scrollImages.clientWidth;
-        const leftButton = document.querySelector(".left");
-        const rightButton = document.querySelector(".right");
-
-        function checkScroll() {
-            const currentScroll = scrollImages.scrollLeft;
-            if (currentScroll === 0) {
-                leftButton.setAttribute("disabled", "true");
-                rightButton.removeAttribute("disabled");
-            } else if (currentScroll === scrollLength) {
-                rightButton.setAttribute("disabled", "true");
-                leftButton.removeAttribute("disabled");
-            } else {
-                leftButton.removeAttribute("disabled");
-                rightButton.removeAttribute("disabled");
-            }
-        }
-
-        scrollImages.addEventListener("scroll", checkScroll);
-        window.addEventListener("resize", checkScroll);
-        checkScroll();
-
-        function leftScroll() {
-            scrollImages.scrollBy({
-                left: -200,
-                behavior: "smooth"
-            });
-        }
-
-        function rightScroll() {
-            scrollImages.scrollBy({
-                left: 200,
-                behavior: "smooth"
-            });
-        }
-
-        leftButton.addEventListener("click", leftScroll);
-        rightButton.addEventListener("click", rightScroll);
-    });
 </script>
+
 
 
 
