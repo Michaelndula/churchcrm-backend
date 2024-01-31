@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
-    //
+
     //
     public function admin()
     {
@@ -479,27 +479,66 @@ class AdminController extends Controller
         }
     }
 
+    protected function handleUpdateResponse($saved, $successMessage, $failureMessage)
+    {
+        if ($saved) {
+            return redirect()->back()->with('message', $successMessage);
+        } else {
+            return redirect()->back()->with('error', $failureMessage);
+        }
+    }
+
     public function update_admin_profile(Request $request, $id)
     {
-        $request->validate([
-            'email'    => 'required|email|unique:users,email,' . $id,
-            'password' => 'sometimes|nullable|min:6',
-        ]);
-
-        $user = User::findOrfail($id);
+        $user = User::findOrFail($id);
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
+        $user->name = $request->input('name');
         $user->email = $request->input('email');
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
+
+        $profileImage = $request->file('Profile_photo');
+
+        if ($profileImage) {
+            $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
+            $fileExtension = strtolower($profileImage->getClientOriginalExtension());
+
+            if (!in_array($fileExtension, $validExtensions)) {
+                return redirect()->back()->with('error', 'Invalid file format. Please upload a jpeg, jpg, png, webp, svg file.');
+            }
+
+            $profileImageName = time() . '.' . $fileExtension;
+            $profileImage->move('ProfileImage/', $profileImageName);
+            $user->profile_photo_path = 'ProfileImage/' . $profileImageName;
         }
 
         $user->save();
-        return redirect()->back()->with('message', 'Admin updated successfully.');
+        return $this->handleUpdateResponse(true, 'Admin profile updated successfully.', 'Failed to update admin profile.');
     }
+
+    public function update_admin_password(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        if (!Hash::check($request->input('password'), $user->password)) {
+            return redirect()->back()->with('error', 'Incorrect password');
+        }
+
+        $user->password = bcrypt($request->input('newpassword'));
+
+        $saved = $user->save();
+
+        return $this->handleUpdateResponse($saved, 'Password updated successfully.', 'Failed to update password');
+    }
+
+
+
     public function settings()
     {
         return view('admin.pages.settings');
