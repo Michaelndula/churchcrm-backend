@@ -3,22 +3,22 @@
 
 <head>
     @include('admin.layout.head')
+ 
+
 </head>
 
 <body>
     @php
         $announcements = App\Models\Announcement::OrderBy('id', 'desc')->get();
     @endphp
-    <div class="dashboard-body" id="page-body">
-        <div class="navigation-menu">
-            <div>
-                <!-- Top Navigation Menu -->
-                @include('admin.layout.header')
-                <!-- Side Navigation Menu -->
-                @include('admin.layout.aside')
-            </div>
+    <header>
+        @include('admin.layout.header')
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            @include('admin.layout.aside')
         </div>
-        <div class="dashboard-container" id="dashboardContainer">
+        <div class="main">
             <div class="dashboard-header">
                 <h1>Announcements</h1>
                 <hr>
@@ -94,7 +94,7 @@
                                     <tr id="announcement_{{ $announcement->id }}">
                                         <td>{{ $announcement->Topic }}</td>
                                         <td>
-                                        
+
                                             {{ Illuminate\Support\Str::limit($announcement->Message, $limit = 50, $end = '...') }}
                                         </td>
                                         <td>
@@ -155,10 +155,14 @@
                     </div>
                 </div>
             @endif
-
         </div>
     </div>
+    {{-- scripts  --}}
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/usermodal.js"></script>
+    <script src="assets/js/profilemodal.js"></script>
     @include('admin.layout.scripts')
+
 </body>
 
 </html>

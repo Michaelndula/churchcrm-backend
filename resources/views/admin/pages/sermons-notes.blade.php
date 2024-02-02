@@ -3,38 +3,20 @@
 
 <head>
     @include('admin.layout.head')
-    <style>
-        input[type="file"] {
-            display: none;
-        }
-
-        .custom-file-upload {
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 6px 12px;
-            cursor: pointer;
-            background-color: var(--blue);
-            color: var(--white);
-            padding-left: 10px;
-        }
-    </style>
 </head>
 
 <body>
     @php
         $sermonnotes = App\Models\SermonNotes::OrderBy('id', 'desc')->get();
     @endphp
-    <div class="dashboard-body">
-        <div class="navigation-menu">
-            <div>
-                <!-- Top Navigation Menu -->
-                @include('admin.layout.header')
-                <!-- Side Navigation Menu -->
-                @include('admin.layout.aside')
-            </div>
+    <header>
+        @include('admin.layout.header')
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            @include('admin.layout.aside')
         </div>
-        <div class="dashboard-container">
+        <div class="main">
             <div class="dashboard-header">
                 <h1>Sermon Notes</h1>
                 <hr>
@@ -45,47 +27,52 @@
                 <button id="announcementsmodalBtn" onclick="openModal()"><i class="fa-solid fa-plus mr-2"></i>
                     Add Sermon Notes</button>
             </section>
-            <section class="table">
-                <div class="form-container">
-                    <div>
-                        <h4>List of Sermon Notes</h4>
-                        <hr>
+            <section>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-container">
+                            <div>
+                                <h4>List of Sermon Notes</h4>
+                                <hr>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+
+                                        <tr>
+                                            <th>Notes</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach ($sermonnotes as $sermonnote)
+                                            <tr id="sermonnotes_{{ $sermonnote->id }}">
+                                                <td>
+                                                    <a style="text-decoration: none;" target="_blank"
+                                                        href="{{ 'SermonNotes/' . $sermonnote->notesupload }}">
+                                                        {{ $sermonnote->notesupload }}</a>
+                                                </td>
+                                                <td>
+                                                    {{ Illuminate\Support\Str::limit($sermonnote->sermondescription, $limit = 50, $end = '...') }}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="text-danger"
+                                                        onclick="deleteSermonNotes({{ $sermonnote->id }})">Delete</a>
+                                                    <button id="update-user-button" class="view-button"
+                                                        style="font-size: 16px"
+                                                        onclick="openSermonnotesModal({{ $sermonnote->id }}, '{{ $sermonnote->notesupload }}', '{{ $sermonnote->sermondescription }}')">
+                                                        View
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <table class="table">
-                        <thead>
-
-                            <tr>
-                                <th>Notes</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($sermonnotes as $sermonnote)
-                                <tr id="sermonnotes_{{ $sermonnote->id }}">
-                                    <td>
-                                        <a style="text-decoration: none;" target="_blank"
-                                            href="{{ 'SermonNotes/' . $sermonnote->notesupload }}"
-                                            >
-                                            {{ $sermonnote->notesupload }}</a></td>
-                                    <td>
-                                        {{ Illuminate\Support\Str::limit($sermonnote->sermondescription, $limit = 50, $end = '...') }}
-                                    </td>
-                                    <td>
-                                        <a href="#" class="text-danger"
-                                            onclick="deleteSermonNotes({{ $sermonnote->id }})">Delete</a>
-                                        <button id="update-user-button" class="view-button" style="font-size: 16px"
-                                            onclick="openSermonnotesModal({{ $sermonnote->id }}, '{{ $sermonnote->notesupload }}', '{{ $sermonnote->sermondescription }}')">
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-
-                    </table>
-
                 </div>
             </section>
 
@@ -185,12 +172,14 @@
 
                 </div>
             @endif
-
         </div>
-
-
     </div>
+    {{-- scripts  --}}
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/usermodal.js"></script>
+    <script src="assets/js/profilemodal.js"></script>
     @include('admin.layout.scripts')
+
 </body>
 
 </html>

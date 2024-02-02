@@ -1,82 +1,85 @@
-@php
-    $users = App\Models\AppUser::orderBy('id', 'desc')
-        ->take(5)
-        ->get();
-    $ifusers = App\Models\AppUser::all()->count();
-@endphp
+<div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <hr>
+</div>
 
-<div class="dashboard-container" id="dashboardContainer">
-    <div class="dashboard-header">
-        <h1>Dashboard</h1>
-        <hr>
-    </div>
+{{-- card section --}}
+<section class="dashboard-container">
+    <div class="container">
+        <div class="row">
 
-    <section>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-blue order-card">
-                        <div class="card-block">
-                            <h6 class=" m-b-20">Users</h6>
-                            <h2 class="text-left g-blue"><span>{{ $totalusers }}</span><i class="fa fa-user ps-2"></i>
-                            </h2>
-                            <p class="f-right"><a href="{{ route('users') }}">View all</a></p>
-                        </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h6>Users</h6>
+                        <h2 class="f-start "><span>{{ $totalusers }}</span><i
+                                class="fa fa-user ps-2"></i>
+                        </h2>
+                        <p class="f-right"><a href="{{ route('users') }}">View all</a></p>
                     </div>
                 </div>
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-blue order-card">
-                        <div class="card-block">
-                            <h6 class="m-b-20 ">Sermons</h6>
-                            <h2 class="text-left g-blue"><span>{{ $totalsermons }}</span><i
-                                    class="fa fa-solid fa-book-bible ps-2"></i></h2>
-                            <p class="f-right"><a href="{{ route('sermons') }}">View all</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-blue order-card">
-                        <div class="card-block">
-                            <h6 class="m-b-20">Announcements</h6>
-                            <h2 class="text-left g-blue"><span>{{ $totalannouncements }}</span><i
-                                    class="fa fa-solid fa-clipboard-list ps-2"></i>
-                            </h2>
-                            <p class="f-right"><a href="{{ route('announcements') }}">View all</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-blue order-card">
-                        <div class="card-block">
-                            <h6 class="m-b-20 ">Sermon Notes</h6>
-                            <h2 class="text-left g-blue"><span>{{ $totalsermonsnotes }}</span><i
-                                    class="fa fa-solid fa-note-sticky fa-flip-vertical ps-2"></i>
-                            </h2>
-                            <p class="f-right"><a href="{{ route('sermonsnotes') }}">View all</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-blue order-card">
-                        <div class="card-block">
-                            <h6 class=" m-b-20">Events</h6>
-                            <h2 class="text-left g-blue"><span>{{ $totalevents }}</span><i
-                                    class="fa fa-solid fa-calendar-days ps-2"></i></h2>
-                            <p class="f-right"><a href="{{ route('events') }}">View all</a></p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+
+            <div class="col-md-4 col-xl-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h6>Sermons</h6>
+                        <h2 class="f-start "><span>{{ $totalsermons }}</span><i
+                                class="fa fa-solid fa-book-bible ps-2"></i></h2>
+                        <p class="f-right"><a href="{{ route('sermons') }}">View all</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card ">
+                    <div class="card-block">
+                        <h6>Announcements</h6>
+                        <h2 class="f-start "><span>{{ $totalannouncements }}</span><i
+                                class="fa fa-solid fa-clipboard-list ps-2"></i>
+                        </h2>
+                        <p class="f-right"><a href="{{ route('announcements') }}">View all</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card ">
+                    <div class="card-block">
+                        <h6>Sermon Notes</h6>
+                        <h2 class="f-start "><span>{{ $totalsermonsnotes }}</span><i
+                                class="fa fa-solid fa-note-sticky fa-flip-vertical ps-2"></i>
+                        </h2>
+                        <p class="f-right"><a href="{{ route('sermonsnotes') }}">View all</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h6>Events</h6>
+                        <h2 class="f-start "><span>{{ $totalevents }}</span><i
+                                class="fa fa-solid fa-calendar-days ps-2"></i></h2>
+                        <p class="f-right"><a href="{{ route('events') }}">View all</a></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+{{-- end card section --}}
 
+{{-- Table section --}}
+<section>
     <div class="card">
-        <div class="card-body">
-            <div class="card-header bg-transparent">
-                <h4>New App Users</h4>
-            </div>
+
+        <div class="card-header bg-transparent">
+            <h4>New App Users</h4>
+        </div>
+
+        <div class="table-responsive">
+
             <table class="table">
                 <thead>
                     <tr>
@@ -91,93 +94,56 @@
                     @if ($ifusers > 0)
                         @foreach ($users as $user)
                             <tr class="userId">
-                                <td class="username" data-username="{{ $user->name }}">{{ $user->name }}</td>
-                                <td class="email" data-email="{{ $user->email }}">{{ $user->email }}</td>
-                                <td class="phone" data-phone="{{ $user->phone }}">{{ $user->phone }}</td>
+                                <td class="username" data-username="{{ $user->name }}">
+                                    {{ $user->name }}
+                                </td>
+                                <td class="email" data-email="{{ $user->email }}">
+                                    {{ $user->email }}
+                                </td>
+                                <td class="phone" data-phone="{{ $user->phone }}">
+                                    {{ $user->phone }}
+                                </td>
                                 <td>{{ $user->membership_status }}</td>
                                 <td>
                                     <button id="update-user-button" data-userId="{{ $user->id }}"
                                         style="font-size: 16px"
-                                        onclick="openUserModal('{{ $user->name }}', '{{ $user->email }}', '{{ route('users.update', $user->id) }}')">
+                                        onclick="openUserModal('{{ $user->name }}', '{{ $user->email }}')">
                                         View
                                     </button>
                                 </td>
                             </tr>
                         @endforeach
-                        <div id="user-modal" class="modal">
-                            <div class="modal-content">
-                                <div class="modal-head">
-                                    <h4>{{ $user->name }}</h4>
-                                </div>
-                                <hr>
-                                <div class="modal-body">
-                                    <form class="form" id="user-update-form" action="{{ url('/users', $user->id) }}"
-                                        method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Username</label>
-                                            <input id="user-email" data-target="#username" type="email"
-                                                class="form-control" name="email" value="{{ $user->email }}">
-                                        </div>
+                        {{-- User modal --}}
+                        @foreach ($users as $user)
+                            <div id="user-modal-{{ $user->id }}" class="modal">
+                                <div class="modal-content">
+                                    <div class="modal-head">
+                                        <h4>{{ $user->name }}</h4>
+                                    </div>
+                                    <hr>
+                                    <div class="modal-body">
+                                        <p>{{ $user->email }}</p>
 
-                                        <div class="icon-password mb-3">
-                                            <label for="password" class="form-label">Password</label>
-                                            <input id="password" type="text" class="form-control int-bg"
-                                                name="password" autocomplete="password">
-                                            <div class="generator">
-                                                <div class="password">
-                                                    <button class="button generate">Generate</button>
-                                                    <button class="button copy">Copy</button>
-                                                </div>
-                                                <div class="range">
-                                                    <input type="range" min="4" max="24"
-                                                        value="8" />
-                                                    <span>8</span>
-                                                </div>
-                                            </div>
+                                        <p>{{ $user->phone }}</p>
 
-                                        </div>
-
-
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                            </div>
-                                            <div>
-                                                <button type="button" onclick="closeUserModal()"
-                                                    class="btn btn-outline-primary">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        <p>{{ $user->membership_status }}</p>
+                                    </div>
+                                    <div class="modal-footer d-flex">
+                                        <button type="button"
+                                            onclick="closeUserModal('{{ $user->id }}')"
+                                            class="btn btn-outline-primary">
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+                        {{-- End user modal  --}}
                     @endif
                 </tbody>
+
             </table>
-
-
         </div>
     </div>
-    {{-- User info modal --}}
-    </section>
-
-</div>
-@include('admin.layout.scripts')
-
-{{-- <script>
-    function openUserModal(username, userEmail, updateUrl) {
-        document.getElementById('modal-username').innerText = username;
-        document.getElementById('user-email').placeholder = userEmail;
-
-        document.getElementById('user-update-form').action = updateUrl;
-        // Show the modal
-        document.getElementById('user-modal').style.display = 'block';
-    }
-
-    function closeUserModal() {
-        // Close the modal
-        document.getElementById('user-modal').style.display = 'none';
-    }
-</script> --}}
+</section>
+{{-- End table section --}}

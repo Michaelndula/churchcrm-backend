@@ -1,6 +1,7 @@
-<script src="assets/js/toggle_bar.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="assets/js/passwordgenerator.js"></script>
+<script src="assets/js/script.js"></script>
+
 <script>
     // The Global modal function script
     function openModal() {
@@ -37,15 +38,15 @@
     }
     
 
-    // the routing function
-    const currentRoute = window.location.href;
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        const linkHref = link.querySelector('a').href;
-        if (currentRoute.includes(linkHref)) {
-            link.classList.add('active-link');
-        }
-    });
+   
+
+
+
+
+
+
+
+
 
 
     //  Start update modal

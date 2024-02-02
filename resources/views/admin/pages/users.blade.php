@@ -3,24 +3,26 @@
 
 <head>
     @include('admin.layout.head')
+   
+
 </head>
 
 <body>
     @php
         $appusers = App\Models\AppUser::all();
         $webusers = App\Models\User::all();
-
     @endphp
-    <div class="dashboard-body" id="page-body">
-        <div class="navigation-menu">
-            <div>
-                <!-- Top Navigation Menu -->
-                @include('admin.layout.header')
-                <!-- Side Navigation Menu -->
-                @include('admin.layout.aside')
-            </div>
+
+    {{-- Header start --}}
+    <header>
+        @include('admin.layout.header')
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            @include('admin.layout.aside')
         </div>
-        <div class="dashboard-container" id="dashboardContainer">
+        <div class="main">
+
             <div class="dashboard-header">
                 <h1>Users</h1>
                 <hr>
@@ -30,36 +32,39 @@
                     <div class="card-header bg-transparent">
                         <h4>New App Users</h4>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Membership Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($appusers as $user)
+                    <div class="table-responsive">
+
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->membership_status }}</td>
-                                    <td>
-                                        <a class="text-danger" href="#"
-                                            onclick="deleteUser({{ $user->id }})">Delete</a>
-                                        <button id="update-user-button" class="view-button"
-                                            data-userId={{ $user->id }}
-                                            onclick="openUserModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')">
-                                            View
-                                        </button>
-                                    </td>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Membership Status</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($appusers as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->membership_status }}</td>
+                                        <td>
+                                            <a class="text-danger" href="#"
+                                                onclick="deleteUser({{ $user->id }})">Delete</a>
+                                            <button id="update-user-button" class="view-button"
+                                                data-userId={{ $user->id }}
+                                                onclick="openUserModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -67,39 +72,42 @@
                     <div class="card-header bg-transparent">
                         <h4>New Web Users</h4>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Membership Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($webusers as $user)
+                    <div class="table-responsive">
+
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->membership_status }}</td>
-                                    <td>
-                                        <a class="text-danger" href="#"
-                                            onclick="deleteUser({{ $user->id }})">Delete</a>
-                                        <button id="update-user-button" class="view-button"
-                                            data-userId={{ $user->id }}
-                                            onclick="openUserModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')">
-                                            View
-                                        </button>
-                                    </td>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Membership Status</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($webusers as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->membership_status }}</td>
+                                        <td>
+                                            <a class="text-danger" href="#"
+                                                onclick="deleteUser({{ $user->id }})">Delete</a>
+                                            <button id="update-user-button" class="view-button"
+                                                data-userId={{ $user->id }}
+                                                onclick="openUserModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}')">
+                                                View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            {{-- --User Modal- --}}
+            {{-- User Modal --}}
             <div id="user-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-head">
@@ -110,7 +118,6 @@
                         <form class="form" id="user-update-form" action="{{ url('/users', $user->id) }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
                             <div class="mb-3">
                                 <label for="email" class="form-label">Username</label>
                                 <input id="user-email" data-target="#username" type="email" class="form-control"
@@ -152,8 +159,13 @@
             </div>
         </div>
     </div>
+
+    {{-- scripts  --}}
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/usermodal.js"></script>
+    <script src="assets/js/profilemodal.js"></script>
     @include('admin.layout.scripts')
-    <script src="assets/js/toggle_bar.js"></script>
+
 </body>
 
 </html>

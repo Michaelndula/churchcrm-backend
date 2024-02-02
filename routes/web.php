@@ -21,7 +21,7 @@ Route::get('/welcome', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('admin', [AdminController::class, 'admin'])->name('admin');
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Announcements
     Route::get('announcements', [AdminController::class, 'announcements'])->name('announcements');
@@ -58,7 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('events', [AdminController::class, 'events'])->name('events');
     Route::post('updateevent', [AdminController::class, 'updateevent'])->name('update-event');
     Route::delete('delete/{id}/event', [AdminController::class, 'deleteevent'])->name('deleteevent');
-    Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+    Route::get('settings', [AdminController::class, 'adminprofile'])->name('settings');
     //admin-usr-register
     Route::post('admin-usr-register', [AdminController::class, 'adminusrregister'])->name('admin-usr-register');
     Route::delete('delete/{id}/user', [AdminController::class, 'delete_user'])->name('delete_user');
