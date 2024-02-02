@@ -3,7 +3,6 @@
 
 <head>
     @include('admin.layout.head')
-    <link rel="stylesheet" href="assets/css/files.css">
 </head>
 
 <body>
@@ -11,15 +10,14 @@
         $user = App\Models\User::where('id', Illuminate\Support\Facades\Auth::id())->first();
         $unencriptedPassword;
     @endphp
-    <div class="dashboard-body">
-        <div class="navigation-menu">
-            <!-- Top Navigation Menu -->
-            @include('admin.layout.header')
-            <!-- Side Navigation Menu -->
+    <header>
+        @include('admin.layout.header')
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
             @include('admin.layout.aside')
         </div>
-
-        <div class="dashboard-container">
+        <div class="main">
             <div class="dashboard-header">
                 <h1>Profile</h1>
                 <hr>
@@ -117,12 +115,12 @@
 
                 </form>
             </div>
-
         </div>
-
     </div>
-
-
+    {{-- scripts  --}}
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/usermodal.js"></script>
+    <script src="assets/js/profilemodal.js"></script>
     @include('admin.layout.scripts')
 
 </body>

@@ -1,5 +1,5 @@
-<div class="sideNav" id="sideNavbar">
-    <ul>
+<nav class="nav">
+    <ul class="nav-upper-options ">
         <li class="nav-link">
             <a href="{{ route('dashboard') }}">
                 <span class="icon">
@@ -78,6 +78,5 @@
                 </span>
             </a>
         </li>
-        
     </ul>
-</div>
+</nav>
