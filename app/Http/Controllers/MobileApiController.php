@@ -40,25 +40,24 @@ class MobileApiController extends Controller
         return response()->json($data);
     }
 
-   
+
 
     public function createNotes(Request $request)
     {
-        // ===== Pending work on the upload of the image =====//
         $validatedData = $request->validate([
             'note_topic' => 'required|string',
             'content' => 'required|string',
         ]);
 
         $notes = new Note();
-        
+
         $notes->note_topic = $validatedData['note_topic'];
         $notes->user_id_fk = $request->user_id_fk;
 
         $notes->save();
 
-        $jsonFilePath = Storage::path('UserNotes\notes_file.json');
-
+        // $jsonFilePath = Storage::path('UserNotes\notes_file.json');
+        $jsonFilePath = public_path('notes_file.json');
         if (file_exists($jsonFilePath)) {
             $existingNotes = file_get_contents($jsonFilePath);
             $data = json_decode($existingNotes, true) ?? [];
@@ -88,22 +87,44 @@ class MobileApiController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
     }
-    
+
+    public function getNote($noteId)
+    {
+        $jsonFilePath = public_path('notes_file.json');
+
+        if (file_exists($jsonFilePath)) {
+            $existingNotes = file_get_contents($jsonFilePath);
+
+            $data = json_decode($existingNotes, true) ?? [];
+
+
+        } else {
+            $data = [];
+        }
+
+        if (array_key_exists($noteId, $data)) {
+            $specificNote = $data[$noteId];
+            return response()->json($specificNote);
+        } else {
+            return response()->json(['error' => 'Note not found'], 404);
+        }
+    }
+
 
     public function sermonAndNote($id)
     {
         $data = Sermons::where('id', $id)->first();
 
-    //     $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
-    //     $parser = new \Smalot\PdfParser\Parser();
-    //     $pdf = $parser->parseFile($pdfFile);
-    //     $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
-    //     $data->text = $text;
+        //     $pdfFile =  public_path('SermonNotes/' . $data->Sermon_Notes);
+        //     $parser = new \Smalot\PdfParser\Parser();
+        //     $pdf = $parser->parseFile($pdfFile);
+        //     $text = mb_convert_encoding($pdf->getText(), 'UTF-8', 'UTF-8');
+        //     $data->text = $text;
 
         return response()->json($data);
     }
 
-    public function downloadSermonNotes($id) 
+    public function downloadSermonNotes($id)
     {
         $sermon = Sermons::where("id", $id)->first();
         $path_name = $sermon->Sermon_Notes;
