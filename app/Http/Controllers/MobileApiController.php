@@ -77,14 +77,18 @@ class MobileApiController extends Controller
 
     public function displayNotes($id)
     {
-        // Find all notes for the logged user
         $user = AppUser::where('id', $id)->first();
 
         if ($user) {
             $data = Note::where('user_id_fk', $user->id)->orderBy('id', 'desc')->get();
-            return response()->json($data);
+            if ($data) {
+                return response()->json($data);
+
+            }else {
+                return response()->json(['error' => 'User has no notes.'], 404);
+            }
         } else {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'User not found.'], 404);
         }
     }
 
