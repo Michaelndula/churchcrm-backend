@@ -83,8 +83,7 @@ class MobileApiController extends Controller
             $data = Note::where('user_id_fk', $user->id)->orderBy('id', 'desc')->get();
             if ($data) {
                 return response()->json($data);
-
-            }else {
+            } else {
                 return response()->json(['error' => 'User has no notes.'], 404);
             }
         } else {
@@ -100,8 +99,6 @@ class MobileApiController extends Controller
             $existingNotes = file_get_contents($jsonFilePath);
 
             $data = json_decode($existingNotes, true) ?? [];
-
-
         } else {
             $data = [];
         }
@@ -113,7 +110,48 @@ class MobileApiController extends Controller
             return response()->json(['error' => 'Note not found'], 404);
         }
     }
+    public function updateNote(Request $request, $noteId)
+    {
+        //update the note in json
+        $validatedData = $request->validate([
+            'note_topic' => 'required|string',
+            'content' => 'required|string',
+        ]);
 
+        $notes = Note::where('id', $noteId);
+        if ($notes) {
+            $notes->note_topic = $validatedData['note_topic'];
+            $notes->user_id_fk = $request->user_id_fk;
+
+            $notes->save();
+        } else {
+            return response()->json(['error' => 'note not found'], 404);
+        }
+
+
+        // $jsonFilePath = Storage::path('UserNotes\notes_file.json');
+        $jsonFilePath = public_path('notes_file.json');
+        if (file_exists($jsonFilePath)) {
+            $existingNotes = file_get_contents($jsonFilePath);
+            $data = json_decode($existingNotes, true) ?? [];
+        } else {
+            $data = [];
+        }
+
+        // Data to be sent to the file
+        $data[$notes->id] = [
+            'userID' => $notes->user_id_fk,
+            'note_topic' => $notes->note_topic,
+            'content' => $validatedData['content'],
+        ];
+
+        if (array_key_exists($noteId, $data)) {
+            $specificNote = $data[$noteId];
+            file_put_contents($jsonFilePath, json_encode($specificNote, JSON_PRETTY_PRINT));//$data ->$specificNote
+        } else {
+            return response()->json(['error' => 'Note not found'], 404);
+        }
+    }
 
     public function sermonAndNote($id)
     {

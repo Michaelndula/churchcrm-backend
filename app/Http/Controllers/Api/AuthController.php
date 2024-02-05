@@ -28,11 +28,11 @@ class AuthController extends Controller
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             $user->phone = $validated['phone'];
-            $user->profile_photo_path= 'default_user_profile.jpeg';
+            $user->profile_photo_path = 'default_user_profile.jpeg';
             $user->password = Hash::make($password);
 
             $save = $user->save();
-            
+
             if ($save) {
                 $token = $user->createToken('authToken')->plainTextToken;
                 return response()->json(['user' => $user, 'message' => 'App user registered successfully']);
@@ -42,7 +42,8 @@ class AuthController extends Controller
         }
     }
     // Update User
-    public function update_user(Request $request, $id) {
+    public function update_user(Request $request, $id)
+    {
         $validated = $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
@@ -55,7 +56,7 @@ class AuthController extends Controller
         $profile_pic = $request->file('profile_photo_path');
 
         $user = AppUser::findOrFail($id);
-        if($user) {
+        if ($user) {
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             $user->phone = $validated['phone'];
@@ -78,15 +79,14 @@ class AuthController extends Controller
 
             $user->profile_photo_path = $profile_pic_path;
             $user->save();
-        }
-        else {
+        } else {
             return response()->json(['message' => 'Error! User does not exist']);
         }
-     }
+    }
 
     //  Delete user account 
-    public function delete_user($id) {
-        
+    public function delete_user($id)
+    {
     }
 
     public function login(Request $request)
@@ -105,8 +105,11 @@ class AuthController extends Controller
                 'access_token' => $user->createToken('auth_token')->plainTextToken,
                 'message' => 'User logged in successfully',
             ]);
+        } elseif (!$user) {
+            return response()->json(['error' => 'Error'], 404);
+        } else {
+            return response()->json(['error' => 'Error'], 502);
         }
-
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 }
