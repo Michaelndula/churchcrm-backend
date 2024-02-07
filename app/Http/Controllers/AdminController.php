@@ -294,6 +294,7 @@ class AdminController extends Controller
         $sermonnotes->notesupload = $notesThumbnailFile['file_name'];
         $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];
         $sermonnotes->sermondescription = $request->sermondescription;
+        $sermonnotes->sermon_date = $request->sermon_date;
         $sermonnotes->save();
 
         return redirect()->back();
@@ -397,6 +398,7 @@ class AdminController extends Controller
         }
 
         $sermons->Title = $request->Title;
+        $sermons->sermon_date = $request->sermon_date;
         $sermons->Sermon_Description = $request->Sermon_Description;
         $sermons->Sermon_Link = $request->Sermon_Link;
         $sermons->save();

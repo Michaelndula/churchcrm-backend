@@ -112,24 +112,23 @@ class MobileApiController extends Controller
     }
     public function updateNote(Request $request, $noteId)
     {
-        //update the note in json
+        // Validate request data
         $validatedData = $request->validate([
             'note_topic' => 'required|string',
             'content' => 'required|string',
         ]);
 
-        $notes = Note::where('id', $noteId);
-        if ($notes) {
-            $notes->note_topic = $validatedData['note_topic'];
-            $notes->user_id_fk = $request->user_id_fk;
+        // Find the note by ID or throw a 404 error if not found
+        $note = Note::findOrFail($noteId);
 
-            $notes->save();
-        } else {
-            return response()->json(['error' => 'note not found'], 404);
-        }
+        // Update the note with the validated data
+        $note->note_topic = $validatedData['note_topic'];
+        $note->user_id_fk = $request->userID;
 
+        // Save the changes to the database
+        $save = $note->save();
 
-        // $jsonFilePath = Storage::path('UserNotes\notes_file.json');
+        // Update the data in the JSON file
         $jsonFilePath = public_path('notes_file.json');
         if (file_exists($jsonFilePath)) {
             $existingNotes = file_get_contents($jsonFilePath);
@@ -138,20 +137,25 @@ class MobileApiController extends Controller
             $data = [];
         }
 
-        // Data to be sent to the file
-        $data[$notes->id] = [
-            'userID' => $notes->user_id_fk,
-            'note_topic' => $notes->note_topic,
-            'content' => $validatedData['content'],
-        ];
-
+        // Update the specific note data
         if (array_key_exists($noteId, $data)) {
-            $specificNote = $data[$noteId];
-            file_put_contents($jsonFilePath, json_encode($specificNote, JSON_PRETTY_PRINT));//$data ->$specificNote
+            $data[$noteId] = [
+                'userID' => $note->user_id_fk,
+                'note_topic' => $validatedData['note_topic'],
+                'content' => $validatedData['content'],
+            ];
+
+            // Save the updated data back to the JSON file
+            file_put_contents($jsonFilePath, json_encode($data, JSON_PRETTY_PRINT));
         } else {
-            return response()->json(['error' => 'Note not found'], 404);
+            // Return error response if note ID not found in the JSON file
+            return response()->json(['error' => 'Note not found in JSON file'], 404);
         }
+
+        // Return success response
+        return response()->json(['message' => 'Note updated successfully'], 200);
     }
+
 
     public function sermonAndNote($id)
     {

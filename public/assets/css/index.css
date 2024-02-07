@@ -197,17 +197,6 @@
             background-color: #9e9e9eb2;
         }
 
-
-
-        /* Dashboard container */
-        .dashboard-container {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 50px;
-        }
-
         /* ===================The dashboard cards========== */
         .card {
             border-radius: 5px;

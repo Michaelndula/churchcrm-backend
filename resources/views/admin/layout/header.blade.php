@@ -4,7 +4,7 @@
 @endphp
 <!-- Top Navigation Menu -->
 <div class="logosec">
-    {{-- <div class="logo">ChurchCRM</div> --}}
+    <div class="logo">ChurchCRM</div>
     <a id="toggleSidebar">
         <span class="icn menuicn" id="menuicn">
             <i class="fa-solid fa-bars" style="color: #ffffff; font-size:18px;"></i>
