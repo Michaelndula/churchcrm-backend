@@ -49,7 +49,7 @@ Route::post('/update_user/{userId}', [AuthController::class, 'update_user']);
 Route::post('/newNotes', [MobileApiController::class, 'createNotes']);
 Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
 Route::get('/getNote/{noteId}', [MobileApiController::class, 'getNote']);
-Route::get('/updateNote/{noteId}', [MobileApiController::class, 'updateNote']);
+Route::post('/updateNote/{noteId}', [MobileApiController::class, 'updateNote']);
 
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);

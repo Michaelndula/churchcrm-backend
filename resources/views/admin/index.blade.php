@@ -7,17 +7,19 @@
 
 <body>
     @php
-        $totalusers = App\Models\User::count();
+        $totalwebusers = App\Models\User::count();
+        $totalappusers = App\Models\AppUser::count();
         $totalannouncements = App\Models\Announcement::count();
         $totalsermons = App\Models\Sermons::count();
         $totalsermonsnotes = App\Models\SermonNotes::count();
         $totalevents = App\Models\Event::count();
         $userId = Illuminate\Support\Facades\Auth::id();
-        $user = App\Models\User::where('id', $userId)->first();
-        $users = App\Models\User::orderBy('id', 'desc')
+
+        $user = App\Models\AppUser::where('id', $userId)->first();
+        $users = App\Models\AppUser::orderBy('id', 'desc')
             ->take(5)
             ->get();
-        $ifusers = App\Models\User::all()->count();
+        $ifusers = App\Models\AppUser::all()->count();
     @endphp
     <header>
         @include('admin.layout.header')

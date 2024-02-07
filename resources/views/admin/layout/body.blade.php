@@ -4,16 +4,25 @@
 </div>
 
 {{-- card section --}}
-<section class="dashboard-container">
-    <div class="container">
+<section>
+    <div class="">
         <div class="row">
-
-
             <div class="col-md-4 col-xl-3">
                 <div class="card">
                     <div class="card-block">
-                        <h6>Users</h6>
-                        <h2 class="f-start "><span>{{ $totalusers }}</span><i
+                        <h6>Web Users</h6>
+                        <h2 class="f-start "><span>{{ $totalwebusers }}</span><i
+                                class="fa fa-user ps-2"></i>
+                        </h2>
+                        <p class="f-right"><a href="{{ route('users') }}">View all</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h6>App Users</h6>
+                        <h2 class="f-start "><span>{{ $totalappusers }}</span><i
                                 class="fa fa-user ps-2"></i>
                         </h2>
                         <p class="f-right"><a href="{{ route('users') }}">View all</a></p>
@@ -73,14 +82,11 @@
 {{-- Table section --}}
 <section>
     <div class="card">
-
         <div class="card-header bg-transparent">
             <h4>New App Users</h4>
         </div>
-
         <div class="table-responsive">
-
-            <table class="table">
+<table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>

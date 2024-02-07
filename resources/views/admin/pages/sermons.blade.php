@@ -7,9 +7,7 @@
 
 <body>
     @php
-        $LatestSermons = App\Models\Sermons::latest()
-            ->take(6)
-            ->get();
+        $LatestSermons = App\Models\Sermons::latest()->take(6)->get();
         $previousSermons = App\Models\Sermons::orderBy('id', 'desc')
             ->skip(6)
             ->take(PHP_INT_MAX)
@@ -50,14 +48,15 @@
                                     <div class="card-body">
                                         <img style="height: 200px; width: 300px;" alt="image"
                                             src="SermonThumbnails/{{ $sermon->Thumbnail }}">
-
-                                        <h6 class="card-title">
-                                            {{ Illuminate\Support\Str::limit($sermon->Title, $limit = 25, $end = '...') }}
-                                        </h6>
-
-                                        <small class="card-text">
-                                            {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 30, $end = '...') }}
-                                        </small>
+                                        <div>
+                                            <p>{{ $sermon->sermon_date }}</p>
+                                            <h6>
+                                                {{ Illuminate\Support\Str::limit($sermon->Title, $limit = 25, $end = '...') }}
+                                            </h6>
+                                            <small>
+                                                {{ Illuminate\Support\Str::limit($sermon->Sermon_Description, $limit = 30, $end = '...') }}
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -144,9 +143,13 @@
                                 </div>
                             </div>
                             <div class="mb-3">
+                                <label for="sermon_date" class="form-label">Sermon Date</label>
+                                <input type="date" class="form-control" name="sermon_date" required id="sermon_date">
+                            </div>
+                            <div class="mb-3">
                                 <label for="Sermon_Description" class="form-label">Sermon Description</label>
-                                <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30" rows="10"
-                                    placeholder="Sermon Description"></textarea>
+                                <textarea class="form-control" name="Sermon_Description" id="Sermon_Description" required cols="30"
+                                    rows="10" placeholder="Sermon Description"></textarea>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div>

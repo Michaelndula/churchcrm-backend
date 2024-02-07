@@ -107,6 +107,10 @@
                                 <input id="notesimage" name="notesimage" type="file" />
 
                             </div>
+                            <div class="mb-3">
+                                <label for="sermon_date" class="form-label">Sermon Date</label>
+                                <input type="date" class="form-control" name="sermon_date" required id="sermon_date">
+                            </div>
                             <div class="form-group mb-4">
                                 <label for="sermondescription">Add Description</label>
                                 <textarea class="form-control" name="sermondescription" id="sermondescription" required cols="30" rows="10"

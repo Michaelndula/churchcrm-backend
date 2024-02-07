@@ -3,7 +3,7 @@
 
 <head>
     @include('admin.layout.head')
- 
+
 
 </head>
 
@@ -43,8 +43,10 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-4">
-                                    <label for="poster">Add Poster</label>
-                                    <input type="file" class="form-control" name="poster" id="poster" required>
+                                    <label for="poster" class="custom-file-upload">
+                                        Add Poster </label>
+                                    <input type="file" class="file" name="poster" id="poster" required>
+
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="Topic">Add Topic</label>

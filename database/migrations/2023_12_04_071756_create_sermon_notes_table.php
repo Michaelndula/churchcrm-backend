@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('sermon_notes', function (Blueprint $table) {
             $table->id();
             $table->string('notesupload');
-            $table->longtext('sermondescription');
             $table->string('notesimage')->nullable();
+            $table->string('sermon_date')->nullable();
+            $table->longtext('sermondescription');
             $table->timestamps();
         });
     }

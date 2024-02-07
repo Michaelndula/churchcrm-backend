@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('Sermon_Link')->nullable();
             $table->string('Thumbnail')->nullable();
             $table->string('Notes_Thumbnail')->nullable();
+            $table->string('sermon_date')->nullable();
             $table->longText('Sermon_Description')->nullable();
             $table->timestamps();
         });
