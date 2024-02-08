@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MobileApiController;
 use App\Http\Controllers\Api\AuthController;
-USE App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 
@@ -43,7 +43,7 @@ Route::get('/fetchSermons', [MobileApiController::class, 'fetchSermons']);
 Route::get('/profile/{userId}', [MobileApiController::class, 'fetchProfile']);
 
 // Update profile
-Route::post('/update_user/{userId}', [AuthController::class, 'update_user']);
+Route::post('/updateuser/{userId}', [AuthController::class, 'updateuser']);
 
 // Notes
 Route::post('/newNotes', [MobileApiController::class, 'createNotes']);
@@ -56,11 +56,6 @@ Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermon
 
 // Download notes
 Route::get('/download_notes/{sermonId}', [MobileApiController::class, 'downloadSermonNotes']);
-
-
-
-
-
 
 
 // Forgot Password
