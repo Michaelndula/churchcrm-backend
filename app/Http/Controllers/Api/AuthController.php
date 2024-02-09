@@ -112,4 +112,37 @@ class AuthController extends Controller
         }
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+    public function passwordchange(Request $request, $user)
+    {
+        $credentials = $request->validate([
+            'currentpassword' => 'required|string',
+            'newpassword' => 'required|string',
+            'confirmpassword' => 'required|string',
+        ]);
+        $user = AppUser::findOrFail($user);
+
+        if ($user) {
+            $check =  Hash::check($credentials['currentpassword'], $user->password);
+            if ($check) {
+                $newpassword = $credentials['newpassword'];
+                $confirmpassword = $credentials['confirmpassword'];
+                if ($newpassword == $confirmpassword) {
+                    $password = Hash::make($credentials['confirmpassword']);
+                    $user->password = $password;
+                    $save = $user->save();
+                    if ($save) {
+                        return response()->json(['message' => 'user found and passowrd changed'], 200);
+                    } else {
+                        return response()->json(['error' => 'user fot found'], 404);
+                    }
+                }
+            } elseif (!$check) {
+                return response()->json(['failed' => 'wrong password'], 401);
+            } else {
+                return response()->json(['error' => 'Unknown error'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
 }
