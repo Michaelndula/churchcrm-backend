@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Announcements
-    Route::get('announcements', [AdminController::class, 'announcements'])->name('announcements');
+    Route::get('announcement', [AdminController::class, 'announcements'])->name('announcements');
     Route::post('new-announcement', [AdminController::class, 'newannouncement'])->name('new-announcement');
     Route::delete('delete/{id}/announcement', [AdminController::class, 'deleteannouncement'])->name('deleteannouncement');
     Route::post('/announcements/{id}', [AdminController::class, 'update_announcement'])->name('announcement.update');

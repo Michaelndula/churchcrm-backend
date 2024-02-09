@@ -126,7 +126,7 @@
                         </div>
                         <div class="modal-body">
                             <form class="form" id="announcement-update-form"
-                                action="{{ url('/announcements', $announcement->id) }}" method="post">
+                                action="{{ url('/announcement', $announcement->id) }}" method="post">
                                 @csrf
                                 <div class="form-group mb-4">
                                     <label for="topic">Update Topic</label>

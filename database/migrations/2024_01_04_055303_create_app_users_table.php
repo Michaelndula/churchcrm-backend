@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password_reset_token')->nullable();
             $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('membership_status')->default('new member');

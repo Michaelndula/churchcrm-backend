@@ -54,8 +54,15 @@ Route::post('/updateNote/{noteId}', [MobileApiController::class, 'updateNote']);
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
 
+// View sermon notes
+Route::get('/fetch_other_notes/{noteID}', [MobileApiController::class, 'sermonNotesView']);
+
+
 // Download notes
 Route::get('/download_notes/{sermonId}', [MobileApiController::class, 'downloadSermonNotes']);
+
+// Download notes from home page
+Route::get('/download_sermon_notes/{noteID}', [MobileApiController::class, 'downloadHomePageNotes']);
 
 
 // Forgot Password
