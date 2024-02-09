@@ -286,12 +286,12 @@ class AdminController extends Controller
         ]);
 
         $notesfile = $request->file('notesupload');
-        $notesThumbnailFile = $this->uploadEventFile($notesfile, ['pdf', 'doc', 'docx', 'ppt', 'pptx'], 'SermonNotes/');
+        $notesFileSaved = $this->uploadEventFile($notesfile, ['pdf', 'doc', 'docx', 'ppt', 'pptx'], 'SermonNotes/');
 
         $notes_thumbnail = $request->file('notesimage');
         $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'webp', 'svg'], 'Notes_Thumbnails/');
 
-        $sermonnotes->notesupload = $notesThumbnailFile['file_name'];
+        $sermonnotes->notesupload = $notesFileSaved['file_name'];
         $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];
         $sermonnotes->sermondescription = $request->sermondescription;
         $sermonnotes->sermon_date = $request->sermon_date;

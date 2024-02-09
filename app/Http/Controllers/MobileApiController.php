@@ -185,4 +185,26 @@ class MobileApiController extends Controller
             return response()->json(['error' => 'File not found'], 404);
         }
     }
+
+    public function downloadHomePageNotes($id)
+    {
+        $notes = SermonNotes::where("id", $id)->first();
+        $path_name = $notes->notesupload;
+
+        $notesPath = public_path('SermonNotes');
+
+        $filePath = $notesPath . '/' . $path_name;
+
+        if (file_exists($filePath)) {
+            return response()->file($filePath);
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+    }
+
+    public function sermonNotesView($id)
+    {
+        $data = SermonNotes::where('id', '!=', $id)->orderBy('id', 'desc')->get();
+        return response()->json($data);
+    }
 }
