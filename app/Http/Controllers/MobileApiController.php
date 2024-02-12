@@ -56,8 +56,8 @@ class MobileApiController extends Controller
 
         $notes->save();
 
-        // $jsonFilePath = Storage::path('UserNotes\notes_file.json');
-        $jsonFilePath = public_path('notes_file.json');
+        $jsonFilePath = Storage::path('notes_file.json');
+        // $jsonFilePath = public_path('notes_file.json');
         if (file_exists($jsonFilePath)) {
             $existingNotes = file_get_contents($jsonFilePath);
             $data = json_decode($existingNotes, true) ?? [];
@@ -93,7 +93,7 @@ class MobileApiController extends Controller
 
     public function getNote($noteId)
     {
-        $jsonFilePath = public_path('notes_file.json');
+        $jsonFilePath = Storage::path('notes_file.json');
 
         if (file_exists($jsonFilePath)) {
             $existingNotes = file_get_contents($jsonFilePath);
@@ -129,7 +129,7 @@ class MobileApiController extends Controller
         $save = $note->save();
 
         // Update the data in the JSON file
-        $jsonFilePath = public_path('notes_file.json');
+        $jsonFilePath = Storage::path('notes_file.json');
         if (file_exists($jsonFilePath)) {
             $existingNotes = file_get_contents($jsonFilePath);
             $data = json_decode($existingNotes, true) ?? [];
