@@ -10,13 +10,9 @@
         use Illuminate\Support\Carbon;
         $date = Carbon::now();
 
-        $upcomingEvents = App\Models\Event::orderBy('Event_Date', 'asc')
-            ->where('Event_Date', '>=', $date)
-            ->get();
+        $upcomingEvents = App\Models\Event::orderBy('Event_Date', 'asc')->where('Event_Date', '>=', $date)->get();
 
-        $pastEvents = App\Models\Event::orderBy('Event_Date', 'asc')
-            ->where('Event_Date', '<', $date)
-            ->get();
+        $pastEvents = App\Models\Event::orderBy('Event_Date', 'asc')->where('Event_Date', '<', $date)->get();
     @endphp
     <header>
         @include('admin.layout.header')
@@ -127,7 +123,10 @@
                                 <div class="form-group mb-4">
                                     <div class="mb-3">
                                         <div class="row">
-                                            <div class="col image_display" id="image_display"></div>
+                                            <div class="col image_display" id="image_display">
+                                                <img src="assets/images/blurholder.jpeg" alt="Placeholder Image"
+                                                    style="width: 100%; max-height: 300px;">
+                                            </div>
                                             <div class="col">
                                                 <label for="eventupload" class="custom-file-upload">
                                                     Add Event Image
@@ -165,12 +164,10 @@
                                     <button type="submit" class="btn btn-primary">Add Event</button>
                                 </div>
                                 <div>
-                                    <button type="button" onclick="closeModal()"
+                                    <button type="button" onclick="closeModal('newevent')"
                                         class="btn btn-outline-primary">Cancel</button>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
                 </div>

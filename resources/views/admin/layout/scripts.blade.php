@@ -36,9 +36,9 @@
             modal.style.display = 'none';
         }
     }
-    
 
-   
+
+
 
 
 
@@ -96,6 +96,9 @@
                     '" alt="Uploaded Image" style="width: 100%; max-height: 300px;">';
             };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            imageDisplay.innerHTML =
+                '<img src="assets/images/blurholder.jpeg" alt="Placeholder Image" style="width: 100%; max-height: 300px;">';
         }
     }
 
@@ -319,9 +322,6 @@
             }
         });
     }
-
-    
-
 </script>
 
 
