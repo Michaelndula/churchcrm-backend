@@ -1,82 +1,85 @@
 <nav class="nav">
     <div class="nav-upper-options">
-        <p class="nav-link">
-            <a href="{{ route('dashboard') }}">
+        <a href="{{ route('dashboard') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-house"></i>
                 </span>
                 <span class="title"> Dashboard </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('users') }}">
+            </p>
+        </a>
+        <a href="{{ route('users') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-users"></i>
                 </span>
                 <span class="title">
                     Users
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('announcements') }}">
+            </p>
+        </a>
+        <a href="{{ route('announcements') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-clipboard-list"></i>
                 </span>
                 <span class="title">
                     Announcements
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('sermons') }}">
+            </p>
+        </a>
+        <a href="{{ route('sermons') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-book-bible"></i>
                 </span>
                 <span class="title">
                     Sermons
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('sermonsnotes') }}">
+            </p>
+        </a>
+        <a href="{{ route('sermonsnotes') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-note-sticky fa-flip-vertical"></i>
                 </span>
                 <span class="title">
                     Sermon Notes
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('events') }}">
+            </p>
+        </a>
+        <a href="{{ route('events') }}">
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
                 </span>
                 <span class="title">
                     Events
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('profile') }}">
+            </p>
+        </a>
+        <a href="{{ route('profile') }}">
+
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-user"></i>
                 </span>
                 <span class="title">
                     Profile
                 </span>
-            </a>
-        </p>
-        <p class="nav-link">
-            <a href="{{ route('settings') }}">
+            </p>
+        </a>
+        <a href="{{ route('settings') }}">
+
+            <p class="nav-link">
                 <span class="icon">
                     <i class="fa fa-cog"></i>
                 </span>
                 <span class="title">
                     Admin
                 </span>
-            </a>
-        </p>
+            </p>
+        </a>
+
     </div>
 </nav>

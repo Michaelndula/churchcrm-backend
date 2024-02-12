@@ -150,6 +150,11 @@
             left: 00;
         }
 
+        .nav-upper-options a {
+            text-decoration: none;
+            color: var(--primary-color1);
+        }
+
         .nav-link {
             width: 250px;
             height: 60px;
@@ -165,15 +170,12 @@
             cursor: pointer;
         }
 
-        .nav-link a {
-            text-decoration: none;
+        .nav-link span {
             color: var(--primary-color1);
-        }
-
-        .nav-link a:hover {
-            color: var(--primary-color2);
 
         }
+
+
 
         /* Main  */
 
