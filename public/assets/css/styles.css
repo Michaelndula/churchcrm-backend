@@ -23,19 +23,6 @@ body {
     overflow-x: hidden; 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .topNav {
     width: 100%;
     height: 70px;
@@ -75,62 +62,10 @@ body {
 .profileName {
     color: var(--white);
     margin-right: 50px;
-}
-
-.sideNav {
-    display: block;
-    width: 250px;
-    background-color: var(--blue);
-    position: fixed;
-    top: 70px;
-    left: 0;
-    height: auto;
-    overflow: hidden;
-    transition: display 1s ease;
-    transition-delay: 1s;
-    z-index: 1;
-}
-
-.sideNav ul {
-    padding: 0 !important;
-}
-
-.sideNav ul li {
-    list-style-type: none;
-    padding: 20px 10px;
-}
-
-.sideNav ul li a {
-    color: var(--white);
-    text-decoration: none;
     font-size: 18px;
+
 }
 
-.sideNav ul li:hover,
-.sideNav ul li.hovered {
-    background-color: var(--white2);
-}
-
-.sideNav ul li:hover a,
-.sideNav ul li.hovered a {
-    color: var(--blue);
-}
-
-.sideNav ul li a .icon {
-    min-width: 60px;
-    height: 60px;
-    line-height: 35px;
-    text-align: center;
-    margin-right: 10px;
-}
-
-.sideNav ul li a .icon i {
-    font-size: 18px;
-}
-
-.profileName {
-    font-size: 18px;
-}
 
 /* the modal css  */
 .center-btn-modal {

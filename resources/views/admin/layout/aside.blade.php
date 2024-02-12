@@ -1,14 +1,14 @@
 <nav class="nav">
-    <ul class="nav-upper-options ">
-        <li class="nav-link">
+    <div class="nav-upper-options">
+        <p class="nav-link">
             <a href="{{ route('dashboard') }}">
                 <span class="icon">
                     <i class="fa-solid fa-house"></i>
                 </span>
                 <span class="title"> Dashboard </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('users') }}">
                 <span class="icon">
                     <i class="fa-solid fa-users"></i>
@@ -17,8 +17,8 @@
                     Users
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('announcements') }}">
                 <span class="icon">
                     <i class="fa-solid fa-clipboard-list"></i>
@@ -27,8 +27,8 @@
                     Announcements
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('sermons') }}">
                 <span class="icon">
                     <i class="fa-solid fa-book-bible"></i>
@@ -37,8 +37,8 @@
                     Sermons
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('sermonsnotes') }}">
                 <span class="icon">
                     <i class="fa-solid fa-note-sticky fa-flip-vertical"></i>
@@ -47,8 +47,8 @@
                     Sermon Notes
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('events') }}">
                 <span class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
@@ -57,8 +57,8 @@
                     Events
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('profile') }}">
                 <span class="icon">
                     <i class="fa-solid fa-user"></i>
@@ -67,8 +67,8 @@
                     Profile
                 </span>
             </a>
-        </li>
-        <li class="nav-link">
+        </p>
+        <p class="nav-link">
             <a href="{{ route('settings') }}">
                 <span class="icon">
                     <i class="fa fa-cog"></i>
@@ -77,6 +77,6 @@
                     Admin
                 </span>
             </a>
-        </li>
-    </ul>
+        </p>
+    </div>
 </nav>
