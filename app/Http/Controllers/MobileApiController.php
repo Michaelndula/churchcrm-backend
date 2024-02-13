@@ -155,6 +155,18 @@ class MobileApiController extends Controller
         // Return success response
         return response()->json(['message' => 'Note updated successfully'], 200);
     }
+    public function deletenote($id)
+    {
+        $note = Note::find($id);
+
+        if (!$note) {
+            return response()->json(['message' => 'Note not found'], 404);
+        }
+
+        $note->delete();
+
+        return response()->json(['message' => 'Note deleted successfully'], 200);
+    }
 
 
     public function sermonAndNote($id)
