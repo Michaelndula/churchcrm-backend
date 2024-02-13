@@ -282,14 +282,14 @@ class AdminController extends Controller
         $sermonnotes = new SermonNotes();
         $validate = $request->validate([
             'notesupload' => 'required|mimes:pdf,doc,docx,ppt,pptx|max:5120',
-            'notesimage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'notesimage' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
         ]);
 
         $notesfile = $request->file('notesupload');
         $notesFileSaved = $this->uploadEventFile($notesfile, ['pdf', 'doc', 'docx', 'ppt', 'pptx'], 'SermonNotes/');
 
         $notes_thumbnail = $request->file('notesimage');
-        $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'webp', 'svg'], 'Notes_Thumbnails/');
+        $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'gif', 'webp', 'svg'], 'Notes_Thumbnails/');
 
         $sermonnotes->notesupload = $notesFileSaved['file_name'];
         $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];

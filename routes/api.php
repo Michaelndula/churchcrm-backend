@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //the auth functions
 Route::post('/register', [AuthController::class, 'register_user']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('deleteuser/{userId}', [AuthController::class, 'deleteuser']);
 
 // fetch of the api data
 Route::get('/fetchEvents', [MobileApiController::class, 'fetchEvents']);

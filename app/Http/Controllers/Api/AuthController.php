@@ -48,7 +48,6 @@ class AuthController extends Controller
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
             'email' => 'required|email',
-            'password' => 'required|string|min:8',
             'profile_photo_path' => 'image|mimes:jpeg,png,jpg,svg,webp|max:5120',
             'membership_status' => 'string',
         ]);
@@ -61,7 +60,6 @@ class AuthController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->phone = $validated['phone'];
-        $user->password = Hash::make($validated['password']);
         $user->membership_status = $validated['membership_status'];
 
         if ($request->hasFile('profile_photo_path')) {
@@ -85,8 +83,19 @@ class AuthController extends Controller
 
 
     //  Delete user account 
-    public function delete_user($id)
+    public function deleteuser($userId)
     {
+        $user = AppUser::findOrFail($userId);
+        if (!$user) {
+            return response()->json(['error' => 'No account for this user']);
+        } else {
+            $deleteuser = AppUser::where('id', $userId)->delete();
+            if ($deleteuser) {
+                return response()->json(['success' => 'Account deleted successfully']);
+            } else {
+                return response()->json(['success' => 'Account deletion not completed.']);
+            }
+        }
     }
 
     public function login(Request $request)
