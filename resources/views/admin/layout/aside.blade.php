@@ -1,6 +1,6 @@
 <nav class="nav">
     <div class="nav-upper-options">
-        <a href="{{ route('dashboard') }}">
+        <a class='link'  href="{{ route('dashboard') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-house"></i>
@@ -8,7 +8,7 @@
                 <span class="title"> Dashboard </span>
             </p>
         </a>
-        <a href="{{ route('users') }}">
+        <a class='link'  href="{{ route('users') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-users"></i>
@@ -18,7 +18,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('announcements') }}">
+        <a class='link'  href="{{ route('announcements') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-clipboard-list"></i>
@@ -28,7 +28,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('sermons') }}">
+        <a class='link'  href="{{ route('sermons') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-book-bible"></i>
@@ -38,7 +38,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('sermonsnotes') }}">
+        <a class='link'  href="{{ route('sermonsnotes') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-note-sticky fa-flip-vertical"></i>
@@ -48,7 +48,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('events') }}">
+        <a class='link'  href="{{ route('events') }}">
             <p class="nav-link">
                 <span class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
@@ -58,7 +58,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('profile') }}">
+        <a class='link'  href="{{ route('profile') }}">
 
             <p class="nav-link">
                 <span class="icon">
@@ -69,7 +69,7 @@
                 </span>
             </p>
         </a>
-        <a href="{{ route('settings') }}">
+        <a  class='link' href="{{ route('settings') }}">
 
             <p class="nav-link">
                 <span class="icon">
@@ -80,6 +80,5 @@
                 </span>
             </p>
         </a>
-
     </div>
 </nav>

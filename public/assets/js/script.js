@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Active link
 const currentRoute = window.location.href;
-const navLinks = document.querySelectorAll(".nav-link");
+const navLinks = document.querySelectorAll(".link");
 navLinks.forEach((link) => {
-    const linkHref = link.querySelector("a").href;
+    const linkHref = link.href;
     if (currentRoute.includes(linkHref)) {
         link.classList.add("active-link");
     }
