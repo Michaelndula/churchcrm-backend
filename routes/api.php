@@ -51,7 +51,7 @@ Route::post('/newNotes', [MobileApiController::class, 'createNotes']);
 Route::get('/showNotes/{userId}', [MobileApiController::class, 'displayNotes']);
 Route::get('/getNote/{noteId}', [MobileApiController::class, 'getNote']);
 Route::post('/updateNote/{noteId}', [MobileApiController::class, 'updateNote']);
-
+Route::delete('/deletenote/{id}', [MobileApiController::class, 'deletenote']);
 // Sermon and sermon notes
 Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermonAndNote']);
 
