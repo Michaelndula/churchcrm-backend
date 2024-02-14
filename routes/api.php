@@ -67,9 +67,13 @@ Route::get('/download_sermon_notes/{noteID}', [MobileApiController::class, 'down
 
 
 // Forgot Password
-Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/passwordchange/{user}', [AuthController::class, 'passwordchange'])->name('passwordchange');
+// Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/resetcodegen', [ForgotPasswordController::class, 'resetcodegen']);
+Route::post('/resetcode', [ResetPasswordController::class, 'resetcode'])->name('resetcode');
+Route::post('/resetpassword/{code}', [ResetPasswordController::class, 'resetpassword']);
+
+
 // Reset Password
 Route::get('/showResetForm/{token}/{email}', [ResetPasswordController::class, 'showResetForm'])->name('appuser_reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('appuser_reset_password');
-// passwordchange
-Route::post('/passwordchange/{user}', [AuthController::class, 'passwordchange'])->name('passwordchange');
