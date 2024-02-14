@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\AppUser;
+use App\Models\Password_reset_code;
 use Illuminate\Support\Facades\Hash;
+
 class ResetPasswordController extends Controller
 {
-    public function showResetForm( $token, $email)
+    public function showResetForm($token, $email)
     {
 
         return view('auth.reset-appuser-password', [
@@ -50,11 +52,48 @@ class ResetPasswordController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
-
-   // TODO -MW
-    private function isTokenValid($email, $token)
+    public function resetcode(Request $request)
     {
-        $user = AppUser::where('email', $email)->first();
-        return $user && $user->password_reset_token === $token;
+        try {
+            $id = 1;
+            $code = $request->code;
+
+            $user = AppUser::where('password_reset_code', '=', $code)->get();
+            if ($user) {
+                return response()->json(['message' => $code], 200);
+                // TODO - solve the diffminute error
+                // if ($code && $user->password_reset_code->diffInMinutes(now()) < 60) {
+                //     return response()->json(['message' => 'reset code available'], 200);
+                // } else {
+                //     return false;
+                // }
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+    public function resetpassword(Request $request, $code)
+    {
+        $credentials = $request->validate([
+            'newpassword' => 'required|string',
+            'confirmpassword' => 'required|string',
+        ]);
+        $user = AppUser::where('password_reset_code', $code)->get();
+        if ($user) {
+            $newpassword = $credentials['newpassword'];
+            $confirmpassword = $credentials['confirmpassword'];
+            if ($newpassword == $confirmpassword) {
+                $password = Hash::make($credentials['confirmpassword']);
+                $user->password = $password;
+
+                // $user->update([
+                //     'password' => $password,
+                // ]);
+                $user->save();
+                return response()->json(['newpassword' => $newpassword], 200);
+            }
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
     }
 }
