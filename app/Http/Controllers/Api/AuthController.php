@@ -48,38 +48,38 @@ class AuthController extends Controller
             'name' => 'required|string',
             'phone' => 'required|string|max:12|min:10',
             'email' => 'required|email',
-            'profile_photo_path' => 'image|mimes:jpeg,png,jpg,svg,webp|max:5120',
+            'profile_photo_path' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:5120',
             'membership_status' => 'string',
         ]);
-
+    
         $user = AppUser::findOrFail($id);
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-
+    
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->phone = $validated['phone'];
         $user->membership_status = $validated['membership_status'];
-
+    
         if ($request->hasFile('profile_photo_path')) {
             $profile_pic = $request->file('profile_photo_path');
             $fileExtension = strtolower($profile_pic->getClientOriginalExtension());
             $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
-
+    
             if (!in_array($fileExtension, $validExtensions)) {
                 return response()->json(['error' => 'Invalid file format. Please upload a jpeg, jpg, png, webp, or svg file.'], 400);
             }
-
+    
             $profile_pic_path = time() . '.' . $fileExtension;
             $profile_pic->move('Mobile_App_Profile_Pics/', $profile_pic_path);
             $user->profile_photo_path = $profile_pic_path;
         }
-
+    
         $user->save();
-
+    
         return response()->json(['message' => 'User updated successfully'], 200);
-    }
+    }    
 
 
     //  Delete user account 
