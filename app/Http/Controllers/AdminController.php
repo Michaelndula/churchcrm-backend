@@ -289,10 +289,14 @@ class AdminController extends Controller
         $notesFileSaved = $this->uploadEventFile($notesfile, ['pdf', 'doc', 'docx', 'ppt', 'pptx'], 'SermonNotes/');
 
         $notes_thumbnail = $request->file('notesimage');
-        $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'gif', 'webp', 'svg'], 'Notes_Thumbnails/');
+        if ($notes_thumbnail) {
+            $notesThumbnailFile = $this->uploadEventFile($notes_thumbnail, ['jpeg', 'png', 'jpg', 'gif', 'webp', 'svg'], 'Notes_Thumbnails/');
+            $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];
+        } else {
+            $sermonnotes->notesimage = null;
+        }
 
         $sermonnotes->notesupload = $notesFileSaved['file_name'];
-        $sermonnotes->notesimage = $notesThumbnailFile['thumbnail_file_name'];
         $sermonnotes->sermondescription = $request->sermondescription;
         $sermonnotes->sermon_date = $request->sermon_date;
         $sermonnotes->save();
@@ -432,7 +436,6 @@ class AdminController extends Controller
         $request->validate([
             'notesupload' => 'sometimes|required|mimes:pdf,doc,docx,ppt,pptx|max:2048',
             'sermondescription' => 'required|string',
-            'notesimage' => 'string',
         ]);
 
         $sermonnotes = SermonNotes::findOrFail($id);
@@ -456,7 +459,7 @@ class AdminController extends Controller
             $notesfileName = time() . '.' . $fileExtension;
             $request->file('notesupload')->move('SermonNotes/', $notesfileName);
         }
-
+       
         $sermonnotes->update([
             'notesupload' => $notesfileName,
             'sermondescription' => $request->sermondescription,
