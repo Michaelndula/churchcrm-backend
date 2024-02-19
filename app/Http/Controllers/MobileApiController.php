@@ -31,7 +31,7 @@ class MobileApiController extends Controller
     }
     public function fetchSermons()
     {
-        $data = Sermons::orderBy('id', 'desc')->get();
+        $data = Sermons::orderBy('sermon_date', 'desc')->get();
         return response()->json($data);
     }
     public function fetchProfile($userId)
@@ -219,4 +219,5 @@ class MobileApiController extends Controller
         $data = SermonNotes::where('id', '!=', $id)->orderBy('id', 'desc')->get();
         return response()->json($data);
     }
+
 }

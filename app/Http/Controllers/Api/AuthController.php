@@ -111,7 +111,7 @@ class AuthController extends Controller
             return response()->json([
                 'user_id' => $user->id,
                 'user' => $user,
-                'access_token' => $user->createToken('auth_token')->plainTextToken,
+                    'access_token' => $user->createToken('auth_token')->plainTextToken,
                 'message' => 'User logged in successfully',
             ]);
         } elseif (!$user) {
@@ -121,6 +121,7 @@ class AuthController extends Controller
         }
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+    
     public function passwordchange(Request $request, $user)
     {
         $credentials = $request->validate([

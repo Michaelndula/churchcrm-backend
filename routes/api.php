@@ -58,6 +58,9 @@ Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermon
 // View sermon notes
 Route::get('/fetch_other_notes/{noteID}', [MobileApiController::class, 'sermonNotesView']);
 
+// View announcements
+Route::get('/fetch_other_announcements/{announcement_ID}', [MobileApiController::class, 'announcementsView']);
+
 
 // Download notes
 Route::get('/download_notes/{sermonId}', [MobileApiController::class, 'downloadSermonNotes']);
