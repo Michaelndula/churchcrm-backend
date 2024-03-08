@@ -123,9 +123,9 @@
                             <div class="mb-3">
                                 <div class="form-group mb-4">
                                     <label>Video</label><br>
-                                    <label for="Notes_Thumbnail" class="custom-file-upload">
+                                    <label for="video" class="custom-file-upload">
                                         Upload </label>
-                                    <input type="file" class="file" name="Notes_Thumbnail" id="Notes_Thumbnail" />
+                                    <input type="file" class="file" name="video" id="video" />
                                 </div>
                             </div>
 
