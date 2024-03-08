@@ -9,6 +9,7 @@ use App\Models\SermonNotes;
 use App\Models\Sermons;
 use Illuminate\Http\Request;
 use App\Models\AppUser;
+use App\Models\ShortVideo;
 use Illuminate\Support\Facades\Storage;
 
 class MobileApiController extends Controller
@@ -31,12 +32,16 @@ class MobileApiController extends Controller
     }
     public function fetchSermons()
     {
-        $data = Sermons::orderBy('sermon_date', 'desc')->get();
+        $data = Sermons::orderBy('id', 'desc')->get();
         return response()->json($data);
     }
     public function fetchProfile($userId)
     {
         $data = AppUser::where('id', $userId)->first();
+        return response()->json($data);
+    }
+    public function fetchShortVideo(){
+        $data = ShortVideo::orderBy('id', 'desc')->get();
         return response()->json($data);
     }
 
@@ -80,9 +85,29 @@ class MobileApiController extends Controller
         $user = AppUser::where('id', $id)->first();
 
         if ($user) {
-            $data = Note::where('user_id_fk', $user->id)->orderBy('id', 'desc')->get();
-            if ($data) {
+            $notesData = Note::where('user_id_fk', $user->id)->orderBy('id', 'desc')->get();
+            $jsonFilePath = Storage::path('notes_file.json');
+
+            if (file_exists($jsonFilePath)) {
+                $existingNotes = file_get_contents($jsonFilePath);
+
+                $jsonData = json_decode($existingNotes, true) ?? [];
+            } else {
+                $jsonData = [];
+            }
+
+            if (array_key_exists($notesData->id, $jsonData)) {
+                $specificNote = $jsonData[$notesData->id];
+                $data = [
+                    'noteContent' => $specificNote,
+                    'notesData' => $notesData,
+                ];
                 return response()->json($data);
+            } else {
+                return response()->json(['error' => 'Note not found'], 404);
+            }
+            if ($notesData) {
+                return response()->json($notesData);
             } else {
                 return response()->json(['error' => 'User has no notes.'], 404);
             }
@@ -219,5 +244,4 @@ class MobileApiController extends Controller
         $data = SermonNotes::where('id', '!=', $id)->orderBy('id', 'desc')->get();
         return response()->json($data);
     }
-
 }

@@ -39,6 +39,8 @@ Route::get('/fetchEvents', [MobileApiController::class, 'fetchEvents']);
 Route::get('/fetchAnnouncements', [MobileApiController::class, 'fetchAnnouncements']);
 Route::get('/fetchSermonnotes', [MobileApiController::class, 'fetchSermonnotes']);
 Route::get('/fetchSermons', [MobileApiController::class, 'fetchSermons']);
+// fetchShortVideo
+Route::get('/fetchShortVideo', [MobileApiController::class, 'fetchShortVideo']);
 
 // Profile
 Route::get('/profile/{userId}', [MobileApiController::class, 'fetchProfile']);
@@ -57,9 +59,6 @@ Route::get('/fetch/sermonNotes/{sermonId}', [MobileApiController::class, 'sermon
 
 // View sermon notes
 Route::get('/fetch_other_notes/{noteID}', [MobileApiController::class, 'sermonNotesView']);
-
-// View announcements
-Route::get('/fetch_other_announcements/{announcement_ID}', [MobileApiController::class, 'announcementsView']);
 
 
 // Download notes
