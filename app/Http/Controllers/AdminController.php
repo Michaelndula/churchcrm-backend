@@ -555,12 +555,12 @@ class AdminController extends Controller
     {
         $shortvideo = new ShortVideo();
         $validated = $request->validate([
-            'thumbnail_path' => 'mimes:jpeg,png,jpg,webp,svg|max:2048',
-            'video_path' =>'mimes:mp4|max:20480',
+            'Thumbnail' => 'mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'video' =>'mimes:mp4|max:20480',
         ]);
         $shortvideo->title = $request->title;
         $shortvideo->video_description = $request->video_description;
-        $thumbnailFile = $validated['thumbnail_path'];
+        $thumbnailFile = $validated['Thumbnail'];
         if ($thumbnailFile) {
             $validExtensions = ['jpeg', 'png', 'jpg', 'webp', 'svg'];
             $fileExtension = strtolower($thumbnailFile->getClientOriginalExtension());
@@ -573,7 +573,7 @@ class AdminController extends Controller
             $thumbnailFile->move('ShortVideoThumbnails/', $thumbnailFileName);
         }
 
-        $video = $validated['video_path'];
+        $video = $validated['video'];
         if ($video) {
             $validExtensions = ['mp4'];
             $fileExtension = strtolower($video->getClientOriginalExtension());
